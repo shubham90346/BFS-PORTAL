@@ -367,10 +367,11 @@ console.log(values);
                             <tr key={e}>
                               <td className={` ps-3 ${Styles.tabletd}`}>{e.ManufacturerName}</td>
                               <td className={Styles.tabletd}>{e.totalOrder}</td>
-                              <td className={Styles.tabletd}>{e.sale}</td>
-                              <td className={Styles.tabletd}>${e.target}k</td>
+                              <td className={Styles.tabletd}>${Number(e.sale).toFixed(2)}K</td>
+                              <td className={Styles.tabletd}>${e.target}K</td>
                             </tr>
                           );
+
                         })}
                       </tbody>
                     </table>

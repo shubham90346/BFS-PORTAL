@@ -20,9 +20,14 @@ const Header = () => {
           Newness Report
         </Link>
       </p>
-      <p className={`m-0  ${styles.text}`}>
+      {/* <p className={`m-0  ${styles.text}`}>
         <Link to="/marketing-calendar" className="linkStyle">
           Marketing Calendar
+        </Link>
+      </p> */}
+        <p className={`m-0  ${styles.text}`}>
+        <Link to="/comparison-report" className="linkStyle">
+         Comparison Report
         </Link>
       </p>
       <p className={`m-0  ${styles.text}`}>
