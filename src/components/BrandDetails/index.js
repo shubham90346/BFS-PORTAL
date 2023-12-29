@@ -172,6 +172,7 @@ function BrandDetails() {
               }}
             />
             {/* <FilterSearch onChange={(e) => setSearchBy(e.target.value)} value={searchBy} placeholder={"Enter Product name"} width="155px" /> */}
+            {/* hjsjrj rjhjrkf mkrje frkjhfrjbfjrj */}
             <button
               className="border px-2.5 py-1 leading-tight"
               onClick={() => {
