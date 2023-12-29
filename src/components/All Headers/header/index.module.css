@@ -1,0 +1,23 @@
+.text {
+  text-align: center;
+  font-family: Montserrat-500;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 32px; /* 266.667% */
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+@media screen and (max-width: 1130px) and (min-width: 700px) {
+  #main {
+    flex-wrap: wrap;
+  }
+  .text {
+    font-size: 10px !important;
+  }
+}
+@media screen and (max-width: 700px) and (min-width: 200px) {
+  #main {
+    display: none !important;
+  }
+}

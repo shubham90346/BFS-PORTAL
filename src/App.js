@@ -1,0 +1,66 @@
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import "./App.css";
+import SalesReport from "./reports/sales_report/SalesReport";
+import NewnessReport from "./reports/newness/NewnessReport";
+import ComparisonReport from "./reports/comparison/ComparisonReport";
+import "../node_modules/bootstrap/dist/js/bootstrap";
+import Login from "./pages/Login";
+import Testing from "./components/Testing";
+import TopProducts from "./pages/TopProducts";
+import Logout from "./components/Logout";
+import MyRetailersPage from "./pages/MyRetailersPage";
+import DashboardPage from "./pages/DashboardPage";
+import BrandDetails from "./components/BrandDetails";
+import { UserProvider } from "./context/UserContext";
+import BrandsPage from "./pages/BrandsPage";
+import { GlobalProvider } from "./context/GlobalContext";
+import CustomerCare from "./pages/CustomerCare";
+import AboutUs from "./pages/AboutUs";
+import EducationCenter from "./pages/EducationCenter";
+import NewArrivals from "./pages/NewArrivals";
+import CustomerSupport from "./pages/CustomerSupport";
+import MarketingCalendar from "./pages/MarketingCalendar";
+import MyBag from "./pages/MyBag";
+import OrderListPage from "./pages/OrderListPage";
+// import OrderList from "./pages/OrderListPage";
+
+function App() {
+  // const Redirect = ({ href }) => {
+  //   window.location.href = href;
+  // };
+  return (
+    <GlobalProvider>
+      <UserProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/sales-report" element={<SalesReport />}></Route>
+            <Route path="/order-list" element={<OrderListPage />}></Route>
+            <Route path="/newness-report" element={<NewnessReport />}></Route>
+            <Route path="/comparison-report" element={<ComparisonReport />}></Route>
+            <Route path="/testing" element={<Testing />}></Route>
+            <Route path="/top-products" element={<TopProducts />}></Route>
+            <Route path="/login" element={<Login />}></Route>
+            <Route path="/" element={<Login />}></Route>
+            <Route path="/logout" element={<Logout />}></Route>
+            <Route path="/my-retailers" element={<MyRetailersPage />}></Route>
+            <Route path="/dashboard" element={<DashboardPage />}></Route>
+            <Route path="/product" element={<BrandDetails />}></Route>
+            <Route path="/my-bag" element={<MyBag />}></Route>
+            <Route path="/brand" element={<BrandsPage />}></Route>
+            {/*  */}
+            <Route path="/customer-care" element={<CustomerCare />}></Route>
+            <Route path="/customer-support" element={<CustomerSupport />}></Route>
+            <Route path="/new-arrivals" element={<NewArrivals />}></Route>
+            <Route path="/marketing-calendar" element={<MarketingCalendar />}></Route>
+            <Route path="/education-center" element={<EducationCenter />}></Route>
+            <Route path="/about-us" element={<AboutUs />}></Route>
+            {/* <Route path="/wholesale-inquiry" elements={<WholesaleInquiry />}></Route> */}
+            <Route path="logout" element={<Logout />}></Route>
+          </Routes>
+        </BrowserRouter>
+      </UserProvider>
+    </GlobalProvider>
+  );
+}
+
+export default App;

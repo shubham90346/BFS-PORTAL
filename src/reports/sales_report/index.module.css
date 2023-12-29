@@ -1,0 +1,14 @@
+.text {
+  color: #fff;
+  /* text-align: center; */
+  text-align: left;
+  font-family:Montserrat-500;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 32px; /* 266.667% */
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  border: none;
+}
+

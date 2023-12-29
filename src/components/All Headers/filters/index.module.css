@@ -1,0 +1,22 @@
+.text {
+  color: #fff;
+  /* text-align: center; */
+  text-align: left;
+  font-family:Montserrat-500;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 32px; 
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  border: none;
+  /* background-color: black; */
+}
+
+.option{
+  background-color: white;
+  /* padding: 20px; */
+  /* background-color: #ece5f0; */
+  color: black;
+  text-transform: capitalize;
+}
