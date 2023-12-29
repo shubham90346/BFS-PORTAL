@@ -171,7 +171,7 @@ function BrandDetails() {
                 setProductTypeFilter(value);
               }}
             />
-            <FilterSearch onChange={(e) => setSearchBy(e.target.value)} value={searchBy} placeholder={"Enter Product name"} width="155px" />
+            {/* <FilterSearch onChange={(e) => setSearchBy(e.target.value)} value={searchBy} placeholder={"Enter Product name"} width="155px" /> */}
             <button
               className="border px-2.5 py-1 leading-tight"
               onClick={() => {
