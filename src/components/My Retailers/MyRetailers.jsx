@@ -5,7 +5,7 @@ import Loading from "../Loading";
 
 const MyRetailers = ({ pageData, filterBy, sortBy, searchBy, isLoading }) => {
   const navigate = useNavigate();
-console.log("pageData",pageData);
+// console.log("pageData",pageData);
   useEffect(() => {
     const userData = localStorage.getItem("Name");
     if (!userData) {

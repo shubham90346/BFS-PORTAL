@@ -30,7 +30,6 @@ function FilterPage({ data, formattedData, setCategoryFilters, categoryFilters, 
             />
           </svg>
           Discount Offer: {data?.discount?.margin || 0}%
-          {localStorage.setItem("discount",data?.discount?.margin || 0)}
         </h2>
         {/* dropDown */}
 

@@ -7,6 +7,8 @@ import { useGlobal } from "../../../context/GlobalContext";
 import { useNavigate } from "react-router-dom";
 
 const Accordion = ({ data, formattedData }) => {
+  console.log("Accordion data", data);
+  console.log("Accordion formattedData", formattedData);
   // console.log(Object.keys(formattedData).length);
   const [orders, setOrders] = useState({});
   const { orderQuantity, setOrderQuantity } = useGlobal();
@@ -17,6 +19,13 @@ const Accordion = ({ data, formattedData }) => {
       obj[product.Id] = {
         quantity: quantity,
         product,
+        discount: {
+          MinOrderAmount: data.discount.MinOrderAmount,
+          margin: data.discount.margin,
+          sample: data.discount.sample,
+          testerMargin: data.discount.testerMargin,
+          testerproductLimit: data.discount.testerproductLimit,
+        },
       };
 
       return obj;
@@ -39,14 +48,13 @@ const Accordion = ({ data, formattedData }) => {
 
   useEffect(() => {
     const fetchedOrders = localStorage.getItem("orders");
-
     if (fetchedOrders) {
       setOrders(JSON.parse(fetchedOrders));
     }
   }, []);
 
   return (
-    <div className={`overflow-auto`} >
+    <div className={`overflow-auto`}>
       <div className={styles.accordion}>
         <table className="table table-hover ">
           <thead>
@@ -73,12 +81,12 @@ const Accordion = ({ data, formattedData }) => {
                   });
                   // console.log(formattedData);
                   return (
-                    <CollapsibleRow title={key} quantity={categoryOrderQuantity}>
-                      {Object.values(formattedData)[index]?.map((value,indexed) => (
+                    <CollapsibleRow title={key} quantity={categoryOrderQuantity} key={index}>
+                      {Object.values(formattedData)[index]?.map((value, indexed) => (
                         <tr className="w-full" key={indexed}>
                           {/* {console.log(value)} */}
                           <td>
-                            <img src={Img1} alt="img"/>
+                            <img src={Img1} alt="img" />
                           </td>
                           <td className="text-capitalize">{value.Name}</td>
                           <td>{value.ProductCode}</td>
