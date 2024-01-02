@@ -1,11 +1,11 @@
 import React, { useEffect, useMemo } from "react";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import MyRetailerCard from "./MyRetailerCard";
 import Loading from "../Loading";
 
 const MyRetailers = ({ pageData, filterBy, sortBy, searchBy, isLoading }) => {
   const navigate = useNavigate();
-
+// console.log("pageData",pageData);
   useEffect(() => {
     const userData = localStorage.getItem("Name");
     if (!userData) {
@@ -45,6 +45,7 @@ const MyRetailers = ({ pageData, filterBy, sortBy, searchBy, isLoading }) => {
               {filteredPageData?.map((data) => (
                 <MyRetailerCard
                   key={data.Name}
+                  accountId={data.Id}
                   placeName={data.City}
                   title={data.Name}
                   brands={data?.data}

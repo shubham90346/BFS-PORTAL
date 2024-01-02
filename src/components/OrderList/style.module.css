@@ -378,6 +378,9 @@ text-transform: uppercase;
 .tool{
     cursor: pointer;
 }
+.buullet{
+    list-style: disc;
+}
 
 
 @media(max-width:1199px) {

@@ -2,6 +2,7 @@ import { useState } from "react";
 import classNames from "classnames";
 
 const CollapsibleRow = ({ children, title, onChange, quantity }) => {
+  // console.log(quantity);
   const [open, setOpen] = useState(false);
 
   return (
@@ -13,6 +14,7 @@ const CollapsibleRow = ({ children, title, onChange, quantity }) => {
           <input
             id="expandCollapse"
             checked={open}
+            // defaultChecked={open}
             type="checkbox"
             className="peer sr-only"
           />
@@ -46,7 +48,7 @@ const CollapsibleRow = ({ children, title, onChange, quantity }) => {
                 <path
                   d="M21.2847 17.1456L14.1897 10.2871L7.09467 17.1456"
                   stroke="#403A35"
-                  stroke-width="2"
+                  strokeWidth={"2"}
                 />
               </svg>
             )}

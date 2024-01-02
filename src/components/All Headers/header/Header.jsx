@@ -11,6 +11,30 @@ const Header = () => {
         </Link>
       </p>
       <p className={`m-0  ${styles.text}`}>
+        <Link to="/marketing-calendar" className="linkStyle">
+          Marketing Calendar
+        </Link>
+      </p>
+        
+      <p className={`m-0  ${styles.text}`}>
+        <Link to="/education-center" className="linkStyle">
+          Education Center
+        </Link>
+      </p>
+      <p className={`m-0  ${styles.text}`}>
+        <Link to="/customer-support" className="linkStyle">
+          Customer Support
+        </Link>
+      </p>
+      {/* <p className={`m-0  ${styles.text}`}>
+        <select defaultValue="">
+          <option value=""  disabled > REPORTS</option>
+          <option value="1" className={`m-0  ${styles.text}`}> Sales Report</option>
+          <option value="2" className={`m-0  ${styles.text}`}> Newness Report</option>
+          <option value="3" className={`m-0  ${styles.text}`}> Comparison Report</option>
+        </select>
+        </p> */}
+      <p className={`m-0  ${styles.text}`}>
         <Link to="/sales-report" className="linkStyle">
           Sales Report
         </Link>
@@ -20,24 +44,9 @@ const Header = () => {
           Newness Report
         </Link>
       </p>
-      {/* <p className={`m-0  ${styles.text}`}>
-        <Link to="/marketing-calendar" className="linkStyle">
-          Marketing Calendar
-        </Link>
-      </p> */}
-        <p className={`m-0  ${styles.text}`}>
+      <p className={`m-0  ${styles.text}`}>
         <Link to="/comparison-report" className="linkStyle">
          Comparison Report
-        </Link>
-      </p>
-      <p className={`m-0  ${styles.text}`}>
-        <Link to="/education-center" className="linkStyle">
-          Education Center
-        </Link>
-      </p>
-      <p className={`m-0  ${styles.text}`}>
-        <Link to="/customer-support" className="linkStyle">
-          Customer Support
         </Link>
       </p>
     </div>

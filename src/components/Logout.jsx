@@ -6,9 +6,11 @@ const Logout = () => {
     localStorage.removeItem("Api Data");
     localStorage.removeItem("orders");
     localStorage.removeItem("response");
-    // localStorage.removeItem("Api Data");
-    // localStorage.removeItem("Api Data");
-
+    localStorage.removeItem("manufacturer");
+    localStorage.removeItem("AccountId__c");
+    localStorage.removeItem("ManufacturerId__c");
+    localStorage.removeItem("Account");
+    
     window.location.href = "/";
   }, []);
   return <></>;

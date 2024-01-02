@@ -4,8 +4,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useNavigate } from "react-router-dom";
 
 const SelectBrandModel = ({ brands, onClose }) => {
-  const [selectedBrandAccountId, setSelectedBrandAccountId] = useState();
-  const [selectedBrandManufacturerId, setSelectedBrandManufacturerId] =
+  // console.log("brands",brands);
+  // const [selectedBrandAccountId, setSelectedBrandAccountId] = useState();
+  // const [selectedBrandManufacturerId, setSelectedBrandManufacturerId] =
     useState();
 
   const navigate = useNavigate();
@@ -18,16 +19,17 @@ const SelectBrandModel = ({ brands, onClose }) => {
 
         <div className={Styles.BrandInRadio}>
           <div className="grid grid-cols-3 gap-4">
-            {brands?.map((brand) => (
-              <div className={Styles.BrandName}>
+            {brands?.map((brand,index) => (
+              <div className={Styles.BrandName} key={index} >
                 <input
                   type="radio"
                   name="brand_names"
                   // checked={selectedBrandAccountId === brand.AccountId__c}
                   onChange={() => {
-                    setSelectedBrandAccountId(brand.AccountId__c);
-                    setSelectedBrandManufacturerId(brand.ManufacturerId__c);
+                    // setSelectedBrandAccountId(brand.AccountId__c);
+                    // setSelectedBrandManufacturerId(brand.ManufacturerId__c);
                     localStorage.setItem("manufacturer",brand.ManufacturerName__c)
+                    localStorage.setItem("ManufacturerId__c",brand.ManufacturerId__c)
                   }}
                   id={brand.ManufacturerName__c}
                 />
@@ -45,7 +47,8 @@ const SelectBrandModel = ({ brands, onClose }) => {
               className={Styles.Button2}
               onClick={() =>
                 navigate(
-                  `/product?accountId=${selectedBrandAccountId}&manufacturerId=${selectedBrandManufacturerId}`
+                  `/product`
+                  // `/product?accountId=${selectedBrandAccountId}&manufacturerId=${selectedBrandManufacturerId}`
                 )
               }
             >
