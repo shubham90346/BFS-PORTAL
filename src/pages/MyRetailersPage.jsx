@@ -40,15 +40,15 @@ const MyRetailersPage = () => {
 
   return (
     <>
-      <div className="container-fluid p-0 m-0">
-        <div className="row p-0 m-0 d-flex flex-column justify-content-around align-items-center col-12">
+      <div className="container p-0 ">
+        <div className="row p-0 m-0 d-flex flex-column justify-content-around align-items-center ">
           {/* TopNav */}
-          <div className="col-10">
+          <div className="p-0">
             <TopNav />
           </div>
           <hr className="hrBgColor"></hr>
           {/* all headers */}
-          <div className="col-10">
+          <div className="p-0">
             <LogoHeader />
             <Header />
             <div className="filter-container">
@@ -97,7 +97,7 @@ const MyRetailersPage = () => {
             </div>
           </div>
           {/* my retailers */}
-          <div className="col-10">
+          <div className="">
             <MyRetailers
               pageData={data?.data}
               sortBy={sortBy}
@@ -113,14 +113,14 @@ const MyRetailersPage = () => {
             />
           </div>
           {/* footer */}
-          <div className="col-12">
+      </div>
+        </div>
+          <div className="">
             <HelpSection />
           </div>
-          <div className="col-10">
+          <div className="container">
             <Footer />
           </div>
-        </div>
-      </div>
     </>
   );
 };
