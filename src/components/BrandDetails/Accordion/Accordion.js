@@ -74,11 +74,11 @@ const Accordion = ({ data, formattedData }) => {
                   // console.log(formattedData);
                   return (
                     <CollapsibleRow title={key} quantity={categoryOrderQuantity}>
-                      {Object.values(formattedData)[index]?.map((value) => (
-                        <tr className="w-full">
+                      {Object.values(formattedData)[index]?.map((value,indexed) => (
+                        <tr className="w-full" key={indexed}>
                           {/* {console.log(value)} */}
-                          <td scope="row">
-                            <img src={Img1} />
+                          <td>
+                            <img src={Img1} alt="img"/>
                           </td>
                           <td className="text-capitalize">{value.Name}</td>
                           <td>{value.ProductCode}</td>

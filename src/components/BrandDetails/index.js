@@ -15,7 +15,6 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import Loading from "../Loading";
 import { FilterItem } from "../FilterItem";
 import FilterSearch from "../FilterSearch";
-import MyRetailersPage from "../../pages/MyRetailersPage";
 import { useGlobal } from "../../context/GlobalContext";
 
 const groupBy = function (xs, key) {
@@ -62,7 +61,7 @@ function BrandDetails() {
 
     return groupedData;
   }, [data?.data?.records]);
-  console.log(formattedData);
+  // console.log(formattedData);
   const formattedFilterData = useMemo(() => {
     let filteredData = { ...formattedData };
     if (categoryFilters?.length) {
@@ -95,10 +94,11 @@ function BrandDetails() {
       let newData = {};
       Object.keys(filteredData)?.forEach((key) => {
         const values = filteredData[key];
+        console.log(values);
         newData = values?.filter((value) => value.Name?.toLowerCase().includes(searchBy?.toLowerCase()));
         filteredData = { ...newData };
 
-        console.log(filteredData);
+        // console.log(filteredData);
       });
     }
 
@@ -171,8 +171,7 @@ function BrandDetails() {
                 setProductTypeFilter(value);
               }}
             />
-            {/* <FilterSearch onChange={(e) => setSearchBy(e.target.value)} value={searchBy} placeholder={"Enter Product name"} width="155px" /> */}
-            {/* hjsjrj rjhjrkf mkrje frkjhfrjbfjrj */}
+            <FilterSearch onChange={(e) => setSearchBy(e.target.value)} value={searchBy} placeholder={"Enter Product name"} width="155px" />
             <button
               className="border px-2.5 py-1 leading-tight"
               onClick={() => {
@@ -185,7 +184,7 @@ function BrandDetails() {
             </button>
           </div>
         </div>
-        {/* my retailers */}
+        {/* brand list accordion */}
         <div className="col-10">
           {isLoading ? (
             <Loading height={"70vh"} />

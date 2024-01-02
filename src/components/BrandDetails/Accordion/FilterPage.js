@@ -43,7 +43,7 @@ function FilterPage({ data, formattedData, setCategoryFilters, categoryFilters, 
             <Accordion.Item className={styles.AcciIten} eventKey="0">
               <Accordion.Header className={styles.HeaderAccor}>Sort By: {sortBy}</Accordion.Header>
               <Accordion.Body className={styles.bodyAccor}>
-                <div className={styles.accordion}>
+                <div className={styles.accordion} key={"price"}>
                   <div className={styles.Content}>
                     {["Price: High To Low", "Price: Low To High"]?.map((key) => (
                       <div className={styles.accordion}>
@@ -86,10 +86,10 @@ function FilterPage({ data, formattedData, setCategoryFilters, categoryFilters, 
           </div>
 
           <Accordion className={styles.AccoMain} defaultActiveKey="0">
-            <Accordion.Item className={styles.AcciIten} eventKey="0">
+            <Accordion.Item className={styles.AcciIten} eventKey="0" key={"category"}>
               <Accordion.Header className={styles.HeaderAccor}>Product Type</Accordion.Header>
               <Accordion.Body className={styles.bodyAccor}>
-                <div className={styles.accordion}>
+                <div className={styles.accordion} >
                   <div className={styles.Content}>
                     {["Wholesale", "Pre-order"]?.map((key) => (
                       <div className={styles.accordion}>
