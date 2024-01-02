@@ -11,6 +11,8 @@ import { useManufacturer } from "../api/useManufacturer";
 import Loading from "../components/Loading";
 import { useNavigate } from "react-router";
 
+import Page from './page.module.css'
+
 const brandsImageMap = {
   Diptyque: "Diptyque.png",
   Byredo: "Byredo.png",
@@ -65,15 +67,16 @@ const BrandsPage = () => {
     return newValues;
   }, [highestRetailers, searchBy, manufacturers]);
   return (
-    <div className="container-fluid p-0 m-0">
+    <>
+    <div className="container p-0 ">
       <div className="row p-0 m-0 d-flex flex-column justify-content-around align-items-center col-12">
         {/* TopNav */}
-        <div className="col-10">
+        <div className="col-12 p-0">
           <TopNav />
         </div>
         <hr className="hrBgColor"></hr>
         {/* all headers */}
-        <div className="col-10">
+        <div className="col-12 p-0">
           <LogoHeader />
           <Header />
           <div className="filter-container">
@@ -110,7 +113,7 @@ const BrandsPage = () => {
           </div>
         </div>
         {/* brands */}
-        <div className="col-10">
+        <div className="col-12 p-0">
           {isLoading ? (
             <Loading height={"70vh"} />
           ) : (
@@ -122,7 +125,8 @@ const BrandsPage = () => {
                 Below are the Brands available with “Beauty Fashions Sales
                 Group”
               </div>
-              <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 grid-cols-2 gap-4 max-w-[1280px] m-auto">
+              {/* <div className="widthGivenBrandDetailPage grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 grid-cols-2 gap-4  m-auto">    */}   
+              <div className={`grid-cols-1 grid sm:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 grid-cols-2 gap-4  m-auto ${Page.widthGivenBrandDetailPage}`}> 
                 {filteredPageData?.length ? (
                   <>
                     {filteredPageData?.map((brand) => (
@@ -144,16 +148,18 @@ const BrandsPage = () => {
             </div>
           )}
         </div>
-        {/* footer */}
-        <div className="col-12">
-          <HelpSection />
-        </div>
-        <div className="col-10">
-          <Footer />
-        </div>
       </div>
     </div>
-  );
+        {/* footer */}
+        <div className="col-12 p-0">
+          <HelpSection />
+        </div>
+        <div className="container">
+          <Footer />
+        </div>
+        </>
+  )
+  ;
 };
 
 export default BrandsPage;

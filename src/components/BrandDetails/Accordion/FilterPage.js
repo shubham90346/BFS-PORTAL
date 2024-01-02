@@ -3,12 +3,8 @@ import styles from "../styles.module.css";
 import Accordion from "react-bootstrap/Accordion";
 
 function FilterPage({ data, formattedData, setCategoryFilters, categoryFilters, productTypeFilter, setProductTypeFilter, setSortBy, sortBy }) {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const onTitleClick = (index) => {
-    setActiveIndex(index === activeIndex ? null : index);
-  };
-
   const [activeIndex1, setActiveIndex1] = useState(0);
+  // console.log(productTypeFilter);
   const onTitleClick1 = (index) => {
     setActiveIndex1(index === activeIndex1 ? null : index);
   };  
@@ -34,16 +30,15 @@ function FilterPage({ data, formattedData, setCategoryFilters, categoryFilters, 
             />
           </svg>
           Discount Offer: {data?.discount?.margin || 0}%
-          {localStorage.setItem("discount",data?.discount?.margin || 0)}
         </h2>
         {/* dropDown */}
 
-        <div className={styles.Filterdropdownsection}>
+        {/* <div className={styles.Filterdropdownsection}>
           <Accordion className={styles.AccoMain} defaultActiveKey="0">
             <Accordion.Item className={styles.AcciIten} eventKey="0">
               <Accordion.Header className={styles.HeaderAccor}>Sort By: {sortBy}</Accordion.Header>
               <Accordion.Body className={styles.bodyAccor}>
-                <div className={styles.accordion}>
+                <div className={styles.accordion} key={"price"}>
                   <div className={styles.Content}>
                     {["Price: High To Low", "Price: Low To High"]?.map((key) => (
                       <div className={styles.accordion}>
@@ -58,7 +53,6 @@ function FilterPage({ data, formattedData, setCategoryFilters, categoryFilters, 
                             name="sort-by"
                             id={`sort-by-${key}`}
                           />
-                          {/* <label htmlFor="sort-by">{key}</label> */}
                           <label htmlFor={`sort-by-${key}`}>{key}</label>
 
                         </div>
@@ -69,10 +63,10 @@ function FilterPage({ data, formattedData, setCategoryFilters, categoryFilters, 
               </Accordion.Body>
             </Accordion.Item>
           </Accordion>
-        </div>
+        </div> */}
 
         <div className={styles.Lastfilter}>
-          <div className={styles.lastFill}>
+          {/* <div className={styles.lastFill}>
             <h5>Filter</h5>
             <button
               onClick={() => {
@@ -83,13 +77,13 @@ function FilterPage({ data, formattedData, setCategoryFilters, categoryFilters, 
             >
               Clear All
             </button>
-          </div>
+          </div> */}
 
           <Accordion className={styles.AccoMain} defaultActiveKey="0">
-            <Accordion.Item className={styles.AcciIten} eventKey="0">
+            {/* <Accordion.Item className={styles.AcciIten} eventKey="0" key={"category"}>
               <Accordion.Header className={styles.HeaderAccor}>Product Type</Accordion.Header>
               <Accordion.Body className={styles.bodyAccor}>
-                <div className={styles.accordion}>
+                <div className={styles.accordion} >
                   <div className={styles.Content}>
                     {["Wholesale", "Pre-order"]?.map((key) => (
                       <div className={styles.accordion}>
@@ -111,15 +105,19 @@ function FilterPage({ data, formattedData, setCategoryFilters, categoryFilters, 
                   </div>
                 </div>
               </Accordion.Body>
-            </Accordion.Item>
+            </Accordion.Item> */}
 
-            <Accordion.Item className={styles.AcciIten} eventKey="1">
+            <Accordion.Item className={styles.AcciIten} eventKey="0">
               <Accordion.Header className={styles.HeaderAccor}>Category</Accordion.Header>
-              <Accordion.Body className={` overflow-auto ${styles.bodyAccor}`} style={{height:"20vh"}}>
+              <Accordion.Body className={` overflow-auto ${styles.bodyAccor}`} style={{height:"44vh"}}>
+                {productTypeFilter==="Pre-order"?<>
+                <div className={`${styles.title} ${styles.borderRad} text-uppercase`}> No Category</div>
+               </>:<>
+                
                 {Object.keys(formattedData)
                   ?.filter((category) => category !== "PREORDER")
-                  ?.map((key) => (
-                    <div className={styles.accordion}>
+                  ?.map((key,index) => (
+                    <div className={styles.accordion} key={index}>
                       <div className={styles.Content}>
                         <div className={styles.accordion}>
                           <div className={`${styles.title} ${styles.borderRad} `} onClick={() => onTitleClick1(0)}>
@@ -147,6 +145,8 @@ function FilterPage({ data, formattedData, setCategoryFilters, categoryFilters, 
                       </div>
                     </div>
                   ))}
+                </>}
+                
               </Accordion.Body>
             </Accordion.Item>
           </Accordion>

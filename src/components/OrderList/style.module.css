@@ -1,5 +1,57 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700&family=Nunito:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Open+Sans:wght@300;400;500;600&family=Rubik:wght@300;400;500;600;700;800&display=swap');
 
+.inputDraw input{
+    color: white;
+padding: 0 2px;
+outline: none;
+border-bottom: 1px solid #FFF;
+border-top: 0px solid #FFF;
+border-left: 0px solid #FFF;
+border-right: 0px solid #FFF;
+background-color: transparent;
+
+}
+
+
+.BtnStyle{
+    border: 1px solid #fff;
+    padding: 0 6px;
+}
+
+ul.dropdown-menu.show {
+    border-radius: 5px;
+background: #FFF;
+box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.blacklLabel{
+    background-color: #08090A;
+    text-align: center;
+
+    padding: 10px 0;
+    /* height: 50px; */
+    
+}
+
+.blacklLabel ul{
+    gap :10%;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+.blacklLabel ul li{
+    color: #FFF;
+    margin: 0;
+text-align: center;
+font-family: "Montserrat";
+font-size: 12px;
+font-style: normal;
+font-weight: 500;
+line-height: 32px; /* 266.667% */
+letter-spacing: 1.2px;
+text-transform: uppercase;
+}
 
 .OrderSvg {
     display: flex;
@@ -325,6 +377,9 @@
 }
 .tool{
     cursor: pointer;
+}
+.buullet{
+    list-style: disc;
 }
 
 

@@ -16,31 +16,31 @@ const DashboardPage = () => {
   }, []);
   return (
     <>
-      <div className="container-fluid m-0">
+      <div className="container  p-0">
         <div className="row m-0 d-flex flex-column justify-content-around align-items-center">
           {/* TopNav */}
-          <div className="col-10">
+          <div className="col-12 p-0">
             <TopNav />
           </div>
           <hr className="hrBgColor"></hr>
           {/* all headers */}
-          <div className="col-10">
+          <div className="col-12 p-0">
             <LogoHeader />
             <Header />
           </div>
           {/* dashboard */}
-          <div className="col-10">
+          <div className="col-12 p-0">
             <Dashboard />
           </div>
+      </div>
           {/* footer */}
-          <div className="col-12 mt-4">
+          
+        </div>
             <HelpSection />
-          </div>
-          <div className="col-10">
+
+            <div className="container">
             <Footer />
           </div>
-        </div>
-      </div>
     </>
   );
 };

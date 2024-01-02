@@ -10,7 +10,6 @@ import TopProducts from "./pages/TopProducts";
 import Logout from "./components/Logout";
 import MyRetailersPage from "./pages/MyRetailersPage";
 import DashboardPage from "./pages/DashboardPage";
-import BrandDetails from "./components/BrandDetails";
 import { UserProvider } from "./context/UserContext";
 import BrandsPage from "./pages/BrandsPage";
 import { GlobalProvider } from "./context/GlobalContext";
@@ -22,6 +21,7 @@ import CustomerSupport from "./pages/CustomerSupport";
 import MarketingCalendar from "./pages/MarketingCalendar";
 import MyBag from "./pages/MyBag";
 import OrderListPage from "./pages/OrderListPage";
+import Product from "./components/BrandDetails/Product";
 // import OrderList from "./pages/OrderListPage";
 
 function App() {
@@ -44,7 +44,7 @@ function App() {
             <Route path="/logout" element={<Logout />}></Route>
             <Route path="/my-retailers" element={<MyRetailersPage />}></Route>
             <Route path="/dashboard" element={<DashboardPage />}></Route>
-            <Route path="/product" element={<BrandDetails />}></Route>
+            <Route path="/product" element={<Product />}></Route>
             <Route path="/my-bag" element={<MyBag />}></Route>
             <Route path="/brand" element={<BrandsPage />}></Route>
             {/*  */}

@@ -43,3 +43,20 @@
   line-height: 32px; /* 290.909% */
   letter-spacing: 1.12px;
 }
+
+.joinMobileUs{
+  display: none;
+}
+
+
+
+@media(max-width:767px){
+  .joinWebUs{
+    display: none;
+  }
+
+  .joinMobileUs{
+    display: block;
+  }
+  
+}

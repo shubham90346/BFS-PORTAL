@@ -14,7 +14,6 @@ export const UserProvider = ({ children }) => {
 
   useEffect(() => {
     const fetched = localStorage.getItem("Api Data");
-    console.log("fetched");
     if (fetched?.length) {
       setUser(JSON.parse(fetched));
     }

@@ -82,55 +82,58 @@ const dataa = {
   },
 };
 
-const data = {
-  series: [44, 55, 41, 17, 35], //static
 
-  options: {
-    chart: {
-      type: "donut",
-    },
-    labels: {
-      show: true,
-      name: {
-        show: true,
-        offsetY: 38,
-        formatter: () => "out of 553 points",
-      },
-    },
-    plotOptions: {
-      pie: {
-        donut: {
-          labels: {
-            show: true,
 
-            total: {
-              show: true,
-              showAlways: true,
-              formatter: function (w) {
-                const t = w.globals.seriesTotals;
-                const result = t.reduce((a, b) => a + b, 0);
-                return (result / 10000).toFixed(1);
-              },
-            },
-          },
-        },
-      },
-    },
 
-    responsive: [
-      {
-        breakpoint: 480,
-        options: {
-          chart: {
-            width: "100px",
-          },
-        },
-      },
-    ],
-    colors: ["#ea9999", "#f9cb9c", "#6fa8dc", "#b6d7a8", "#76a5af"],
-    labels: ["BY TERRY", "Bobbi Brown", "Bumble and Bumble", "ReVive", "RMS Beauty"],
-  },
-};
+// const data = {
+//   series: [44, 55, 41, 17, 35], //static
+
+//   options: {
+//     chart: {
+//       type: "donut",
+//     },
+//     labels: {
+//       show: true,
+//       name: {
+//         show: true,
+//         offsetY: 38,
+//         formatter: () => "out of 553 points",
+//       },
+//     },
+//     plotOptions: {
+//       pie: {
+//         donut: {
+//           labels: {
+//             show: true,
+
+//             total: {
+//               show: true,
+//               showAlways: true,
+//               formatter: function (w) {
+//                 const t = w.globals.seriesTotals;
+//                 const result = t.reduce((a, b) => a + b, 0);
+//                 return (result / 10000).toFixed(1);
+//               },
+//             },
+//           },
+//         },
+//       },
+//     },
+
+//     responsive: [
+//       {
+//         breakpoint: 480,
+//         options: {
+//           chart: {
+//             width: "100px",
+//           },
+//         },
+//       },
+//     ],
+//     colors: ["#ea9999", "#f9cb9c", "#6fa8dc", "#b6d7a8", "#76a5af"],
+//     labels: ["BY TERRY", "Bobbi Brown", "Bumble and Bumble", "ReVive", "RMS Beauty"],
+//   },
+// };
 
 function Dashboard(props) {
   const bgColors = {
@@ -156,6 +159,7 @@ function Dashboard(props) {
   const [manufacturelist2, setmanufaacturelist2] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
+
   const RADIAN = Math.PI / 180;
   const needle_data = [
     { name: "A", value: 80, color: "#16BC4E" },
@@ -173,7 +177,7 @@ function Dashboard(props) {
       total += v.value;
     });
     const ang = 180.0 * (1 - value / total);
-    const length = (iR + 2 * oR) / 3;
+    const length = (iR + 2.4 * oR) / 3;
     const sin = Math.sin(-RADIAN * ang);
     const cos = Math.cos(-RADIAN * ang);
     const r = 5;
@@ -189,128 +193,151 @@ function Dashboard(props) {
     return [<circle cx={x0} cy={y0} r={r} fill={color} stroke="none" />, <path d={`M${xba} ${yba}L${xbb} ${ybb} L${xp} ${yp} L${xba} ${yba}`} stroke="#none" fill={color} />];
   };
   const navigate = useNavigate();
+
+
+
+
+  const data = {
+    series: tabledata.map((ele) => {
+      return [(ele.totalOrder)]
+    }),
+
+
+    // [44, 55, 41, 17, 35],
+
+    options: {
+      chart: {
+        type: "donut",
+      },
+      labels: {
+        show: true,
+        name: {
+          show: true,
+          offsetY: 38,
+          formatter: () => "out of 553 points",
+        },
+      },
+      plotOptions: {
+        pie: {
+          donut: {
+            labels: {
+              show: true,
+
+              total: {
+                show: true,
+                showAlways: true,
+                formatter: function (w) {
+                  const t = w.globals.seriesTotals;
+                  const result = t.reduce((a, b) => a + b, 0);
+                  return (result / 10000).toFixed(1);
+                },
+              },
+            },
+          },
+        },
+      },
+
+      responsive: [
+        {
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: "100px",
+            },
+          },
+        },
+      ],
+      colors: ["#ea9999", "#f9cb9c", "#6fa8dc", "#b6d7a8", "#76a5af"],
+      labels: ["BY TERRY", "Bobbi Brown", "Bumble and Bumble", "ReVive", "RMS Beauty"],
+    },
+  };
+
+
+
+
+
+
+
   // API INTEGRATION
 
   useEffect(() => {
     if (localStorage.getItem("Name")) {
-      // handletabledata();
-      // Handleleadsbybrand();
-      // handle_Performance();
-    
+      let formData = JSON.parse(localStorage.getItem("response"))
 
-  // const formData = new FormData();
-  // formData.append("email", " sangeetaa@designersx.com");
-  // formData.append("password", "Dxdev@575c");
-  let formData=JSON.parse(localStorage.getItem("response"))
-  console.log(formData);
 
- 
-
-  // GOAL BY BRAND (MONTHLY)
-  let filteredAarray = []; 
-  // const handletabledata = async () => {
-    setIsLoading(true);
-  //   const response = await axios  
-  //     .post(`https://dev.beautyfashionsales.com/beauty/v3/PYmsWL`, formData, config)
-  //     console.log(response);
-     
-  //     // .then((res) => {
-
-        const values = JSON.parse(formData.data.data.details);
-console.log(values);
-        let key = Object.keys(values.brandSalesByRep.data).map((ele) => ele);
-        let ans = values.brandSalesByRep.raw.map((ele) => {
-          key.map((item) => {
-            if (ele === item) {
-              filteredAarray.push(values.brandSalesByRep.data[item]);
-            } else {
-            }
-          });
+      // GOAL BY BRAND (MONTHLY)
+      let filteredAarray = [];
+      setIsLoading(true);
+      const values = JSON.parse(formData.data.data.details);
+      let key = Object.keys(values.brandSalesByRep.data).map((ele) => ele);
+      let ans = values.brandSalesByRep.raw.map((ele) => {
+        key.map((item) => {
+          if (ele === item) {
+            filteredAarray.push(values.brandSalesByRep.data[item]);
+          } else {
+          }
         });
-      // })
-      // .catch((error) => {
-      //   console.log(error);
-      // });
+      });
+      settabledata(filteredAarray);
 
-    settabledata(filteredAarray);
-  // };
 
-  // LEADS BY BRAND || MONTHLY SALESBYREP || YEARLY SALESBYREP
-  let leadsdata = [];
-  let MonthlyData = [];
-  let YearlyData = [];
-  // const Handleleadsbybrand = async () => {
-  //   const response = await axios
-  //     .post(`https://dev.beautyfashionsales.com/beauty/v3/PYmsWL`, formData, config)
-  //     .then((res) => {
-
-        const valuess = JSON.parse(formData.data.data.details);
-        let keyy = Object.keys(values.lead.data).map((ele) => ele);
-        let anss = values.lead.raw.map((ele) => {
-          keyy.map((item) => {
-            if (ele === item) {
-              leadsdata.push(values.lead.data[item]);
-            } else {
-            }
-          });
+      // LEADS BY BRAND || MONTHLY SALESBYREP || YEARLY SALESBYREP
+      let leadsdata = [];
+      let MonthlyData = [];
+      let YearlyData = [];
+      const valuess = JSON.parse(formData.data.data.details);
+      let keyy = Object.keys(values.lead.data).map((ele) => ele);
+      let anss = values.lead.raw.map((ele) => {
+        keyy.map((item) => {
+          if (ele === item) {
+            leadsdata.push(values.lead.data[item]);
+          } else {
+          }
         });
- 
+      });
 
-  //       // MONTHLY SALES BY REP
-        let keey = Object.keys(valuess.monthly.data).map((ele) => ele);
-        let annss = valuess.monthly.raw.map((ele) => {
-          keey.map((item) => {
-            if (ele === item) {
-              MonthlyData.push(valuess.monthly.data[item]);
-            } else {
-            }
-          });
+
+      //       // MONTHLY SALES BY REP
+      let keey = Object.keys(valuess.monthly.data).map((ele) => ele);
+      let annss = valuess.monthly.raw.map((ele) => {
+        keey.map((item) => {
+          if (ele === item) {
+            MonthlyData.push(valuess.monthly.data[item]);
+          } else {
+          }
         });
-      
+      });
 
-  //       // YEAR SALES BY REP
-        let KEY = Object.keys(values.yearly.data).map((ele) => ele);
-        let ANS = values.yearly.raw.map((ele) => {
-          keey.map((item) => {
-            if (ele === item) {
-              YearlyData.push(values.yearly.data[item]);
-            } else {
-            }
-          });
+
+      //       // YEAR SALES BY REP
+      let KEY = Object.keys(values.yearly.data).map((ele) => ele);
+      let ANS = values.yearly.raw.map((ele) => {
+        keey.map((item) => {
+          if (ele === item) {
+            YearlyData.push(values.yearly.data[item]);
+          } else {
+          }
         });
-      // })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-    setleadsbtbrand(leadsdata);
-    setMonthlydata(MonthlyData);
-    setYearlydata(YearlyData);
-  // };
+      });
 
-  // PERFORMANCE
-  // const handle_Performance = async () => {
-  //   const response = await axios
-  //     .post(`https://dev.beautyfashionsales.com/beauty/v3/PYmsWL`, formData, config)
-  //     .then((res) => {
-        // const values = JSON.parse(res.data.data.details);
-  //       console.log(values);
-        setnameacc(values.performance.data[0].Name);
-        setnameacc1(values.performance.data[1].Name);
-        setnameacc2(values.performance.data[2].Name);
-        setmanufaacturelist(values.performance.data[0].ManufacturerList);
-        setmanufaacturelist1(values.performance.data[1].ManufacturerList);
-        setmanufaacturelist2(values.performance.data[2].ManufacturerList);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // };
-  setIsLoading(false);
+      setleadsbtbrand(leadsdata);
+      setMonthlydata(MonthlyData);
+      setYearlydata(YearlyData);
 
-} else {
-  navigate("/");
-}
-}, []);
+
+      // PERFORMANCE
+      setnameacc(values.performance.data[0].Name);
+      setnameacc1(values.performance.data[1].Name);
+      setnameacc2(values.performance.data[2].Name);
+      setmanufaacturelist(values.performance.data[0].ManufacturerList);
+      setmanufaacturelist1(values.performance.data[1].ManufacturerList);
+      setmanufaacturelist2(values.performance.data[2].ManufacturerList);
+      setIsLoading(false);
+
+    } else {
+      navigate("/");
+    }
+  }, []);
   const date = new Date();
   const options = {
     year: "numeric",
@@ -346,10 +373,10 @@ console.log(values);
 
           <div className="row">
             {/* monthly data goal by brand*/}
-            <div className="col-lg-6">
+            <div className="col-lg-6 my-2">
               <p className={Styles.Tabletext}>Month bill date(MTD): Goal by Brand</p>
               <div className={Styles.goaltable}>
-                <div className="container">
+                
                   <div className={Styles.table_scroll}>
                     <table className="table table-borderless ">
                       <thead>
@@ -376,11 +403,11 @@ console.log(values);
                       </tbody>
                     </table>
                   </div>
-                </div>
+                
               </div>
             </div>
             {/* leads by brand*/}
-            <div className="col-lg-6">
+            <div className="col-lg-6 my-2">
               <p className={Styles.Tabletext}>Leads by Brand</p>
               <div className={Styles.goaltable1}>
                 <div className=" container">
@@ -424,34 +451,13 @@ console.log(values);
 
           <div className="row mt-5">
             {/* Monthly SALESBYREP */}
-            <div className="col-lg-6">
+            <div className="col-lg-6 my-2">
               <p className={Styles.Tabletext}>Month bill date(MTD): Sales By Rep</p>
               <div className={Styles.goaltable}>
                 <div className="container">
                   <div className={Styles.table_scroll}>
-                    {/* <table class="table table-borderless ">
-                      <thead>
-                        <tr className={Styles.tablerow}>
-                          <th className="ps-3" scope="col">
-                            Opportunity Owner
-                          </th>
-                          <th scope="col">Sum of Amount</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {Monthlydataa?.map((e) => {
-                          return (
-                            <tr key={e}>
-                              <td className={`${Styles.tabletd}ps-3 d-flex gap-2`}>
-                                <img src={img5} alt="" /> {e.salesRepName}
-                              </td>
-                              <td className={Styles.tabletd}>${(Number(e.total.revenue) / 1000).toFixed(0)}K</td>
-                            </tr>
-                          );
-                        })}
-                      </tbody>
-                    </table> */}
-                       <table class="table table-borderless ">
+
+                    <table class="table table-borderless ">
                       <thead>
                         <tr className={Styles.tablerow}>
                           <th scope="col" className="ps-3">
@@ -461,25 +467,38 @@ console.log(values);
                         </tr>
                       </thead>
 
-                      <tbody>
-                        {Monthlydataa?.map((e) => {
-                          return (
-                            <tr key={e}>
-                              <td className={`${Styles.tabletd} ps-3 d-flex justify-content-start align-items-center gap-2`}>
-                                <img src={img5} className="h-100" alt="" /> {e.salesRepName}
-                              </td>
-                              <td className={Styles.tabletd}>${(Number(e.total.revenue) / 1000).toFixed(0)}K</td>
-                            </tr>
-                          );
-                        })}
-                      </tbody>
+
+                      {Monthlydataa ? (
+                        <tbody>
+                          {Monthlydataa?.map((e) => {
+                            return (
+                              <tr key={e}>
+                                <td className={`${Styles.tabletd} ps-3 d-flex justify-content-start align-items-center gap-2`}>
+                                  <img src={img5} className="h-100" alt="" /> {e.salesRepName}
+                                </td>
+                                <td className={Styles.tabletd}>${(Number(e.total.revenue) / 1000).toFixed(0)}K</td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      ) : (
+                        <tbody>
+                          <td></td>
+                          <td>
+                            <div className={`d-flex justify-content-start align-items-center`} style={{ minHeight: "230px" }}>
+                              <p className={`${Styles.tablenodata}`}>No Data Found</p>
+                            </div>
+                          </td>
+                          <td></td>
+                        </tbody>
+                      )}
                     </table>
                   </div>
                 </div>
               </div>
             </div>
             {/* Yearly SALESBYREP */}
-            <div className="col-lg-6">
+            <div className="col-lg-6 my-2">
               <p className={Styles.Tabletext}>Year bill date(MTD): Sales By Rep</p>
               <div className={Styles.goaltable}>
                 <div className="container">
@@ -494,18 +513,32 @@ console.log(values);
                         </tr>
                       </thead>
 
-                      <tbody>
-                        {Yearlydataa?.map((e) => {
-                          return (
-                            <tr key={e}>
-                              <td className={`${Styles.tabletd} ps-3 d-flex justify-content-start align-items-center gap-2`}>
-                                <img src={img5} className="h-100" alt="" /> {e.salesRepName}
-                              </td>
-                              <td className={Styles.tabletd}>${(Number(e.total.revenue) / 1000).toFixed(0)}K</td>
-                            </tr>
-                          );
-                        })}
-                      </tbody>
+
+
+                      {Yearlydataa ? (
+                        <tbody>
+                          {Yearlydataa?.map((e) => {
+                            return (
+                              <tr key={e}>
+                                <td className={`${Styles.tabletd} ps-3 d-flex justify-content-start align-items-center gap-2`}>
+                                  <img src={img5} className="h-100" alt="" /> {e.salesRepName}
+                                </td>
+                                <td className={Styles.tabletd}>${(Number(e.total.revenue) / 1000).toFixed(0)}K</td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      ) : (
+                        <tbody>
+                          <td></td>
+                          <td>
+                            <div className={`d-flex justify-content-start align-items-center`} style={{ minHeight: "230px" }}>
+                              <p className={`${Styles.tablenodata}`}>No Data Found</p>
+                            </div>
+                          </td>
+                          <td></td>
+                        </tbody>
+                      )}
                     </table>
                   </div>
                 </div>
@@ -513,20 +546,22 @@ console.log(values);
             </div>
           </div>
 
-          <div className="row mt-5">
+          {/* <div className="row mt-5">
             <div className="col-lg-6">
               <p className={Styles.Tabletext}>Top Performing Accounts</p>
             </div>
             <div className="col-lg-6">
               <p className={Styles.Tabletext1}>Low Performing Accounts</p>
             </div>
-          </div>
+          </div> */}
+          <div className="my-5">
 
           <div className="row mt-1">
             <div className={`col-lg-6 ${Styles.top_perform1}`}>
+            <p className={Styles.Tabletext}>Top Performing Accounts</p>
               <div className="row">
                 {/* TOP PERFORMANCE */}
-                <div className="col-lg-6 ">
+                <div className="col-lg-6 col-md-6  ">
                   <div className={Styles.top_perform}>
                     <div className="container">
                       <div className={Styles.top_account}>
@@ -541,7 +576,7 @@ console.log(values);
                       </div>
                     </div>
                   </div>
-                  <div className={`mt-4 ${Styles.top_perform}`}>
+                  <div className={` ${Styles.top_perform}`}>
                     <div className="container">
                       <div className={Styles.top_account}>
                         <p className={Styles.top_accounttext}>{nameacc2}</p>
@@ -557,7 +592,7 @@ console.log(values);
                   </div>
                 </div>
 
-                <div className="col-lg-6">
+                <div className="col-lg-6 col-md-6">
                   <div className={Styles.top_perform}>
                     <div className="container">
                       <div className={Styles.top_account}>
@@ -578,8 +613,9 @@ console.log(values);
             </div>
 
             <div className="col-lg-6">
+            <p className={Styles.Tabletext1}>Low Performing Accounts</p>
               <div className="row">
-                <div className="col-lg-6">
+                <div className="col-lg-6 col-md-6">
                   {/* LOW PERFORMANCE */}
                   <div className={Styles.top_perform2}>
                     <div className="container">
@@ -595,7 +631,7 @@ console.log(values);
                       </div>
                     </div>
                   </div>
-                  <div className={`mt-4 ${Styles.top_perform2}`}>
+                  <div className={` ${Styles.top_perform2}`}>
                     <div className="container">
                       <div className={Styles.top_accnew}>
                         <p className={Styles.top_accounttext}>{nameacc} </p>
@@ -611,7 +647,7 @@ console.log(values);
                   </div>
                 </div>
 
-                <div className="col-lg-6">
+                <div className="col-lg-6 col-md-6">
                   <div className={Styles.top_perform}>
                     <div className="container">
                       <div className={Styles.top_accnew}>
@@ -630,15 +666,17 @@ console.log(values);
               </div>
             </div>
           </div>
+          </div>
 
-          <div className="row mt-5">
+
+          <div className="row my-5">
             <div className="col-lg-7">
               <p className={Styles.Tabletext}>Sales By Brand</p>
 
               <div className={Styles.donuttop}>
                 <p className={` text-center mt-3  ${Styles.Tabletextt}`}>Sum of Ordered</p>
                 <p className={`text-end ${Styles.main_heading}`}>MANUFACTURER</p>
-                <Chart options={data.options} series={data.series} type="donut" className={Styles.donutchart} width="70%" />
+                <Chart options={data.options} series={data.series} type="donut" className={Styles.donutchart} width="90%" />
               </div>
             </div>
 
@@ -667,73 +705,61 @@ console.log(values);
             </div>
           </div>
 
-          <div className="row mt-5">
-            <div className="col-lg-3 col-md-4 col-sm-6">
+          <div className="row mt-5 g-4">
+            <div className="col-lg-3 col-md-6 col-sm-6">
               <div className={Styles.dashbottom}>
-                <div className="container">
-                  <div className="row">
-                    <div className="col-lg-4 m-auto">
+                
                       <div className={`text-center  ${Styles.active}`}>
                         <img src={img1} alt="" className={`text-center ${Styles.iconactive}`} />
-                      </div>
+                
                     </div>
-                    <div className="col-lg-8">
+                    <div className="">
                       <p className={`text-end ${Styles.activetext}`}>ACTIVE RETAILERS</p>
                       <h1 className={`text-end ${Styles.activetext1}`}>06</h1>
                     </div>
-                  </div>
-                </div>
+                
               </div>
             </div>
-            <div className="col-lg-3">
+            <div className="col-lg-3 col-md-6 col-sm-6">
               <div className={Styles.dashbottom}>
-                <div className="container">
-                  <div className="row">
-                    <div className="col-lg-3 m-auto">
+                
                       <div className={`text-center  ${Styles.active}`}>
                         <img src={img2} alt="" className={`text-center ${Styles.iconactive}`} />
-                      </div>
+                
                     </div>
-                    <div className="col-lg-9">
+                    <div className="">
                       <p className={`text-end ${Styles.activetext}`}>GROWTH 2022 VS 2023</p>
                       <h1 className={`text-end ${Styles.activetext1}`}>78</h1>
                     </div>
-                  </div>
-                </div>
+                
               </div>
             </div>
-            <div className="col-lg-3">
+            <div className="col-lg-3 col-md-6 col-sm-6">
               <div className={Styles.dashbottom}>
-                <div className="container">
-                  <div className="row">
-                    <div className="col-lg-4 m-auto">
+                
                       <div className={`text-center  ${Styles.active}`}>
                         <img src={img3} alt="" className={`text-center ${Styles.iconactive3}`} />
-                      </div>
+                
                     </div>
-                    <div className="col-lg-8">
+                    <div className="">
                       <p className={`text-end ${Styles.activetext}`}>TOTAL NO.ORDERS</p>
                       <h1 className={`text-end ${Styles.activetext1}`}>135K</h1>
                     </div>
-                  </div>
-                </div>
+                
               </div>
             </div>
-            <div className="col-lg-3">
+            <div className="col-lg-3 col-md-6 col-sm-6">
               <div className={Styles.dashbottom}>
-                <div className="container">
-                  <div className="row">
-                    <div className="col-lg-4 m-auto">
+                
                       <div className={`text-center  ${Styles.active}`}>
                         <img src={img4} alt="" className={`text-center ${Styles.iconactive4}`} />
-                      </div>
+                
                     </div>
-                    <div className="col-lg-8">
+                    <div className="">
                       <p className={`text-end ${Styles.activetext}`}>REVENUE</p>
                       <h1 className={`text-end ${Styles.activetext1}`}>$680K</h1>
                     </div>
-                  </div>
-                </div>
+                
               </div>
             </div>
           </div>
@@ -747,7 +773,7 @@ console.log(values);
             </div>
           </div>
         </div>
-      )}``
+      )}
     </>
   );
 }
