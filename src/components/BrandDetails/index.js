@@ -38,8 +38,10 @@ function BrandDetails() {
   const { data, isLoading } = useProductList({
     key: user?.data.access_token,
     Sales_Rep__c: user?.data.Sales_Rep__c,
-    Manufacturer: searchParams.get("manufacturerId"),
-    AccountId__c: searchParams.get("accountId"),
+    Manufacturer:localStorage.getItem("ManufacturerId__c"),
+    AccountId__c: localStorage.getItem("AccountId__c"),
+    //  Manufacturer: searchParams.get("manufacturerId"),
+    // AccountId__c: searchParams.get("accountId"),
   });
 
   const brandName = data?.data?.records?.[0]?.ManufacturerName__c;
