@@ -2,40 +2,31 @@ import React, { useState } from "react";
 import Styles from "./Styles.module.css";
 import SelectBrandModel from "./SelectBrandModel/SelectBrandModel";
 import ModalPage from "../Modal UI";
-// import ModalPage from "../Modal UI";
 
-const bgColors={
+const bgColors = {
   "Kevyn Aucoin Cosmetics": "KevynAucoinCosmeticsBg",
-  "Bumble and Bumble":"BumbleandBumbleBg",
-  "BY TERRY":"BYTERRYBg",
-  "Bobbi Brown":"BobbiBrownBg",
-  "ReVive":"ReViveBg",
-  "Maison Margiela":"MaisonMargielaBg",
-  "Smashbox":"SmashboxBg",
-  "RMS Beauty":"RMSBeautyBg",
-  "ESTEE LAUDER":"esteeLauderBg"
- 
-}
+  "Bumble and Bumble": "BumbleandBumbleBg",
+  "BY TERRY": "BYTERRYBg",
+  "Bobbi Brown": "BobbiBrownBg",
+  ReVive: "ReViveBg",
+  "Maison Margiela": "MaisonMargielaBg",
+  Smashbox: "SmashboxBg",
+  "RMS Beauty": "RMSBeautyBg",
+  "ESTEE LAUDER": "esteeLauderBg",
+};
 
-const MyRetailerCard = ({ placeName, title, brands }) => {
+const MyRetailerCard = ({ placeName, title, brands, accountId }) => {
   const [modalOpen, setModalOpen] = useState(false);
-
   return (
     <>
-      <ModalPage
-        open={modalOpen}
-        onClose={() => setModalOpen(false)}
-        content={
-          <SelectBrandModel
-            brands={brands}
-            onClose={() => setModalOpen(false)}
-          />
-        }
-      />
+      <ModalPage open={modalOpen} onClose={() => setModalOpen(false)} content={<SelectBrandModel brands={brands} onClose={() => setModalOpen(false)} />} />
       <div
         className={`${Styles.Retailer} cursor-pointer flex`}
-        onClick={() => {setModalOpen(true);
-        localStorage.setItem("Account",title)}}
+        onClick={() => {
+          setModalOpen(true);
+          localStorage.setItem("Account", title);
+          localStorage.setItem("AccountId__c", accountId);
+        }}
       >
         <div className={`${Styles.mainRetailer} flex flex-col justify-between`}>
           <h2 className="leading-normal">{title}</h2>
@@ -51,11 +42,7 @@ const MyRetailerCard = ({ placeName, title, brands }) => {
                   }}
                 />
                 <div className="d-flex ps-2 gap-2" style={{ zIndex: 1 }}>
-                  <img
-                    className={Styles.ControlerImg}
-                    src={"/assets/images/LocationPin.svg"}
-                    alt="img"
-                  />
+                  <img className={Styles.ControlerImg} src={"/assets/images/LocationPin.svg"} alt="img" />
                   <p
                     className="w-100 mb-0"
                     style={{
@@ -65,22 +52,20 @@ const MyRetailerCard = ({ placeName, title, brands }) => {
                       color: "black",
                     }}
                   >
-                    {placeName || "No location"}
+                    {placeName || "No Location"}
                   </p>
                 </div>
               </div>
             </div>
             <div className={Styles.BrandName}>
               <div className={Styles.Brandspan}>
-                {brands?.map((brand) => 
-                  {
-                  return <span
-                  className={`${Styles[bgColors[brand.ManufacturerName__c]]}`}
-                  style={{ height: "fit-content" }}
-                >
-                  {brand.ManufacturerName__c}
-                </span>}
-                )}
+                {brands?.map((brand) => {
+                  return (
+                    <span className={`${Styles[bgColors[brand.ManufacturerName__c]]}`} style={{ height: "fit-content" }}>
+                      {brand.ManufacturerName__c}
+                    </span>
+                  );
+                })}
               </div>
             </div>
           </div>
