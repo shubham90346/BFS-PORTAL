@@ -35,6 +35,7 @@ line-height: 22px; /* 228.571% */
 letter-spacing: 1.4px;
 display: flex;
 /* gap: 10px; */
+text-align: left;
 align-items: center;
 /* padding: 0 18px; */
 }

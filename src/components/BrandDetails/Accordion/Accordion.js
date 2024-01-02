@@ -14,22 +14,29 @@ const Accordion = ({ data, formattedData }) => {
   const { orderQuantity, setOrderQuantity } = useGlobal();
   const navigate = useNavigate();
   const onQuantityChange = (product, quantity) => {
-    setOrders((prev) => {
-      const obj = { ...prev };
-      obj[product.Id] = {
-        quantity: quantity,
-        product,
-        discount: {
-          MinOrderAmount: data.discount.MinOrderAmount,
-          margin: data.discount.margin,
-          sample: data.discount.sample,
-          testerMargin: data.discount.testerMargin,
-          testerproductLimit: data.discount.testerproductLimit,
-        },
-      };
+  
+    if((Object.values(orders)[0].brand===localStorage.getItem("manufacturer")) && (Object.values(orders)[0].retailer===localStorage.getItem("Account"))){
 
-      return obj;
-    });
+// pre-order or wholesale pending
+      setOrders((prev) => {
+        const obj = { ...prev };
+        obj[product.Id] = {
+          quantity: quantity,
+          product,
+          discount: {
+            MinOrderAmount: data.discount.MinOrderAmount,
+            margin: data.discount.margin,
+            sample: data.discount.sample,
+            testerMargin: data.discount.testerMargin,
+            testerproductLimit: data.discount.testerproductLimit,
+          },
+          retailer: localStorage.getItem("Account"),
+          brand: localStorage.getItem("manufacturer"),
+        };
+  
+        return obj;
+      });
+    }
   };
 
   useEffect(() => {
@@ -84,7 +91,7 @@ const Accordion = ({ data, formattedData }) => {
                     <CollapsibleRow title={key} quantity={categoryOrderQuantity} key={index}>
                       {Object.values(formattedData)[index]?.map((value, indexed) => (
                         <tr className="w-full" key={indexed}>
-                          {console.log(value.Category__c)}
+                          {/* {console.log(value.Category__c)} */}
                           <td>
                             <img src={Img1} alt="img" />
                           </td>
