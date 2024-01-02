@@ -177,7 +177,7 @@ function Dashboard(props) {
       total += v.value;
     });
     const ang = 180.0 * (1 - value / total);
-    const length = (iR + 2 * oR) / 3;
+    const length = (iR + 2.4 * oR) / 3;
     const sin = Math.sin(-RADIAN * ang);
     const cos = Math.cos(-RADIAN * ang);
     const r = 5;
@@ -373,10 +373,10 @@ function Dashboard(props) {
 
           <div className="row">
             {/* monthly data goal by brand*/}
-            <div className="col-lg-6">
+            <div className="col-lg-6 my-2">
               <p className={Styles.Tabletext}>Month bill date(MTD): Goal by Brand</p>
               <div className={Styles.goaltable}>
-                <div className="container">
+                
                   <div className={Styles.table_scroll}>
                     <table className="table table-borderless ">
                       <thead>
@@ -403,11 +403,11 @@ function Dashboard(props) {
                       </tbody>
                     </table>
                   </div>
-                </div>
+                
               </div>
             </div>
             {/* leads by brand*/}
-            <div className="col-lg-6">
+            <div className="col-lg-6 my-2">
               <p className={Styles.Tabletext}>Leads by Brand</p>
               <div className={Styles.goaltable1}>
                 <div className=" container">
@@ -451,7 +451,7 @@ function Dashboard(props) {
 
           <div className="row mt-5">
             {/* Monthly SALESBYREP */}
-            <div className="col-lg-6">
+            <div className="col-lg-6 my-2">
               <p className={Styles.Tabletext}>Month bill date(MTD): Sales By Rep</p>
               <div className={Styles.goaltable}>
                 <div className="container">
@@ -498,7 +498,7 @@ function Dashboard(props) {
               </div>
             </div>
             {/* Yearly SALESBYREP */}
-            <div className="col-lg-6">
+            <div className="col-lg-6 my-2">
               <p className={Styles.Tabletext}>Year bill date(MTD): Sales By Rep</p>
               <div className={Styles.goaltable}>
                 <div className="container">
@@ -546,20 +546,22 @@ function Dashboard(props) {
             </div>
           </div>
 
-          <div className="row mt-5">
+          {/* <div className="row mt-5">
             <div className="col-lg-6">
               <p className={Styles.Tabletext}>Top Performing Accounts</p>
             </div>
             <div className="col-lg-6">
               <p className={Styles.Tabletext1}>Low Performing Accounts</p>
             </div>
-          </div>
+          </div> */}
+          <div className="my-5">
 
           <div className="row mt-1">
             <div className={`col-lg-6 ${Styles.top_perform1}`}>
+            <p className={Styles.Tabletext}>Top Performing Accounts</p>
               <div className="row">
                 {/* TOP PERFORMANCE */}
-                <div className="col-lg-6 ">
+                <div className="col-lg-6 col-md-6  ">
                   <div className={Styles.top_perform}>
                     <div className="container">
                       <div className={Styles.top_account}>
@@ -574,7 +576,7 @@ function Dashboard(props) {
                       </div>
                     </div>
                   </div>
-                  <div className={`mt-4 ${Styles.top_perform}`}>
+                  <div className={` ${Styles.top_perform}`}>
                     <div className="container">
                       <div className={Styles.top_account}>
                         <p className={Styles.top_accounttext}>{nameacc2}</p>
@@ -590,7 +592,7 @@ function Dashboard(props) {
                   </div>
                 </div>
 
-                <div className="col-lg-6">
+                <div className="col-lg-6 col-md-6">
                   <div className={Styles.top_perform}>
                     <div className="container">
                       <div className={Styles.top_account}>
@@ -611,8 +613,9 @@ function Dashboard(props) {
             </div>
 
             <div className="col-lg-6">
+            <p className={Styles.Tabletext1}>Low Performing Accounts</p>
               <div className="row">
-                <div className="col-lg-6">
+                <div className="col-lg-6 col-md-6">
                   {/* LOW PERFORMANCE */}
                   <div className={Styles.top_perform2}>
                     <div className="container">
@@ -628,7 +631,7 @@ function Dashboard(props) {
                       </div>
                     </div>
                   </div>
-                  <div className={`mt-4 ${Styles.top_perform2}`}>
+                  <div className={` ${Styles.top_perform2}`}>
                     <div className="container">
                       <div className={Styles.top_accnew}>
                         <p className={Styles.top_accounttext}>{nameacc} </p>
@@ -644,7 +647,7 @@ function Dashboard(props) {
                   </div>
                 </div>
 
-                <div className="col-lg-6">
+                <div className="col-lg-6 col-md-6">
                   <div className={Styles.top_perform}>
                     <div className="container">
                       <div className={Styles.top_accnew}>
@@ -663,15 +666,17 @@ function Dashboard(props) {
               </div>
             </div>
           </div>
+          </div>
 
-          <div className="row mt-5">
+
+          <div className="row my-5">
             <div className="col-lg-7">
               <p className={Styles.Tabletext}>Sales By Brand</p>
 
               <div className={Styles.donuttop}>
                 <p className={` text-center mt-3  ${Styles.Tabletextt}`}>Sum of Ordered</p>
                 <p className={`text-end ${Styles.main_heading}`}>MANUFACTURER</p>
-                <Chart options={data.options} series={data.series} type="donut" className={Styles.donutchart} width="70%" />
+                <Chart options={data.options} series={data.series} type="donut" className={Styles.donutchart} width="90%" />
               </div>
             </div>
 
@@ -700,73 +705,61 @@ function Dashboard(props) {
             </div>
           </div>
 
-          <div className="row mt-5">
-            <div className="col-lg-3 col-md-4 col-sm-6">
+          <div className="row mt-5 g-4">
+            <div className="col-lg-3 col-md-6 col-sm-6">
               <div className={Styles.dashbottom}>
-                <div className="container">
-                  <div className="row">
-                    <div className="col-lg-4 m-auto">
+                
                       <div className={`text-center  ${Styles.active}`}>
                         <img src={img1} alt="" className={`text-center ${Styles.iconactive}`} />
-                      </div>
+                
                     </div>
-                    <div className="col-lg-8">
+                    <div className="">
                       <p className={`text-end ${Styles.activetext}`}>ACTIVE RETAILERS</p>
                       <h1 className={`text-end ${Styles.activetext1}`}>06</h1>
                     </div>
-                  </div>
-                </div>
+                
               </div>
             </div>
-            <div className="col-lg-3">
+            <div className="col-lg-3 col-md-6 col-sm-6">
               <div className={Styles.dashbottom}>
-                <div className="container">
-                  <div className="row">
-                    <div className="col-lg-3 m-auto">
+                
                       <div className={`text-center  ${Styles.active}`}>
                         <img src={img2} alt="" className={`text-center ${Styles.iconactive}`} />
-                      </div>
+                
                     </div>
-                    <div className="col-lg-9">
+                    <div className="">
                       <p className={`text-end ${Styles.activetext}`}>GROWTH 2022 VS 2023</p>
                       <h1 className={`text-end ${Styles.activetext1}`}>78</h1>
                     </div>
-                  </div>
-                </div>
+                
               </div>
             </div>
-            <div className="col-lg-3">
+            <div className="col-lg-3 col-md-6 col-sm-6">
               <div className={Styles.dashbottom}>
-                <div className="container">
-                  <div className="row">
-                    <div className="col-lg-4 m-auto">
+                
                       <div className={`text-center  ${Styles.active}`}>
                         <img src={img3} alt="" className={`text-center ${Styles.iconactive3}`} />
-                      </div>
+                
                     </div>
-                    <div className="col-lg-8">
+                    <div className="">
                       <p className={`text-end ${Styles.activetext}`}>TOTAL NO.ORDERS</p>
                       <h1 className={`text-end ${Styles.activetext1}`}>135K</h1>
                     </div>
-                  </div>
-                </div>
+                
               </div>
             </div>
-            <div className="col-lg-3">
+            <div className="col-lg-3 col-md-6 col-sm-6">
               <div className={Styles.dashbottom}>
-                <div className="container">
-                  <div className="row">
-                    <div className="col-lg-4 m-auto">
+                
                       <div className={`text-center  ${Styles.active}`}>
                         <img src={img4} alt="" className={`text-center ${Styles.iconactive4}`} />
-                      </div>
+                
                     </div>
-                    <div className="col-lg-8">
+                    <div className="">
                       <p className={`text-end ${Styles.activetext}`}>REVENUE</p>
                       <h1 className={`text-end ${Styles.activetext1}`}>$680K</h1>
                     </div>
-                  </div>
-                </div>
+                
               </div>
             </div>
           </div>
@@ -780,7 +773,7 @@ function Dashboard(props) {
             </div>
           </div>
         </div>
-      )}``
+      )}
     </>
   );
 }
