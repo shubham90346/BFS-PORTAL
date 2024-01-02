@@ -7,6 +7,6 @@ export const useManufacturer = () => {
       method: "POST",
     }
   );
-console.log(manufacturers);
+// console.log(manufacturers);
   return manufacturers;
 };
