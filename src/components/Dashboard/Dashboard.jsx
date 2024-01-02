@@ -82,55 +82,58 @@ const dataa = {
   },
 };
 
-const data = {
-  series: [44, 55, 41, 17, 35], //static
 
-  options: {
-    chart: {
-      type: "donut",
-    },
-    labels: {
-      show: true,
-      name: {
-        show: true,
-        offsetY: 38,
-        formatter: () => "out of 553 points",
-      },
-    },
-    plotOptions: {
-      pie: {
-        donut: {
-          labels: {
-            show: true,
 
-            total: {
-              show: true,
-              showAlways: true,
-              formatter: function (w) {
-                const t = w.globals.seriesTotals;
-                const result = t.reduce((a, b) => a + b, 0);
-                return (result / 10000).toFixed(1);
-              },
-            },
-          },
-        },
-      },
-    },
 
-    responsive: [
-      {
-        breakpoint: 480,
-        options: {
-          chart: {
-            width: "100px",
-          },
-        },
-      },
-    ],
-    colors: ["#ea9999", "#f9cb9c", "#6fa8dc", "#b6d7a8", "#76a5af"],
-    labels: ["BY TERRY", "Bobbi Brown", "Bumble and Bumble", "ReVive", "RMS Beauty"],
-  },
-};
+// const data = {
+//   series: [44, 55, 41, 17, 35], //static
+
+//   options: {
+//     chart: {
+//       type: "donut",
+//     },
+//     labels: {
+//       show: true,
+//       name: {
+//         show: true,
+//         offsetY: 38,
+//         formatter: () => "out of 553 points",
+//       },
+//     },
+//     plotOptions: {
+//       pie: {
+//         donut: {
+//           labels: {
+//             show: true,
+
+//             total: {
+//               show: true,
+//               showAlways: true,
+//               formatter: function (w) {
+//                 const t = w.globals.seriesTotals;
+//                 const result = t.reduce((a, b) => a + b, 0);
+//                 return (result / 10000).toFixed(1);
+//               },
+//             },
+//           },
+//         },
+//       },
+//     },
+
+//     responsive: [
+//       {
+//         breakpoint: 480,
+//         options: {
+//           chart: {
+//             width: "100px",
+//           },
+//         },
+//       },
+//     ],
+//     colors: ["#ea9999", "#f9cb9c", "#6fa8dc", "#b6d7a8", "#76a5af"],
+//     labels: ["BY TERRY", "Bobbi Brown", "Bumble and Bumble", "ReVive", "RMS Beauty"],
+//   },
+// };
 
 function Dashboard(props) {
   const bgColors = {
@@ -155,6 +158,7 @@ function Dashboard(props) {
   const [manufacturelist1, setmanufaacturelist1] = useState([]);
   const [manufacturelist2, setmanufaacturelist2] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+
 
   const RADIAN = Math.PI / 180;
   const needle_data = [
@@ -189,128 +193,151 @@ function Dashboard(props) {
     return [<circle cx={x0} cy={y0} r={r} fill={color} stroke="none" />, <path d={`M${xba} ${yba}L${xbb} ${ybb} L${xp} ${yp} L${xba} ${yba}`} stroke="#none" fill={color} />];
   };
   const navigate = useNavigate();
+
+
+
+
+  const data = {
+    series: tabledata.map((ele) => {
+      return [(ele.totalOrder)]
+    }),
+
+
+    // [44, 55, 41, 17, 35],
+
+    options: {
+      chart: {
+        type: "donut",
+      },
+      labels: {
+        show: true,
+        name: {
+          show: true,
+          offsetY: 38,
+          formatter: () => "out of 553 points",
+        },
+      },
+      plotOptions: {
+        pie: {
+          donut: {
+            labels: {
+              show: true,
+
+              total: {
+                show: true,
+                showAlways: true,
+                formatter: function (w) {
+                  const t = w.globals.seriesTotals;
+                  const result = t.reduce((a, b) => a + b, 0);
+                  return (result / 10000).toFixed(1);
+                },
+              },
+            },
+          },
+        },
+      },
+
+      responsive: [
+        {
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: "100px",
+            },
+          },
+        },
+      ],
+      colors: ["#ea9999", "#f9cb9c", "#6fa8dc", "#b6d7a8", "#76a5af"],
+      labels: ["BY TERRY", "Bobbi Brown", "Bumble and Bumble", "ReVive", "RMS Beauty"],
+    },
+  };
+
+
+
+
+
+
+
   // API INTEGRATION
 
   useEffect(() => {
     if (localStorage.getItem("Name")) {
-      // handletabledata();
-      // Handleleadsbybrand();
-      // handle_Performance();
-    
+      let formData = JSON.parse(localStorage.getItem("response"))
 
-  // const formData = new FormData();
-  // formData.append("email", " sangeetaa@designersx.com");
-  // formData.append("password", "Dxdev@575c");
-  let formData=JSON.parse(localStorage.getItem("response"))
-  console.log(formData);
 
- 
-
-  // GOAL BY BRAND (MONTHLY)
-  let filteredAarray = []; 
-  // const handletabledata = async () => {
-    setIsLoading(true);
-  //   const response = await axios  
-  //     .post(`https://dev.beautyfashionsales.com/beauty/v3/PYmsWL`, formData, config)
-  //     console.log(response);
-     
-  //     // .then((res) => {
-
-        const values = JSON.parse(formData.data.data.details);
-console.log(values);
-        let key = Object.keys(values.brandSalesByRep.data).map((ele) => ele);
-        let ans = values.brandSalesByRep.raw.map((ele) => {
-          key.map((item) => {
-            if (ele === item) {
-              filteredAarray.push(values.brandSalesByRep.data[item]);
-            } else {
-            }
-          });
+      // GOAL BY BRAND (MONTHLY)
+      let filteredAarray = [];
+      setIsLoading(true);
+      const values = JSON.parse(formData.data.data.details);
+      let key = Object.keys(values.brandSalesByRep.data).map((ele) => ele);
+      let ans = values.brandSalesByRep.raw.map((ele) => {
+        key.map((item) => {
+          if (ele === item) {
+            filteredAarray.push(values.brandSalesByRep.data[item]);
+          } else {
+          }
         });
-      // })
-      // .catch((error) => {
-      //   console.log(error);
-      // });
+      });
+      settabledata(filteredAarray);
 
-    settabledata(filteredAarray);
-  // };
 
-  // LEADS BY BRAND || MONTHLY SALESBYREP || YEARLY SALESBYREP
-  let leadsdata = [];
-  let MonthlyData = [];
-  let YearlyData = [];
-  // const Handleleadsbybrand = async () => {
-  //   const response = await axios
-  //     .post(`https://dev.beautyfashionsales.com/beauty/v3/PYmsWL`, formData, config)
-  //     .then((res) => {
-
-        const valuess = JSON.parse(formData.data.data.details);
-        let keyy = Object.keys(values.lead.data).map((ele) => ele);
-        let anss = values.lead.raw.map((ele) => {
-          keyy.map((item) => {
-            if (ele === item) {
-              leadsdata.push(values.lead.data[item]);
-            } else {
-            }
-          });
+      // LEADS BY BRAND || MONTHLY SALESBYREP || YEARLY SALESBYREP
+      let leadsdata = [];
+      let MonthlyData = [];
+      let YearlyData = [];
+      const valuess = JSON.parse(formData.data.data.details);
+      let keyy = Object.keys(values.lead.data).map((ele) => ele);
+      let anss = values.lead.raw.map((ele) => {
+        keyy.map((item) => {
+          if (ele === item) {
+            leadsdata.push(values.lead.data[item]);
+          } else {
+          }
         });
- 
+      });
 
-  //       // MONTHLY SALES BY REP
-        let keey = Object.keys(valuess.monthly.data).map((ele) => ele);
-        let annss = valuess.monthly.raw.map((ele) => {
-          keey.map((item) => {
-            if (ele === item) {
-              MonthlyData.push(valuess.monthly.data[item]);
-            } else {
-            }
-          });
+
+      //       // MONTHLY SALES BY REP
+      let keey = Object.keys(valuess.monthly.data).map((ele) => ele);
+      let annss = valuess.monthly.raw.map((ele) => {
+        keey.map((item) => {
+          if (ele === item) {
+            MonthlyData.push(valuess.monthly.data[item]);
+          } else {
+          }
         });
-      
+      });
 
-  //       // YEAR SALES BY REP
-        let KEY = Object.keys(values.yearly.data).map((ele) => ele);
-        let ANS = values.yearly.raw.map((ele) => {
-          keey.map((item) => {
-            if (ele === item) {
-              YearlyData.push(values.yearly.data[item]);
-            } else {
-            }
-          });
+
+      //       // YEAR SALES BY REP
+      let KEY = Object.keys(values.yearly.data).map((ele) => ele);
+      let ANS = values.yearly.raw.map((ele) => {
+        keey.map((item) => {
+          if (ele === item) {
+            YearlyData.push(values.yearly.data[item]);
+          } else {
+          }
         });
-      // })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-    setleadsbtbrand(leadsdata);
-    setMonthlydata(MonthlyData);
-    setYearlydata(YearlyData);
-  // };
+      });
 
-  // PERFORMANCE
-  // const handle_Performance = async () => {
-  //   const response = await axios
-  //     .post(`https://dev.beautyfashionsales.com/beauty/v3/PYmsWL`, formData, config)
-  //     .then((res) => {
-        // const values = JSON.parse(res.data.data.details);
-  //       console.log(values);
-        setnameacc(values.performance.data[0].Name);
-        setnameacc1(values.performance.data[1].Name);
-        setnameacc2(values.performance.data[2].Name);
-        setmanufaacturelist(values.performance.data[0].ManufacturerList);
-        setmanufaacturelist1(values.performance.data[1].ManufacturerList);
-        setmanufaacturelist2(values.performance.data[2].ManufacturerList);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // };
-  setIsLoading(false);
+      setleadsbtbrand(leadsdata);
+      setMonthlydata(MonthlyData);
+      setYearlydata(YearlyData);
 
-} else {
-  navigate("/");
-}
-}, []);
+
+      // PERFORMANCE
+      setnameacc(values.performance.data[0].Name);
+      setnameacc1(values.performance.data[1].Name);
+      setnameacc2(values.performance.data[2].Name);
+      setmanufaacturelist(values.performance.data[0].ManufacturerList);
+      setmanufaacturelist1(values.performance.data[1].ManufacturerList);
+      setmanufaacturelist2(values.performance.data[2].ManufacturerList);
+      setIsLoading(false);
+
+    } else {
+      navigate("/");
+    }
+  }, []);
   const date = new Date();
   const options = {
     year: "numeric",
@@ -429,29 +456,8 @@ console.log(values);
               <div className={Styles.goaltable}>
                 <div className="container">
                   <div className={Styles.table_scroll}>
-                    {/* <table class="table table-borderless ">
-                      <thead>
-                        <tr className={Styles.tablerow}>
-                          <th className="ps-3" scope="col">
-                            Opportunity Owner
-                          </th>
-                          <th scope="col">Sum of Amount</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {Monthlydataa?.map((e) => {
-                          return (
-                            <tr key={e}>
-                              <td className={`${Styles.tabletd}ps-3 d-flex gap-2`}>
-                                <img src={img5} alt="" /> {e.salesRepName}
-                              </td>
-                              <td className={Styles.tabletd}>${(Number(e.total.revenue) / 1000).toFixed(0)}K</td>
-                            </tr>
-                          );
-                        })}
-                      </tbody>
-                    </table> */}
-                       <table class="table table-borderless ">
+
+                    <table class="table table-borderless ">
                       <thead>
                         <tr className={Styles.tablerow}>
                           <th scope="col" className="ps-3">
@@ -461,18 +467,31 @@ console.log(values);
                         </tr>
                       </thead>
 
-                      <tbody>
-                        {Monthlydataa?.map((e) => {
-                          return (
-                            <tr key={e}>
-                              <td className={`${Styles.tabletd} ps-3 d-flex justify-content-start align-items-center gap-2`}>
-                                <img src={img5} className="h-100" alt="" /> {e.salesRepName}
-                              </td>
-                              <td className={Styles.tabletd}>${(Number(e.total.revenue) / 1000).toFixed(0)}K</td>
-                            </tr>
-                          );
-                        })}
-                      </tbody>
+
+                      {Monthlydataa ? (
+                        <tbody>
+                          {Monthlydataa?.map((e) => {
+                            return (
+                              <tr key={e}>
+                                <td className={`${Styles.tabletd} ps-3 d-flex justify-content-start align-items-center gap-2`}>
+                                  <img src={img5} className="h-100" alt="" /> {e.salesRepName}
+                                </td>
+                                <td className={Styles.tabletd}>${(Number(e.total.revenue) / 1000).toFixed(0)}K</td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      ) : (
+                        <tbody>
+                          <td></td>
+                          <td>
+                            <div className={`d-flex justify-content-start align-items-center`} style={{ minHeight: "230px" }}>
+                              <p className={`${Styles.tablenodata}`}>No Data Found</p>
+                            </div>
+                          </td>
+                          <td></td>
+                        </tbody>
+                      )}
                     </table>
                   </div>
                 </div>
@@ -494,18 +513,32 @@ console.log(values);
                         </tr>
                       </thead>
 
-                      <tbody>
-                        {Yearlydataa?.map((e) => {
-                          return (
-                            <tr key={e}>
-                              <td className={`${Styles.tabletd} ps-3 d-flex justify-content-start align-items-center gap-2`}>
-                                <img src={img5} className="h-100" alt="" /> {e.salesRepName}
-                              </td>
-                              <td className={Styles.tabletd}>${(Number(e.total.revenue) / 1000).toFixed(0)}K</td>
-                            </tr>
-                          );
-                        })}
-                      </tbody>
+
+
+                      {Yearlydataa ? (
+                        <tbody>
+                          {Yearlydataa?.map((e) => {
+                            return (
+                              <tr key={e}>
+                                <td className={`${Styles.tabletd} ps-3 d-flex justify-content-start align-items-center gap-2`}>
+                                  <img src={img5} className="h-100" alt="" /> {e.salesRepName}
+                                </td>
+                                <td className={Styles.tabletd}>${(Number(e.total.revenue) / 1000).toFixed(0)}K</td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      ) : (
+                        <tbody>
+                          <td></td>
+                          <td>
+                            <div className={`d-flex justify-content-start align-items-center`} style={{ minHeight: "230px" }}>
+                              <p className={`${Styles.tablenodata}`}>No Data Found</p>
+                            </div>
+                          </td>
+                          <td></td>
+                        </tbody>
+                      )}
                     </table>
                   </div>
                 </div>
