@@ -59,9 +59,9 @@ const MyRetailerCard = ({ placeName, title, brands, accountId }) => {
             </div>
             <div className={Styles.BrandName}>
               <div className={Styles.Brandspan}>
-                {brands?.map((brand) => {
+                {brands?.map((brand,index) => {
                   return (
-                    <span className={`${Styles[bgColors[brand.ManufacturerName__c]]}`} style={{ height: "fit-content" }}>
+                    <span className={`${Styles[bgColors[brand.ManufacturerName__c]]}`} style={{ height: "fit-content" }} key={index}>
                       {brand.ManufacturerName__c}
                     </span>
                   );

@@ -4,7 +4,7 @@ import Accordion from "react-bootstrap/Accordion";
 
 function FilterPage({ data, formattedData, setCategoryFilters, categoryFilters, productTypeFilter, setProductTypeFilter, setSortBy, sortBy }) {
   const [activeIndex1, setActiveIndex1] = useState(0);
-  console.log(productTypeFilter);
+  // console.log(productTypeFilter);
   const onTitleClick1 = (index) => {
     setActiveIndex1(index === activeIndex1 ? null : index);
   };  
@@ -116,8 +116,8 @@ function FilterPage({ data, formattedData, setCategoryFilters, categoryFilters, 
                 
                 {Object.keys(formattedData)
                   ?.filter((category) => category !== "PREORDER")
-                  ?.map((key) => (
-                    <div className={styles.accordion}>
+                  ?.map((key,index) => (
+                    <div className={styles.accordion} key={index}>
                       <div className={styles.Content}>
                         <div className={styles.accordion}>
                           <div className={`${styles.title} ${styles.borderRad} `} onClick={() => onTitleClick1(0)}>

@@ -84,26 +84,42 @@ const Accordion = ({ data, formattedData }) => {
                     <CollapsibleRow title={key} quantity={categoryOrderQuantity} key={index}>
                       {Object.values(formattedData)[index]?.map((value, indexed) => (
                         <tr className="w-full" key={indexed}>
-                          {/* {console.log(value)} */}
+                          {console.log(value.Category__c)}
                           <td>
                             <img src={Img1} alt="img" />
                           </td>
                           <td className="text-capitalize">{value.Name}</td>
                           <td>{value.ProductCode}</td>
-                          <td>{value.ProductUPC__c || "--"}</td>
+                          <td>{value.ProductUPC__c === null || "n/a" ? "--" : value.ProductUPC__c}</td>
+                          <td>{value.usdRetail__c.includes("$") ? `$${(+value.usdRetail__c.substring(1)).toFixed(2)}` : `$${Number(value.usdRetail__c).toFixed(2)}`}</td>
                           <td>
-                            {/* {value.usdRetail__c?.startsWith("$")
-                          ? (value.usdRetail__c)
-                          : `$${value.usdRetail__c}`} */}
-                            {value.usdRetail__c.includes("$") ? `$${(+value.usdRetail__c.substring(1)).toFixed(2)}` : `$${value.usdRetail__c}.00`}
-                          </td>
-                          <td>
-                            {/* {(data?.discount?.margin / 100) *
-                          +value.usdRetail__c?.replace("$", "")} */}
-                            $
-                            {value.usdRetail__c.includes("$")
-                              ? (+value.usdRetail__c.substring(1) - (data?.discount?.margin / 100) * +value.usdRetail__c.substring(1)).toFixed(2)
-                              : (+value.usdRetail__c - (data?.discount?.margin / 100) * +value.usdRetail__c).toFixed(2)}
+                            {value.Category__c === "TESTER" ? (
+                              <>
+                                $
+                                {value.usdRetail__c.includes("$")
+                                  ? (+value.usdRetail__c.substring(1) - (data?.discount?.testerMargin / 100) * +value.usdRetail__c.substring(1)).toFixed(2)
+                                  : (+value.usdRetail__c - (data?.discount?.testerMargin / 100) * +value.usdRetail__c).toFixed(2)}
+                              </>
+                            ) : (
+                              <>
+                                {value.Category__c === "Samples" ? (
+                                  <>
+                                    {" "}
+                                    $
+                                    {value.usdRetail__c.includes("$")
+                                      ? (+value.usdRetail__c.substring(1) - (data?.discount?.sample / 100) * +value.usdRetail__c.substring(1)).toFixed(2)
+                                      : (+value.usdRetail__c - (data?.discount?.sample / 100) * +value.usdRetail__c).toFixed(2)}
+                                  </>
+                                ) : (
+                                  <>
+                                    ${" "}
+                                    {value.usdRetail__c.includes("$")
+                                      ? (+value.usdRetail__c.substring(1) - (data?.discount?.margin / 100) * +value.usdRetail__c.substring(1)).toFixed(2)
+                                      : (+value.usdRetail__c - (data?.discount?.margin / 100) * +value.usdRetail__c).toFixed(2)}
+                                  </>
+                                )}
+                              </>
+                            )}
                           </td>
                           <td>{value.Min_Order_QTY__c || 0}</td>
                           <td>
