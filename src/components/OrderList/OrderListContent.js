@@ -2,11 +2,24 @@ import React, { useEffect, useState } from "react";
 import Styles from "./style.module.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import ModalPage from "../Modal UI";
+import MyBagFinal from "./MyBagFinal";
+import { AuthCheck } from "../../lib/store";
+import axios from "axios";
+import TrackingStatus from "./TrackingStatus/TrackingStatus";
+import Orderstatus from "./OrderStatus/Orderstatus";
+import { useParams } from "react-router-dom";
+
+
+
 function OrderListContent({ data }) {
   const [Orderdata, setOrderdata] = useState(data || []);
-  const [Opportunitydata, setOpportunitydata] = useState([]);
   const [Viewmore, setviewmore] = useState(false);
   const [isTrackingModal, setIsTrackingModal] = useState(false);
+  const [oppoId, setoppoId] = useState();
+
+
+
+
   const handleclick = () => {
     setviewmore(!Viewmore);
   };
@@ -26,9 +39,8 @@ function OrderListContent({ data }) {
     "November",
     "December",
   ];
-  let date = `${
-    months[currentDate.getMonth()]
-  } ${currentDate.getDate()}, ${currentDate.getFullYear()}`;
+  let date = `${months[currentDate.getMonth()]
+    } ${currentDate.getDate()}, ${currentDate.getFullYear()}`;
 
   const TrackingModal = () => {
     return (
@@ -47,14 +59,93 @@ function OrderListContent({ data }) {
       />
     );
   };
+  useEffect(() => {
+    ordermodaldata();
+  })
+
+
+  let ab = localStorage.getItem("Api Data")
+  let headersList = {
+    "Accept": "*/*"
+  }
+
+  let Content = new FormData();
+  Content.append("key", JSON.parse(ab).data.access_token);
+  // Content.append("opportunity_id", opportunity);
+
+  const ordermodaldata = async () => {
+    const response = await axios.post(`https://dev.beautyfashionsales.com/beauty/0DS68FOD7s`, Content, headersList)
+    // console.log(response);
+  }
+
+  const handlemodal = () => {
+    Orderdata?.find(
+      (OppId) => setoppoId(OppId.Id)
+    )
+  }
+
 
   return (
     <>
+
+
+      {/* MODAL MY BAG */}
+
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-lg">
+          <div class="modal-content">
+            {/* <div class="modal-header">
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div> */}
+            <div class="modal-body  mt-4">
+              <MyBagFinal />
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      {/* TRACKING MODAL */}
+
+      <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-lg">
+          <div class="modal-content">
+            {/* <div class="modal-header">
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div> */}
+            <div class="modal-body mt-4 ">
+              <TrackingStatus
+                TrackingData={Orderdata}
+                opportunityId={oppoId}
+
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      {/* ORDER STATUS MODAL */}
+
+      <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-lg">
+          <div class="modal-content">
+            {/* <div class="modal-header">
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div> */}
+            <div class="modal-body  mt-4">
+              <Orderstatus />
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
       {Orderdata.map((item, index) => {
         date = new Date(item.CreatedDate);
-        let cdate = `${currentDate.getDate()} ${
-          months[currentDate.getMonth()]
-        } ${currentDate.getFullYear()}`;
+        let cdate = `${currentDate.getDate()} ${months[currentDate.getMonth()]
+          } ${currentDate.getFullYear()}`;
 
         return (
           <div className={` ${Styles.orderStatement}`} key={index}>
@@ -114,9 +205,8 @@ function OrderListContent({ data }) {
                       <a>
                         {item.OpportunityLineItems?.totalSize - 3 < 0
                           ? ""
-                          : `{+${
-                              item.OpportunityLineItems?.totalSize - 3
-                            } More}`}
+                          : `{+${item.OpportunityLineItems?.totalSize - 3
+                          } More}`}
                       </a>
                     </span>
                   </div>
@@ -128,20 +218,21 @@ function OrderListContent({ data }) {
                     <p>${Number(item.Amount).toFixed(2)}</p>
                   </div>
 
-                  <button>View Order Details</button>
+                  <button data-bs-toggle="modal" data-bs-target="#exampleModal" >View Order Details</button>
                 </div>
               </div>
 
               <div className={Styles.StatusOrder}>
                 <div className={Styles.Status1}>
-                  <h2
-                    onClick={() => {
-                      setIsTrackingModal(true);
-                    }}
+                  <h2 data-bs-toggle="modal" data-bs-target="#exampleModal1"
+                  // onClick={() => {
+                  //   setIsTrackingModal(true);
+                  // }}
+                  onClick={handlemodal}
                   >
                     Tracking Status
                   </h2>
-                  <h3>Order Status</h3>
+                  <h3 data-bs-toggle="modal" data-bs-target="#exampleModal2">Order Status</h3>
                   <h4>Invoice </h4>
                 </div>
 
@@ -155,7 +246,9 @@ function OrderListContent({ data }) {
           </div>
         );
       })}
-      {isTrackingModal &&<TrackingModal />}
+      {isTrackingModal && <TrackingModal />}
+
+
     </>
   );
 }

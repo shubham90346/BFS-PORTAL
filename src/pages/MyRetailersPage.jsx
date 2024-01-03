@@ -10,16 +10,18 @@ import { useManufacturer } from "../api/useManufacturer";
 import { useRetailersData } from "../api/useRetailersData";
 import FilterSearch from "../components/FilterSearch";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import MobileHeader from "../components/All Headers/mobileHeader/MobileHeader";
 
 const MyRetailersPage = () => {
   const { data: manufacturers } = useManufacturer();
-
   const [searchParams] = useSearchParams();
   const manufacturerId = searchParams.get("manufacturerId");
+ 
 
   // console.log(manufacturers);
   const { data, isLoading } = useRetailersData();
   const [manufacturerFilter, setManufacturerFilter] = useState(manufacturerId);
+
   const [sortBy, setSortBy] = useState();
   const [searchBy, setSearchBy] = useState("");
 

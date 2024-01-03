@@ -18,7 +18,9 @@ const MyRetailers = ({ pageData, filterBy, sortBy, searchBy, isLoading }) => {
       filterBy
         ? data.data?.some((d) => d.ManufacturerId__c === filterBy.Id)
         : true
+       
     );
+
 
     if (searchBy) {
       newValues = newValues?.filter((value) =>
