@@ -9,7 +9,7 @@ const LogoHeader = () => {
   return (
     <>
       <div className={` ${styles.laptopMode}`}>
-        <div className="d-flex justify-content-between align-items-center col-lg-4 col-xl-3">
+        <div className={styles.lapSetting}>
           <p className={`m-0  ${styles.language}`}>
             <Link to="/my-retailers" className={`linkStyle`}>
               My Retailers
@@ -27,13 +27,13 @@ const LogoHeader = () => {
           </p>
         </div>
         {/* image div */}
-        <div className="d-flex justify-content-center align-items-center col-lg-4 col-xl-6">
+        <div className={styles.lapSetting}>
           <Link to="/dashboard" className={`linkStyle`}>
             <img src={"/assets/images/BFSG_logo.svg"} alt="img" />
           </Link>
         </div>
         {/* my bag */}
-        <div className="d-flex justify-content-between align-items-center col-lg-4 col-xl-3">
+        <div className={styles.lapSetting}>
           <p className={`m-0  ${styles.language}`}>
             <Link to="/dashboard" className={`linkStyle`}>
               Dashboard
