@@ -1,10 +1,9 @@
 import React, { useEffect, useState, useMemo } from "react";
 import Styles from "./style.module.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import axios, { formToJSON } from "axios";
+
 import OrderListContent from "./OrderListContent";
-import { FilterItem } from "../FilterItem";
-import FilterSearch from "../FilterSearch";
+
 import { json } from "react-router-dom";
 import { GetAuthData, getOrderList } from "../../lib/store";
 import Loading from "../Loading";
@@ -12,12 +11,17 @@ import Pagination from "../Pagination/Pagination";
 let PageSize = 10;
 function OrderList() {
   const [data, setdata] = useState([]);
+
   const [searchText, setSearchText] = useState("");
   const [searchTextfilter, setSearchTextfilter] = useState("");
   const [cards, setCards] = useState();
   const [Viewmore, setviewmore] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [Options, setOptions] = useState([]);
+
+
+
 
   useEffect(() => {
     GetAuthData()
@@ -50,7 +54,6 @@ function OrderList() {
     console.log(searchText);
     const filtered = data.filter(
       (ele) =>
-        // post.PO_Number__c.includes(searchText)
         ele.PO_Number__c === searchText ||
         ele.PO_Number__c.includes(searchText.toLowerCase())
     );
@@ -74,6 +77,7 @@ function OrderList() {
         item.AccountName.includes(search.toLowerCase())
     );
     console.log(fill);
+
   };
   if (!loaded) return <Loading />;
   const OrderListDataSort = () => {
@@ -84,6 +88,27 @@ function OrderList() {
     }, [currentPage]);
     return <OrderListContent data={currentTableData} />;
   };
+
+  const date = new Date();
+  const options = {
+    year: "numeric",
+    month: "long",
+  };
+  let current = date.toLocaleString("en-IN", options);
+
+
+  var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  var today = new Date();
+  var d;
+  var month;
+  for (var i = 6; i > 0; i -= 1) {
+    d = new Date(today.getFullYear(), today.getMonth() - i, 1);
+    month = monthNames[d.getMonth()];
+  }
+
+  var previousYearDate = `${d.getFullYear() - 1}`;
+
+
   return (
     <div>
       <div className="container mt-4">
@@ -101,59 +126,43 @@ function OrderList() {
                 </button>
                 <ul class="dropdown-menu">
                   <li>
-                    <a class={`dropdown-item ${Styles.buullet}`} href="#">
-                      A-Z
+                    <a class="dropdown-item" href="#">
+                      {current}
                     </a>
                   </li>
                   <li>
                     <a class="dropdown-item" href="#">
-                      Last 6 Months
+                      {month}
                     </a>
                   </li>
                   <li>
                     <a class="dropdown-item" href="#">
-                      Current Year
-                    </a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" href="#">
-                      2022
-                    </a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" href="#">
-                      2021
+                      {previousYearDate}
                     </a>
                   </li>
                 </ul>
               </div>
             </li>
+
             <li>
-              <div class="dropdown">
-                <button
-                  class="dropdown-toggle"
-                  type="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  MANUFACTURER
-                </button>
-                <ul class="dropdown-menu">
-                  {data.map((ele, index) => {
-                    return (
-                      <li key={`manu-${index}`}>
-                        <a class="dropdown-item" href="#">
-                          {ele.ManufacturerName__c}
-                        </a>
-                      </li>
-                    );
-                  })}
-                  {/* <li><a class="dropdown-item" href="#">Action</a></li>
-                  <li><a class="dropdown-item" href="#">Another action</a></li>
-                  <li><a class="dropdown-item" href="#">Something else here</a></li> */}
-                </ul>
-              </div>
+              <select onChange={(e) => {
+                const selectdata = data?.find((x) => x.ManufacturerName__c === e.target.value);
+                setOptions(selectdata)
+              }}
+                className={Styles.selection}>
+                <option> MANUFACTURER</option>
+                {
+                  data.map((ele) => {
+                    return <>
+                      <option value={ele.ManufacturerName__c} key={ele.Id}>{ele.ManufacturerName__c}</option>
+                    </>
+                  })
+                }
+              </select>
+
             </li>
+
+
             <li className={`d-flex align-items-center ${Styles.inputDraw}`}>
               <input
                 type="text"
@@ -295,7 +304,8 @@ function OrderList() {
                           </div>
                         </div>
                       );
-                    })}
+                    })} 
+
                   </div>
                 </>
               ) : (

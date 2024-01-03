@@ -1,12 +1,15 @@
 let url = "https://dev.beautyfashionsales.com/beauty/"
+let URL = "https://dev.beautyfashionsales.com/beauty/0DS68FOD7s"
 
 export async function AuthCheck() {
-  if (JSON.parse(localStorage.getItem("Api Data"))?.data) {
+  if (JSON.parse(localStorage.getItem("Api Data"))?.data)
+  {
     return true;
   } else {
     return false;
   }
 }
+
 
 export async function DestoryAuth() {
    localStorage.clear()
@@ -22,6 +25,7 @@ export async function GetAuthData() {
 }
 
 export async function getOrderList({ user }) {
+
     let headersList = {
         "Accept": "*/*"
        }
@@ -29,7 +33,7 @@ export async function getOrderList({ user }) {
         let bodyContent = new FormData();
         bodyContent.append("key", user.key);
         bodyContent.append("Sales_Rep__c",user.Sales_Rep__c);
-       
+    
        let response = await fetch(url+"v3/20h2J48c", { 
          method: "POST",
          body: bodyContent,
@@ -39,3 +43,4 @@ export async function getOrderList({ user }) {
        return data.data
        
   }
+
