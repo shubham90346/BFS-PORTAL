@@ -12,8 +12,8 @@ import { useBag } from "../../context/BagContext";
 
 function MyBagFinal() {
   const navigate = useNavigate();
-  const { addOrder } = useBag();
-  const { orderQuantity } = useBag();
+  const { addOrder, orderQuantity } = useBag();
+
   let total = 0;
   let price = "";
   return (
