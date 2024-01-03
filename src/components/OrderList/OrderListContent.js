@@ -1,49 +1,63 @@
 import React, { useEffect, useState } from "react";
 import Styles from "./style.module.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import axios, { formToJSON } from "axios";
-import OrderList from "./OrderList";
-
-function OrderListContent() {
-  const [Orderdata, setOrderdata] = useState([]);
-  // console.log(Orderdata);
+import ModalPage from "../Modal UI";
+function OrderListContent({ data }) {
+  const [Orderdata, setOrderdata] = useState(data || []);
   const [Opportunitydata, setOpportunitydata] = useState([]);
   const [Viewmore, setviewmore] = useState(false);
-
-  useEffect(() => {
-    handleOrderdata();
-  }, []);
-
-  const formData = new FormData();
-  formData.append("key", "00D30000001G9fh!AQEAQNCq4VF57u1dX1en6k_qQIy.3LFAYYp1gOZOS3Y15SFhp.60QjkjHyrET2C9vttq9d2.zUfaRRgBuCKF7prF5KOc29eq");
-  formData.append("Sales_Rep__c", "00530000005AdvsAAC");
-
-  const config = {
-    headers: { "content-type": "multipart/form-data" },
-  };
-
-  const handleOrderdata = async () => {
-    const response = await axios.post(` https://dev.beautyfashionsales.com/beauty/v3/20h2J48c`, formData, config);
- 
-    setOrderdata(response.data.data);
-  };
-
+  const [isTrackingModal, setIsTrackingModal] = useState(false);
   const handleclick = () => {
     setviewmore(!Viewmore);
   };
 
   const currentDate = new Date();
-  const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-  let date = `${months[currentDate.getMonth()]} ${currentDate.getDate()}, ${currentDate.getFullYear()}`;
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  let date = `${
+    months[currentDate.getMonth()]
+  } ${currentDate.getDate()}, ${currentDate.getFullYear()}`;
+
+  const TrackingModal = () => {
+    return (
+      <ModalPage
+        open
+        content={
+          <div>
+            <p className="text-center">
+              Data is not available for selected Account and Manufacturer.{" "}
+              <br></br>
+              <br></br>
+              Redirecting to My Retailers page...
+            </p>
+          </div>
+        }
+      />
+    );
+  };
+
   return (
     <>
-      {Orderdata.map((item) => {
+      {Orderdata.map((item, index) => {
         date = new Date(item.CreatedDate);
-        let cdate = `${currentDate.getDate()} ${months[currentDate.getMonth()]} ${currentDate.getFullYear()}`;
+        let cdate = `${currentDate.getDate()} ${
+          months[currentDate.getMonth()]
+        } ${currentDate.getFullYear()}`;
 
         return (
-          <>
-          <div className={` ${Styles.orderStatement}`}>
+          <div className={` ${Styles.orderStatement}`} key={index}>
             <div>
               <div className={Styles.poNumber}>
                 <div>
@@ -81,16 +95,30 @@ function OrderListContent() {
                           <>
                             {/* <li>{ele.Name}</li> */}
 
-                            <li className={Styles.tool} data-bs-toggle="tooltip" data-bs-placement="top" onClick={handleclick}>
-                              {Viewmore ? ele.Name : `${ele.Name.slice(0, 31)}...`}
+                            <li
+                              className={Styles.tool}
+                              data-bs-toggle="tooltip"
+                              data-bs-placement="top"
+                              onClick={handleclick}
+                            >
+                              {Viewmore
+                                ? ele.Name
+                                : `${ele.Name.slice(0, 31)}...`}
                             </li>
                           </>
                         );
                       })}
                     </ul>
                     {/* <span><a > +22More</a></span>*/}
-                    <span><a>{(item.OpportunityLineItems?.totalSize-3)<0?"":`{+${item.OpportunityLineItems?.totalSize-3} More}`}</a></span>
-
+                    <span>
+                      <a>
+                        {item.OpportunityLineItems?.totalSize - 3 < 0
+                          ? ""
+                          : `{+${
+                              item.OpportunityLineItems?.totalSize - 3
+                            } More}`}
+                      </a>
+                    </span>
                   </div>
                 </div>
 
@@ -106,7 +134,13 @@ function OrderListContent() {
 
               <div className={Styles.StatusOrder}>
                 <div className={Styles.Status1}>
-                  <h2>Tracking Status</h2>
+                  <h2
+                    onClick={() => {
+                      setIsTrackingModal(true);
+                    }}
+                  >
+                    Tracking Status
+                  </h2>
                   <h3>Order Status</h3>
                   <h4>Invoice </h4>
                 </div>
@@ -118,13 +152,11 @@ function OrderListContent() {
                 </div>
               </div>
             </div>
-            </div>
-          </>
+          </div>
         );
       })}
-      </>
-
-  
+      {isTrackingModal &&<TrackingModal />}
+    </>
   );
 }
 
