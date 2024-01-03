@@ -27,15 +27,14 @@ export async function getOrderList({ user }) {
        }
        
         let bodyContent = new FormData();
-        bodyContent.append("key", "00D30000001G9fh!AQEAQORv8mcnF5PJrQBgHHfsKMG1wicPw5tQRnnNUhZsMNh.SUu3zd2q6Suo9hV9YsOLzy56IzmyXSnRcdhI8MhoE5w1qVDF");
-        bodyContent.append("Sales_Rep__c", "00530000005AdvsAAC");
+        bodyContent.append("key", user.key);
+        bodyContent.append("Sales_Rep__c",user.Sales_Rep__c);
        
-       let response = await fetch("https://dev.beautyfashionsales.com/beauty/v3/20h2J48c", { 
+       let response = await fetch(url+"v3/20h2J48c", { 
          method: "POST",
          body: bodyContent,
          headers: headersList
        });
-       
        let data = JSON.parse(await response.text());
        return data.data
        

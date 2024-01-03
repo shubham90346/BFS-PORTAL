@@ -9,7 +9,7 @@ import { json } from "react-router-dom";
 import { GetAuthData, getOrderList } from "../../lib/store";
 import Loading from "../Loading";
 import Pagination from "../Pagination/Pagination";
-let PageSize = 1;
+let PageSize = 10;
 function OrderList() {
   const [data, setdata] = useState([]);
   const [searchText, setSearchText] = useState("");
