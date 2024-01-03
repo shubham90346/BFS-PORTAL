@@ -1,19 +1,16 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect,  useState } from "react";
 import styles from "./Style.module.css";
 import Img1 from "./images/makeup1.png";
 import CollapsibleRow from "../../CollapsibleRow";
 import QuantitySelector from "./QuantitySelector";
 import { useGlobal } from "../../../context/GlobalContext";
-import { useNavigate } from "react-router-dom";
 import ModalPage from "../../Modal UI";
 
 const Accordion = ({ data, formattedData }) => {
   console.log("Accordion data", data);
   console.log("Accordion formattedData", formattedData);
-  // console.log(Object.keys(formattedData).length);
   const [orders, setOrders] = useState({});
   const { orderQuantity, setOrderQuantity } = useGlobal();
-  const navigate = useNavigate();
   const [replaceCartModalOpen, setReplaceCartModalOpen] = useState(false);
 
   const onQuantityChange = (product, quantity) => {
@@ -24,6 +21,7 @@ const Accordion = ({ data, formattedData }) => {
         Object.values(orders)[0].productType === (product.Category__c === "PREORDER" ? "pre-order" : "wholesale")
       ) {
         orderSetting(product, quantity);
+        setReplaceCartModalOpen(false);
       } else {
         setReplaceCartModalOpen(true);
       }
@@ -32,7 +30,7 @@ const Accordion = ({ data, formattedData }) => {
     }
   };
   const orderSetting = (product, quantity) => {
-    console.log(product.Category__c);
+    setReplaceCartModalOpen(false);
     setOrders((prev) => {
       const obj = { ...prev };
       obj[product.Id] = {
@@ -55,14 +53,17 @@ const Accordion = ({ data, formattedData }) => {
   };
   useEffect(() => {
     let orderQuantity = 0;
+    console.log(orders);
     Object.values(orders)?.forEach((order) => {
       orderQuantity += order.quantity;
     });
     setOrderQuantity(orderQuantity);
+    // console.log("orderQuantity",orderQuantity);
   }, [orders]);
 
   // to set orders
   useEffect(() => {
+    console.log("orders",orders);
     if (Object.keys(orders)?.length) {
       localStorage.setItem("orders", JSON.stringify(orders));
     }
@@ -73,15 +74,15 @@ const Accordion = ({ data, formattedData }) => {
     const fetchedOrders = localStorage.getItem("orders");
     if (fetchedOrders) {
       setOrders(JSON.parse(fetchedOrders));
-    }
+    } 
   }, []);
 
-  const replaceCart=()=>{
-    localStorage.removeItem("orders")
-    localStorage.removeItem("AccountId__c")
-    localStorage.removeItem("ManufacturerId__c")
-    setReplaceCartModalOpen(false)
-  }
+  const replaceCart = () => {
+    localStorage.removeItem("orders");
+    setReplaceCartModalOpen(false);
+    setOrderQuantity(0);
+    setOrders({})
+  };
   return (
     <>
       {replaceCartModalOpen ? (
@@ -94,8 +95,12 @@ const Accordion = ({ data, formattedData }) => {
                 Adding this item will replace<br></br> your current cart
               </p>
               <div className="d-flex justify-content-around ">
-                <button className={`${styles.modalButton}`} onClick={replaceCart}>OK</button>
-                <button className={`${styles.modalButton}`} onClick={()=>setReplaceCartModalOpen(false)}>Cancel</button>
+                <button className={`${styles.modalButton}`} onClick={replaceCart}>
+                  OK
+                </button>
+                <button className={`${styles.modalButton}`} onClick={() => setReplaceCartModalOpen(false)}>
+                  Cancel
+                </button>
               </div>
             </div>
           }
@@ -176,6 +181,7 @@ const Accordion = ({ data, formattedData }) => {
                                   onQuantityChange(value, quantity);
                                 }}
                                 defaultValue={Object.values(orders)?.find((order) => order.product.Id === value.Id)?.quantity}
+                                orderNeedToAdd={!replaceCartModalOpen}
                               />
                             </td>
                           </tr>
@@ -201,17 +207,6 @@ const Accordion = ({ data, formattedData }) => {
             )}
           </table>
         </div>
-
-        {/* <div className={styles.TotalSide}>
-        <h4>Total Number of Products : {orderQuantity}</h4>
-        <button
-          onClick={() => {
-            navigate("/my-bag");
-          }}
-        >
-          Generate Order
-        </button>
-      </div> */}
       </div>
     </>
   );

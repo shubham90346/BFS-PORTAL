@@ -4,9 +4,11 @@ const padWithZero = (value) => {
   return String(value).padStart("2", "0");
 };
 
-const QuantitySelector = ({ onChange, defaultValue, min = 0 }) => {
+const QuantitySelector = ({ onChange, defaultValue, min = 0 ,orderNeedToAdd}) => {
+
   const [value, setValue] = useState(defaultValue || 0);
   // console.log(defaultValue);
+  // console.log("orderNeedToAdd",orderNeedToAdd);
   useEffect(() => {
     if (value !== 0 && value < min) {
       setValue(min);
@@ -18,34 +20,34 @@ const QuantitySelector = ({ onChange, defaultValue, min = 0 }) => {
     <div className="w-[85px] h-[27px] flex border-[0.5px] border-solid border-black">
       <button
         onClick={() => {
-          setValue((prev) => {
-            let newValue = prev;
-            if (newValue > min) {
-              newValue = newValue - 1;
-            } else {
-              newValue = 0;
-            }
-            onChange?.(newValue);
-            return newValue;
-          });
+          if (orderNeedToAdd) {
+            setValue((prev) => {
+              let newValue = prev;
+              if (newValue > min) {
+                newValue = newValue - 1;
+              } else {
+                newValue = 0;
+              }
+              onChange?.(newValue);
+              return newValue;
+            });
+          }
         }}
         className="px-[8px] h-full bg-[#f8fafb] border-r-[0.5px] border-solid border-black"
       >
         -
       </button>
 
-      <input
-        type="number"
-        value={padWithZero(value)}
-        className="w-full text-center text-[12px] leading-tight appearance-none"
-      />
+      <input type="number" value={padWithZero(value)} className="w-full text-center text-[12px] leading-tight appearance-none" />
       <button
         onClick={() => {
-          setValue((prev) => {
-            let newValue = prev + 1;
-            onChange?.(newValue);
-            return newValue;
-          });
+          if (orderNeedToAdd) {
+            setValue((prev) => {
+              let newValue = prev + 1;
+              onChange?.(newValue);
+              return newValue;
+            });
+          }
         }}
         className="px-[8px] h-full bg-[#f8fafb] border-l-[0.5px] border-solid border-black"
       >
