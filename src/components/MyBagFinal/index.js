@@ -1,5 +1,5 @@
+/* eslint-disable no-lone-blocks */
 import React, { useState } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
 import Styles from "./Styles.module.css";
 import Img1 from "./Images/Eye1.png";
 import Img2 from "./Images/Img2.png";
@@ -12,63 +12,9 @@ import { useGlobal } from "../../context/GlobalContext";
 
 function MyBagFinal() {
   const navigate = useNavigate();
-  const [quantity1, setQuantity1] = useState(1);
-  const [quantity2, setQuantity2] = useState(1);
-  const [quantity3, setQuantity3] = useState(1);
-  const [quantity4, setQuantity4] = useState(1);
-  const [quantity5, setQuantity5] = useState(1);
-
-  const increment1 = () => {
-    setQuantity1(quantity1 + 1);
-  };
-
-  const decrement1 = () => {
-    if (quantity1 > 1) {
-      setQuantity1(quantity1 - 1);
-    }
-  };
-
-  const increment2 = () => {
-    setQuantity2(quantity2 + 1);
-  };
-
-  const decrement2 = () => {
-    if (quantity2 > 1) {
-      setQuantity2(quantity2 - 1);
-    }
-  };
-
-  const increment3 = () => {
-    setQuantity3(quantity3 + 1);
-  };
-
-  const decrement3 = () => {
-    if (quantity3 > 1) {
-      setQuantity3(quantity3 - 1);
-    }
-  };
-
-  const increment4 = () => {
-    setQuantity4(quantity4 + 1);
-  };
-
-  const decrement4 = () => {
-    if (quantity4 > 1) {
-      setQuantity4(quantity4 - 1);
-    }
-  };
-
-  const increment5 = () => {
-    setQuantity5(quantity5 + 1);
-  };
-
-  const decrement5 = () => {
-    if (quantity5 > 1) {
-      setQuantity5(quantity5 - 1);
-    }
-  };
   const { orderQuantity } = useGlobal();
   let total = 0;
+  let price = "";
   return (
     <div className="mt-4">
       <section>
@@ -76,7 +22,7 @@ function MyBagFinal() {
           <div>
             <div className={Styles.MyBagFinalTop}>
               <div className={Styles.MyBagFinalRight}>
-                <button onClick={() => navigate("/my-retailers")}>
+                <button onClick={() => navigate("/products")}>
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="16" viewBox="0 0 24 16" fill="none">
                     <path
                       d="M8.94284 2.27615C9.46349 1.75544 9.46349 0.911229 8.94284 0.390521C8.42213 -0.130174 7.57792 -0.130174 7.05721 0.390521L2.3911 5.05666C2.39092 5.05684 2.39128 5.05648 2.3911 5.05666L0.390558 7.05721C0.153385 7.29442 0.024252 7.59868 0.00313201 7.90895C-0.00281464 7.99562 -0.000321319 8.08295 0.010852 8.17002C0.0431986 8.42308 0.148118 8.66868 0.325638 8.87322C0.348651 8.89975 0.372651 8.92535 0.397585 8.94989L7.05721 15.6095C7.57792 16.1302 8.42213 16.1302 8.94284 15.6095C9.46349 15.0888 9.46349 14.2446 8.94284 13.7239L4.55231 9.33335H22.6667C23.4031 9.33335 24 8.73642 24 8.00002C24 7.26362 23.4031 6.66668 22.6667 6.66668H4.55231L8.94284 2.27615Z"
@@ -85,9 +31,8 @@ function MyBagFinal() {
                   </svg>
                 </button>
                 <h4>
-                  {" "}
                   <span> {localStorage.getItem("manufacturer")} | </span> {localStorage.getItem("Account")}
-                </h4>{" "}
+                </h4>
               </div>
 
               <div className={Styles.MyBagFinalleft}>
@@ -109,16 +54,25 @@ function MyBagFinal() {
                   <div className={Styles.MainBag}>
                     <h3>SHOPPING BAG ({orderQuantity})</h3>
                     <div className={Styles.scrollP}>
-                      <div className={`${Styles.MainInner} overflow-auto` } style={{minHeight:"400px"}}>
-                        {console.log(JSON.parse(localStorage.getItem("orders")))}
+                      <div className={`${Styles.MainInner} overflow-auto`} style={{ minHeight: "400px" }}>
                         {Object.values(JSON.parse(localStorage.getItem("orders"))).map((ele) => {
-                          console.log(ele);
-                          let price =ele.product?.usdRetail__c.includes("$")
-                              ? +ele.product?.usdRetail__c.substring(1) - (localStorage.getItem("discount") / 100) * +ele.product?.usdRetail__c.substring(1)
-                              : +ele.product?.usdRetail__c - (localStorage.getItem("discount") / 100) * +ele.product?.usdRetail__c;
-                              total=total+price;
-                              // console.log(total);
-
+                          // console.log(ele);
+                          {
+                            ele.Category__c === "TESTER"
+                              ? (price = ele.product.usdRetail__c.includes("$")
+                                  ? (+ele.product.usdRetail__c.substring(1) - (ele?.discount?.testerMargin / 100) * +ele.product.usdRetail__c.substring(1)).toFixed(2)
+                                  : (+ele.product.usdRetail__c - (ele?.discount?.testerMargin / 100) * +ele.product.usdRetail__c).toFixed(2))
+                              : ele.Category__c === "Samples"
+                              ? (price = ele.product.usdRetail__c.includes("$")
+                                  ? (+ele.product.usdRetail__c.substring(1) - (ele?.discount?.sample / 100) * +ele.product.usdRetail__c.substring(1)).toFixed(2)
+                                  : (+ele.product.usdRetail__c - (ele?.discount?.sample / 100) * +ele.product.usdRetail__c).toFixed(2))
+                              : (price = ele.product.usdRetail__c.includes("$")
+                                  ? (+ele.product.usdRetail__c.substring(1) - (ele?.discount?.margin / 100) * +ele.product.usdRetail__c.substring(1)).toFixed(2)
+                                  : (+ele.product.usdRetail__c - (ele?.discount?.margin / 100) * +ele.product.usdRetail__c).toFixed(2));
+                          }
+                          // console.log(price);
+                          total += Number(price);
+                          // console.log(total);
                           return (
                             <div className={Styles.Mainbox}>
                               <div className={Styles.Mainbox1M}>
@@ -129,13 +83,10 @@ function MyBagFinal() {
                                   <h2>{ele.product?.Name}</h2>
                                   <p>
                                     <span className={Styles.Span1}>
-                                      {ele.product?.usdRetail__c.includes("$") ? `$${(+ele.product?.usdRetail__c.substring(1)).toFixed(2)}` : `$${ele.product?.usdRetail__c}.00`}
+                                      {ele.product?.usdRetail__c.includes("$") ? `$${(+ele.product?.usdRetail__c.substring(1)).toFixed(2)}` : `$${Number(ele.product?.usdRetail__c).toFixed(2)}`}
                                     </span>
                                     <span className={Styles.Span2}>
-                                      $
-                                      {ele.product?.usdRetail__c.includes("$")
-                                        ? (+ele.product?.usdRetail__c.substring(1) - (localStorage.getItem("discount") / 100) * +ele.product?.usdRetail__c.substring(1)).toFixed(2)
-                                        : (+ele.product?.usdRetail__c - (localStorage.getItem("discount") / 100) * +ele.product?.usdRetail__c).toFixed(2)}
+                                      ${Number(price).toFixed(2)}
                                     </span>
                                   </p>
                                 </div>
@@ -159,13 +110,13 @@ function MyBagFinal() {
                                   </svg>
                                 </div>
                                 <div className={Styles.Mainbox5}>
-                                <QuantitySelector
-                              min={ele.quantity|| 0}
-                              onChange={(quantity) => {
-                                // onQuantityChange(value, quantity);
-                              }}
-                              defaultValue={ele.quantity}
-                            />
+                                  <QuantitySelector
+                                    min={ele.quantity || 0}
+                                    onChange={(quantity) => {
+                                      // onQuantityChange(value, quantity);
+                                    }}
+                                    defaultValue={ele.quantity}
+                                  />
                                 </div>
                               </div>
                             </div>
