@@ -42,10 +42,7 @@ function Product() {
     Sales_Rep__c: user?.data.Sales_Rep__c,
     Manufacturer: localStorage.getItem("ManufacturerId__c"),
     AccountId__c: localStorage.getItem("AccountId__c"),
-    //  Manufacturer: searchParams.get("manufacturerId"),
-    // AccountId__c: searchParams.get("accountId"),
   });
-  // console.log("data", data);
   const brandName = data?.data?.records?.[0]?.ManufacturerName__c;
 
   const formattedData = useMemo(() => {
@@ -65,7 +62,6 @@ function Product() {
 
     return groupedData;
   }, [data?.data?.records]);
-  // console.log(formattedData);
   const formattedFilterData = useMemo(() => {
     let filteredData = { ...formattedData };
     if (categoryFilters?.length) {

@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { useGlobal } from "../../../context/GlobalContext";
 
 const LogoHeader = () => {
-  const ordersQuantity = localStorage.getItem("categoryOrderQuantity");
   const { orderQuantity } = useGlobal();
 
   return (

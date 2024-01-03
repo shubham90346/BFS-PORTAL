@@ -13,6 +13,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import MobileHeader from '../components/All Headers/mobileHeader/MobileHeader'
 import Page from './page.module.css'
 
+
 const MyRetailersPage = () => {
   const { data: manufacturers } = useManufacturer();
 
