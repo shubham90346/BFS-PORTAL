@@ -10,6 +10,7 @@ import { useManufacturer } from "../api/useManufacturer";
 import { useRetailersData } from "../api/useRetailersData";
 import FilterSearch from "../components/FilterSearch";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import MobileHeader from "../components/All Headers/mobileHeader/MobileHeader";
 
 const MyRetailersPage = () => {
   const { data: manufacturers } = useManufacturer();

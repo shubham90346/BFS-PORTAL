@@ -5,6 +5,7 @@ import CollapsibleRow from "../../CollapsibleRow";
 import QuantitySelector from "./QuantitySelector";
 import { useGlobal } from "../../../context/GlobalContext";
 import { useNavigate } from "react-router-dom";
+import ModalPage from "../../Modal UI";
 
 const Accordion = ({ data, formattedData }) => {
   console.log("Accordion data", data);
@@ -13,52 +14,45 @@ const Accordion = ({ data, formattedData }) => {
   const [orders, setOrders] = useState({});
   const { orderQuantity, setOrderQuantity } = useGlobal();
   const navigate = useNavigate();
+  const [replaceCartModalOpen, setReplaceCartModalOpen] = useState(false);
+
   const onQuantityChange = (product, quantity) => {
     if (Object.values(orders).length) {
-      if (Object.values(orders)[0].brand === localStorage.getItem("manufacturer") && Object.values(orders)[0].retailer === localStorage.getItem("Account")) {
-        // pre-order or wholesale pending
-        setOrders((prev) => {
-          const obj = { ...prev };
-          obj[product.Id] = {
-            quantity: quantity,
-            product,
-            discount: {
-              MinOrderAmount: data.discount.MinOrderAmount,
-              margin: data.discount.margin,
-              sample: data.discount.sample,
-              testerMargin: data.discount.testerMargin,
-              testerproductLimit: data.discount.testerproductLimit,
-            },
-            retailer: localStorage.getItem("Account"),
-            brand: localStorage.getItem("manufacturer"),
-          };
-
-          return obj;
-        });
+      if (
+        Object.values(orders)[0].brand === localStorage.getItem("manufacturer") &&
+        Object.values(orders)[0].retailer === localStorage.getItem("Account") &&
+        Object.values(orders)[0].productType === (product.Category__c === "PREORDER" ? "pre-order" : "wholesale")
+      ) {
+        orderSetting(product, quantity);
+      } else {
+        setReplaceCartModalOpen(true);
       }
-    } 
-    else {
-      setOrders((prev) => {
-        const obj = { ...prev };
-        obj[product.Id] = {
-          quantity: quantity,
-          product,
-          discount: {
-            MinOrderAmount: data.discount.MinOrderAmount,
-            margin: data.discount.margin,
-            sample: data.discount.sample,
-            testerMargin: data.discount.testerMargin,
-            testerproductLimit: data.discount.testerproductLimit,
-          },
-          retailer: localStorage.getItem("Account"),
-          brand: localStorage.getItem("manufacturer"),
-        };
-
-        return obj;
-      });
+    } else {
+      orderSetting(product, quantity);
     }
   };
+  const orderSetting = (product, quantity) => {
+    console.log(product.Category__c);
+    setOrders((prev) => {
+      const obj = { ...prev };
+      obj[product.Id] = {
+        quantity: quantity,
+        product,
+        discount: {
+          MinOrderAmount: data.discount.MinOrderAmount,
+          margin: data.discount.margin,
+          sample: data.discount.sample,
+          testerMargin: data.discount.testerMargin,
+          testerproductLimit: data.discount.testerproductLimit,
+        },
+        retailer: localStorage.getItem("Account"),
+        brand: localStorage.getItem("manufacturer"),
+        productType: product.Category__c === "PREORDER" ? "pre-order" : "wholesale",
+      };
 
+      return obj;
+    });
+  };
   useEffect(() => {
     let orderQuantity = 0;
     Object.values(orders)?.forEach((order) => {
@@ -67,12 +61,14 @@ const Accordion = ({ data, formattedData }) => {
     setOrderQuantity(orderQuantity);
   }, [orders]);
 
+  // to set orders
   useEffect(() => {
     if (Object.keys(orders)?.length) {
       localStorage.setItem("orders", JSON.stringify(orders));
     }
   }, [orders]);
 
+  // to get orders
   useEffect(() => {
     const fetchedOrders = localStorage.getItem("orders");
     if (fetchedOrders) {
@@ -80,109 +76,133 @@ const Accordion = ({ data, formattedData }) => {
     }
   }, []);
 
+  const replaceCart=()=>{
+    localStorage.removeItem("orders")
+    localStorage.removeItem("AccountId__c")
+    localStorage.removeItem("ManufacturerId__c")
+    setReplaceCartModalOpen(false)
+  }
   return (
-    <div className={`overflow-auto`}>
-      <div className={styles.accordion}>
-        <table className="table table-hover ">
-          <thead>
-            <tr>
-              <th>Image</th>
-              <th>Title</th>
-              <th>Product Code</th>
-              <th>UPC</th>
-              <th>List Price</th>
-              <th>Sale Price</th>
-              <th>Min Qty</th>
-              <th>Qty</th>
-            </tr>
-          </thead>
-          {Object.keys(formattedData).length ? (
-            <>
-              <tbody>
-                {Object.keys(formattedData)?.map((key, index) => {
-                  let categoryOrderQuantity = 0;
-                  Object.values(orders)?.forEach((order) => {
-                    if (order.product.Category__c === key) {
-                      categoryOrderQuantity += order.quantity;
-                    }
-                  });
-                  // console.log(formattedData);
-                  return (
-                    <CollapsibleRow title={key} quantity={categoryOrderQuantity} key={index}>
-                      {Object.values(formattedData)[index]?.map((value, indexed) => (
-                        <tr className="w-full" key={indexed}>
-                          {/* {console.log(value.Category__c)} */}
-                          <td>
-                            <img src={Img1} alt="img" />
-                          </td>
-                          <td className="text-capitalize">{value.Name}</td>
-                          <td>{value.ProductCode}</td>
-                          <td>{value.ProductUPC__c === null || "n/a" ? "--" : value.ProductUPC__c}</td>
-                          <td>{value.usdRetail__c.includes("$") ? `$${(+value.usdRetail__c.substring(1)).toFixed(2)}` : `$${Number(value.usdRetail__c).toFixed(2)}`}</td>
-                          <td>
-                            {value.Category__c === "TESTER" ? (
-                              <>
-                                $
-                                {value.usdRetail__c.includes("$")
-                                  ? (+value.usdRetail__c.substring(1) - (data?.discount?.testerMargin / 100) * +value.usdRetail__c.substring(1)).toFixed(2)
-                                  : (+value.usdRetail__c - (data?.discount?.testerMargin / 100) * +value.usdRetail__c).toFixed(2)}
-                              </>
-                            ) : (
-                              <>
-                                {value.Category__c === "Samples" ? (
-                                  <>
-                                    {" "}
-                                    $
-                                    {value.usdRetail__c.includes("$")
-                                      ? (+value.usdRetail__c.substring(1) - (data?.discount?.sample / 100) * +value.usdRetail__c.substring(1)).toFixed(2)
-                                      : (+value.usdRetail__c - (data?.discount?.sample / 100) * +value.usdRetail__c).toFixed(2)}
-                                  </>
-                                ) : (
-                                  <>
-                                    ${" "}
-                                    {value.usdRetail__c.includes("$")
-                                      ? (+value.usdRetail__c.substring(1) - (data?.discount?.margin / 100) * +value.usdRetail__c.substring(1)).toFixed(2)
-                                      : (+value.usdRetail__c - (data?.discount?.margin / 100) * +value.usdRetail__c).toFixed(2)}
-                                  </>
-                                )}
-                              </>
-                            )}
-                          </td>
-                          <td>{value.Min_Order_QTY__c || 0}</td>
-                          <td>
-                            <QuantitySelector
-                              min={value.Min_Order_QTY__c || 0}
-                              onChange={(quantity) => {
-                                onQuantityChange(value, quantity);
-                              }}
-                              defaultValue={Object.values(orders)?.find((order) => order.product.Id === value.Id)?.quantity}
-                            />
-                          </td>
-                        </tr>
-                      ))}
-                    </CollapsibleRow>
-                  );
-                })}{" "}
-              </tbody>
-            </>
-          ) : (
-            <tbody>
+    <>
+      {replaceCartModalOpen ? (
+        <ModalPage
+          open
+          content={
+            <div className="d-flex flex-column gap-3">
+              <h2 className={`${styles.warning} `}>Warning</h2>
+              <p className={`${styles.warningContent} `}>
+                Adding this item will replace<br></br> your current cart
+              </p>
+              <div className="d-flex justify-content-around ">
+                <button className={`${styles.modalButton}`} onClick={replaceCart}>OK</button>
+                <button className={`${styles.modalButton}`} onClick={()=>setReplaceCartModalOpen(false)}>Cancel</button>
+              </div>
+            </div>
+          }
+        />
+      ) : null}
+      <div className={`overflow-auto`}>
+        <div className={styles.accordion}>
+          <table className="table table-hover ">
+            <thead>
               <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td className="flex justify-start items-center py-4 w-full lg:min-h-[300px] xl:min-h-[380px]">No Data Found</td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <th>Image</th>
+                <th>Title</th>
+                <th>Product Code</th>
+                <th>UPC</th>
+                <th>List Price</th>
+                <th>Sale Price</th>
+                <th>Min Qty</th>
+                <th>Qty</th>
               </tr>
-            </tbody>
-          )}
-        </table>
-      </div>
+            </thead>
+            {Object.keys(formattedData).length ? (
+              <>
+                <tbody>
+                  {Object.keys(formattedData)?.map((key, index) => {
+                    let categoryOrderQuantity = 0;
+                    Object.values(orders)?.forEach((order) => {
+                      if (order.product.Category__c === key) {
+                        categoryOrderQuantity += order.quantity;
+                      }
+                    });
+                    // console.log(formattedData);
+                    return (
+                      <CollapsibleRow title={key} quantity={categoryOrderQuantity} key={index}>
+                        {Object.values(formattedData)[index]?.map((value, indexed) => (
+                          <tr className="w-full" key={indexed}>
+                            {/* {console.log(value.Category__c)} */}
+                            <td>
+                              <img src={Img1} alt="img" />
+                            </td>
+                            <td className="text-capitalize">{value.Name}</td>
+                            <td>{value.ProductCode}</td>
+                            <td>{value.ProductUPC__c === null || "n/a" ? "--" : value.ProductUPC__c}</td>
+                            <td>{value.usdRetail__c.includes("$") ? `$${(+value.usdRetail__c.substring(1)).toFixed(2)}` : `$${Number(value.usdRetail__c).toFixed(2)}`}</td>
+                            <td>
+                              {value.Category__c === "TESTER" ? (
+                                <>
+                                  $
+                                  {value.usdRetail__c.includes("$")
+                                    ? (+value.usdRetail__c.substring(1) - (data?.discount?.testerMargin / 100) * +value.usdRetail__c.substring(1)).toFixed(2)
+                                    : (+value.usdRetail__c - (data?.discount?.testerMargin / 100) * +value.usdRetail__c).toFixed(2)}
+                                </>
+                              ) : (
+                                <>
+                                  {value.Category__c === "Samples" ? (
+                                    <>
+                                      {" "}
+                                      $
+                                      {value.usdRetail__c.includes("$")
+                                        ? (+value.usdRetail__c.substring(1) - (data?.discount?.sample / 100) * +value.usdRetail__c.substring(1)).toFixed(2)
+                                        : (+value.usdRetail__c - (data?.discount?.sample / 100) * +value.usdRetail__c).toFixed(2)}
+                                    </>
+                                  ) : (
+                                    <>
+                                      ${" "}
+                                      {value.usdRetail__c.includes("$")
+                                        ? (+value.usdRetail__c.substring(1) - (data?.discount?.margin / 100) * +value.usdRetail__c.substring(1)).toFixed(2)
+                                        : (+value.usdRetail__c - (data?.discount?.margin / 100) * +value.usdRetail__c).toFixed(2)}
+                                    </>
+                                  )}
+                                </>
+                              )}
+                            </td>
+                            <td>{value.Min_Order_QTY__c || 0}</td>
+                            <td>
+                              <QuantitySelector
+                                min={value.Min_Order_QTY__c || 0}
+                                onChange={(quantity) => {
+                                  onQuantityChange(value, quantity);
+                                }}
+                                defaultValue={Object.values(orders)?.find((order) => order.product.Id === value.Id)?.quantity}
+                              />
+                            </td>
+                          </tr>
+                        ))}
+                      </CollapsibleRow>
+                    );
+                  })}{" "}
+                </tbody>
+              </>
+            ) : (
+              <tbody>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td className="flex justify-start items-center py-4 w-full lg:min-h-[300px] xl:min-h-[380px]">No Data Found</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </tbody>
+            )}
+          </table>
+        </div>
 
-      {/* <div className={styles.TotalSide}>
+        {/* <div className={styles.TotalSide}>
         <h4>Total Number of Products : {orderQuantity}</h4>
         <button
           onClick={() => {
@@ -192,7 +212,8 @@ const Accordion = ({ data, formattedData }) => {
           Generate Order
         </button>
       </div> */}
-    </div>
+      </div>
+    </>
   );
 };
 
