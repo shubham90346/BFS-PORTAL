@@ -381,6 +381,18 @@ text-transform: uppercase;
 .buullet{
     list-style: disc;
 }
+.selection{
+    background-color: #08090A;
+    color: white;
+    outline: none;
+    border: none;
+}
+.selection option{
+    background-color: white;
+    color: #000;
+   
+}
+
 
 
 @media(max-width:1199px) {

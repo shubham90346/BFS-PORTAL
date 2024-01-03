@@ -13,13 +13,14 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 
 const MyRetailersPage = () => {
   const { data: manufacturers } = useManufacturer();
-
   const [searchParams] = useSearchParams();
   const manufacturerId = searchParams.get("manufacturerId");
+ 
 
   // console.log(manufacturers);
   const { data, isLoading } = useRetailersData();
   const [manufacturerFilter, setManufacturerFilter] = useState(manufacturerId);
+
   const [sortBy, setSortBy] = useState();
   const [searchBy, setSearchBy] = useState("");
 
