@@ -14,10 +14,30 @@ const Accordion = ({ data, formattedData }) => {
   const { orderQuantity, setOrderQuantity } = useGlobal();
   const navigate = useNavigate();
   const onQuantityChange = (product, quantity) => {
-  
-    if((Object.values(orders)[0].brand===localStorage.getItem("manufacturer")) && (Object.values(orders)[0].retailer===localStorage.getItem("Account"))){
+    if (Object.values(orders).length) {
+      if (Object.values(orders)[0].brand === localStorage.getItem("manufacturer") && Object.values(orders)[0].retailer === localStorage.getItem("Account")) {
+        // pre-order or wholesale pending
+        setOrders((prev) => {
+          const obj = { ...prev };
+          obj[product.Id] = {
+            quantity: quantity,
+            product,
+            discount: {
+              MinOrderAmount: data.discount.MinOrderAmount,
+              margin: data.discount.margin,
+              sample: data.discount.sample,
+              testerMargin: data.discount.testerMargin,
+              testerproductLimit: data.discount.testerproductLimit,
+            },
+            retailer: localStorage.getItem("Account"),
+            brand: localStorage.getItem("manufacturer"),
+          };
 
-// pre-order or wholesale pending
+          return obj;
+        });
+      }
+    } 
+    else {
       setOrders((prev) => {
         const obj = { ...prev };
         obj[product.Id] = {
@@ -33,7 +53,7 @@ const Accordion = ({ data, formattedData }) => {
           retailer: localStorage.getItem("Account"),
           brand: localStorage.getItem("manufacturer"),
         };
-  
+
         return obj;
       });
     }
