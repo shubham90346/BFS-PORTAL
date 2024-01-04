@@ -77,6 +77,7 @@ function OrderList() {
 
   };
   if (!loaded) return <Loading />;
+  
   const OrderListDataSort = () => {
     const currentTableData = useMemo(() => {
       const firstPageIndex = (currentPage - 1) * PageSize;

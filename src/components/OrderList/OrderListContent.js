@@ -15,8 +15,8 @@ function OrderListContent({ data }) {
   const [Viewmore, setviewmore] = useState(false);
   const [isTrackingModal, setIsTrackingModal] = useState(false);
   const [oppoId, setoppoId] = useState();
-  const [OrderId, setOrderId] = useState();
-  console.log(oppoId);
+
+ 
 
   const currentDate = new Date();
   const months = [
@@ -54,17 +54,18 @@ function OrderListContent({ data }) {
     );
   };
 
-
   let size = 3;
 
 
+  const MyBagId = (id) => {
+    localStorage.setItem("OpportunityId",JSON.stringify(id))
 
+  }
 
 
   return (
     <>
 
-      <MyBagFinal opportunityId={oppoId} />
       {/* TRACKING MODAL */}
 
       <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -178,7 +179,7 @@ function OrderListContent({ data }) {
                   </div>
 
                   <Link to="/my-bagorder">
-                    <button onClick={(e) => setoppoId(item.Id)}>
+                    <button onClick={() => MyBagId(item.Id)}>
                       View Order Details
                     </button>
                   </Link>
