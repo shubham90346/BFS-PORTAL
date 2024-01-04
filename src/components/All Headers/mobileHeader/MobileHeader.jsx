@@ -124,6 +124,7 @@ const MobileHeader = () => {
 
         </div>
     </div>
+    </div>
   );
 };
 
