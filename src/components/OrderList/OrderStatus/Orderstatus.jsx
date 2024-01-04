@@ -2,13 +2,8 @@ import React, { useMemo, useState } from 'react';
 import Styles from './Style.module.css'
 
 function Orderstatus({ TrackingData, opportunityId }) {
-
-
     const [data, setdata] = useState([]);
     const [Viewmore, setviewmore] = useState(false);
-
-
-
     const Values = useMemo(() => {
         let newId = TrackingData?.filter((data) =>
             data.Id === opportunityId
@@ -31,20 +26,16 @@ function Orderstatus({ TrackingData, opportunityId }) {
         "November",
         "December",
     ];
-
     let date = `${months[currentDate.getMonth()]
         } ${currentDate.getDate()}, ${currentDate.getFullYear()}`;
 
     var size = 1;
-
-
     return (
         <div>
             <section>
                 <div className={Styles.mainTop}>
                     <h2>Order Status </h2>
                     <div className={Styles.mainControl}>
-
 
                         {
                             data.map((item) => {
@@ -122,8 +113,6 @@ function Orderstatus({ TrackingData, opportunityId }) {
                         </div>
 
                     </div>
-
-
                 </div>
             </section>
         </div>
