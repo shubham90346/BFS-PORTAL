@@ -171,7 +171,8 @@
   text-align: center;
   /* padding: 0; */
   line-height: 5;
-  border: 0.5px solid black;
+  border-top: 0.5px solid black;
+  border-bottom: 0.5px solid black;
 }
 
 .Mainbox button {
@@ -184,6 +185,9 @@
   /* text-align: ce; */
   font-weight: 400;
   /* padding: 0; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .TotalPricer {
@@ -300,4 +304,26 @@
   .Mainbox1M {
     gap: 15px;
   }
+}
+
+
+@media (max-width: 767.98px) {
+.MyBagFinalTop {
+  display: block;
+  justify-content: space-between;
+}
+
+.MyBagFinalleft{
+      margin: 23px 0 0 0;
+}
+
+}
+
+@media (max-width: 767.98px) {
+.Mainbox{
+  display: block;
+}
+.Mainbox2M{
+  margin: 20px 0 0px 0;
+}
 }
