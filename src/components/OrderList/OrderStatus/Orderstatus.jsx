@@ -17,15 +17,71 @@ function Orderstatus(props) {
                             </div>
                         </div>
 
-                        <div className={Styles.ProtuctInnerBoxPara}>
-                            <div className={Styles.ProtuctInnerBoxInner}>
-                                <h3>Vitamin Enriched Face Base <span className={Styles.span3}>(+ 24 more)</span></h3>
-                                <p><span className={Styles.Span1}>PO Number :</span>   <span className={Styles.Span2}>#407-9596458</span></p>
-                                <p><span className={Styles.Span1}>Brand :</span>   <span className={Styles.Span2}>Susanne kaufmann</span></p>
-                                <p><span className={Styles.Span1}>Order Placed :</span>   <span className={Styles.Span2}>24 December 2023</span></p>
-                                <p><span className={Styles.Span1}>Order Type :</span>   <span className={Styles.Span2}>24 December 2023</span></p>
-                                {/* <p><span className={Styles.Span1}>Tracking Id :</span>   <span className={Styles.Span2}>#2345235</span></p> */}
-                                {/* <p><span className={Styles.Span1}>Shipment Method :</span>   <span className={Styles.Span2}>FedEx</span></p> */}
+                        {
+                            data.map((item) => {
+                                date = new Date(item.CreatedDate);
+                                let cdate = `${currentDate.getDate()} ${months[currentDate.getMonth()]
+                                    } ${currentDate.getFullYear()}`;
+                                return <>  
+                                          {console.log(item)}
+                                    <div className={Styles.ProtuctInnerBox}>
+                                        <div className={Styles.BoxBlack}>
+                                            <div className={Styles.Boxwhite}>
+                                                <h1>{item.ProductCount}</h1>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className={Styles.ProtuctInnerBoxPara}>
+                                        <div className={Styles.ProtuctInnerBoxInner}>
+                                        <h4>
+                                                {
+                                                    item.OpportunityLineItems?.records.slice(0, size).map((ele) => {
+                                                        return (
+                                                            <>
+
+                                                                {Viewmore
+                                                                    ? ele.Name
+                                                                    : `${ele.Name.slice(0, 31)}...`}
+
+                                                            </>
+                                                        )
+                                                    })
+                                                }
+
+
+                                            </h4>
+                                            <p><span className={Styles.Span1}>PO Number :</span>   <span className={Styles.Span2}>{item.PO_Number__c}</span></p>
+                                            <p><span className={Styles.Span1}>Brand :</span>   <span className={Styles.Span2}>{item.ManufacturerName__c}</span></p>
+                                            <p><span className={Styles.Span1}>Order Placed :</span>   <span className={Styles.Span2}>{cdate}</span></p>
+                                            <p><span className={Styles.Span1}>Order Type :</span>   <span className={Styles.Span2}>{item.Season__c}</span></p>
+
+
+                                        </div>
+
+                                    </div>
+
+
+
+
+                                </>
+                            })
+
+
+                        }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                             </div>
 

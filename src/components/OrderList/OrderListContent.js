@@ -17,13 +17,6 @@ function OrderListContent({ data }) {
   const [isTrackingModal, setIsTrackingModal] = useState(false);
   const [oppoId, setoppoId] = useState();
 
-
-
-
-  const handleclick = () => {
-    setviewmore(!Viewmore);
-  };
-
   const currentDate = new Date();
   const months = [
     "January",
@@ -63,46 +56,23 @@ function OrderListContent({ data }) {
     ordermodaldata();
   })
 
+  let size = 3;
 
-  let ab = localStorage.getItem("Api Data")
-  let headersList = {
-    "Accept": "*/*"
-  }
 
   let Content = new FormData();
   Content.append("key", JSON.parse(ab).data.access_token);
   // Content.append("opportunity_id", opportunity);
 
-  const ordermodaldata = async () => {
-    const response = await axios.post(`https://dev.beautyfashionsales.com/beauty/0DS68FOD7s`, Content, headersList)
-    // console.log(response);
-  }
 
-  const handlemodal = () => {
-    Orderdata?.find(
-      (OppId) => setoppoId(OppId.Id)
-    )
+  const MyBagId = (id) => {
+    localStorage.setItem("OpportunityId",JSON.stringify(id))
+
+
   }
 
 
   return (
     <>
-
-
-      {/* MODAL MY BAG */}
-
-      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl modal-lg">
-          <div class="modal-content">
-            {/* <div class="modal-header">
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div> */}
-            <div class="modal-body  mt-4">
-              <MyBagFinal />
-            </div>
-          </div>
-        </div>
-      </div>
 
 
       {/* TRACKING MODAL */}
@@ -218,7 +188,12 @@ function OrderListContent({ data }) {
                     <p>${Number(item.Amount).toFixed(2)}</p>
                   </div>
 
-                  <button data-bs-toggle="modal" data-bs-target="#exampleModal" >View Order Details</button>
+                  <Link to="/my-bagorder">
+                    <button onClick={() => MyBagId(item.Id)}>
+                      View Order Details
+                    </button>
+                  </Link>
+
                 </div>
               </div>
 

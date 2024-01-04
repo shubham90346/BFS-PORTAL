@@ -44,7 +44,7 @@ const MyRetailersPage = () => {
 
   return (
     <>
-      <div className="container p-0 ">
+      <div className="container  ">
         <div className="row p-0 m-0 d-flex flex-column justify-content-around align-items-center ">
           {/* TopNav */}
           <TopNav />

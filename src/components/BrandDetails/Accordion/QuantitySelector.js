@@ -12,7 +12,7 @@ const QuantitySelector = ({ onChange, value = 0, min = 0 }) => {
   }, [value, min]);
 
   return (
-    <div className="w-[85px] h-[27px] flex border-[0.5px] border-solid border-black">
+    <div className="w-[85px] h-[27px] flex ">
       <button
         onClick={() => {
           let newValue = value;
