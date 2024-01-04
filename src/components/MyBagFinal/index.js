@@ -8,14 +8,57 @@ import Img4 from "./Images/Img4.png";
 import Img5 from "./Images/Img5.png";
 import QuantitySelector from "../BrandDetails/Accordion/QuantitySelector";
 import { useNavigate } from "react-router-dom";
+import { GetAuthData, OrderPlaced, POGenerator, fetchBeg } from "../../lib/store";
 import { useBag } from "../../context/BagContext";
 
 function MyBagFinal() {
   const navigate = useNavigate();
+  const [orderDesc, setOrderDesc] = useState(null);
+  const [PONumber, setPONumber] = useState(POGenerator())
+  const [buttonActive,setButtonActive] = useState(false)
   const { addOrder, orderQuantity } = useBag();
-
   let total = 0;
   let price = "";
+  const orderPlaceHandler = () => {
+    GetAuthData().then((user) => {
+      let begValue = fetchBeg()
+      if (begValue) {
+        setButtonActive(true)
+        let list = []
+        let productLists = Object.values(begValue.orderList)
+        if (productLists.length) {
+          productLists.map((product) => {
+            let temp = {
+              ProductCode: product.product.ProductCode,
+              qty: product.quantity,
+              price: product.product.usdRetail__c.split("$").length == 2 ? product.product.usdRetail__c.split("$")[1] : product.product.usdRetail__c,
+              discount: product.product.Category__c == "TESTER" ? product.discount.testerMargin : product.product.Category__c == "Samples" ? product.discount.sample : product.discount.margin
+            }
+            list.push(temp)
+          })
+        }
+        let begToOrder = {
+          AccountId: begValue?.Account?.id,
+          Name: begValue?.Account?.name,
+          ManufacturerId__c: begValue?.Manufacturer?.id,
+          PONumber: PONumber,
+          desc: orderDesc,
+          SalesRepId: user.Sales_Rep__c,
+          Type: "Wholesale Numbers", list, key: user.x_access_token
+        }
+        OrderPlaced({ order: begToOrder }).then((response) => {
+          if (response) {
+            console.log({ response });
+            window.location.href = "http://localhost:3000/dashboard"
+          }
+        }).catch((err) => {
+          console.error({ err });
+        })
+      }
+    }).catch((error) => {
+      console.error({ error });
+    })
+  }
   return (
     <div className="mt-4">
       <section>
@@ -38,14 +81,15 @@ function MyBagFinal() {
                   </svg>
                 </button>
                 <h4>
-                  <span> {localStorage.getItem("manufacturer")} | </span>{" "}
-                  {localStorage.getItem("Account")}
+
+                  {buttonActive &&<><span> {localStorage.getItem("manufacturer")} | </span> {localStorage.getItem("Account")}</>}
+
                 </h4>
               </div>
 
               <div className={Styles.MyBagFinalleft}>
                 <h5>
-                  PO Number <b>#310475</b>{" "}
+                  PO Number <b>{buttonActive?PONumber:"---"}</b>{" "}
                 </h5>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -68,51 +112,27 @@ function MyBagFinal() {
                   <div className={Styles.MainBag}>
                     <h3>SHOPPING BAG ({orderQuantity})</h3>
                     <div className={Styles.scrollP}>
-                      <div
-                        className={`${Styles.MainInner} overflow-auto`}
-                        style={{ minHeight: "400px" }}
-                      >
-                        {Object.values(
-                          JSON.parse(localStorage.getItem("orders"))
-                        ).map((ele) => {
+
+                      <div className={`${Styles.MainInner} overflow-auto`} style={{ minHeight: "400px" }}>
+                        {localStorage.getItem("orders")&&Object.values(JSON.parse(localStorage.getItem("orders"))).length > 0 && Object.values(JSON.parse(localStorage.getItem("orders"))).map((ele) => {
+
                           // console.log(ele);
                           {
                             ele.Category__c === "TESTER"
                               ? (price = ele.product.usdRetail__c.includes("$")
-                                  ? (
-                                      +ele.product.usdRetail__c.substring(1) -
-                                      (ele?.discount?.testerMargin / 100) *
-                                        +ele.product.usdRetail__c.substring(1)
-                                    ).toFixed(2)
-                                  : (
-                                      +ele.product.usdRetail__c -
-                                      (ele?.discount?.testerMargin / 100) *
-                                        +ele.product.usdRetail__c
-                                    ).toFixed(2))
+
+                                ? (+ele.product.usdRetail__c.substring(1) - (ele?.discount?.testerMargin / 100) * +ele.product.usdRetail__c.substring(1)).toFixed(2)
+                                : (+ele.product.usdRetail__c - (ele?.discount?.testerMargin / 100) * +ele.product.usdRetail__c).toFixed(2))
                               : ele.Category__c === "Samples"
-                              ? (price = ele.product.usdRetail__c.includes("$")
-                                  ? (
-                                      +ele.product.usdRetail__c.substring(1) -
-                                      (ele?.discount?.sample / 100) *
-                                        +ele.product.usdRetail__c.substring(1)
-                                    ).toFixed(2)
-                                  : (
-                                      +ele.product.usdRetail__c -
-                                      (ele?.discount?.sample / 100) *
-                                        +ele.product.usdRetail__c
-                                    ).toFixed(2))
-                              : (price = ele.product.usdRetail__c.includes("$")
-                                  ? (
-                                      +ele.product.usdRetail__c.substring(1) -
-                                      (ele?.discount?.margin / 100) *
-                                        +ele.product.usdRetail__c.substring(1)
-                                    ).toFixed(2)
-                                  : (
-                                      +ele.product.usdRetail__c -
-                                      (ele?.discount?.margin / 100) *
-                                        +ele.product.usdRetail__c
-                                    ).toFixed(2));
+                                ? (price = ele.product.usdRetail__c.includes("$")
+                                  ? (+ele.product.usdRetail__c.substring(1) - (ele?.discount?.sample / 100) * +ele.product.usdRetail__c.substring(1)).toFixed(2)
+                                  : (+ele.product.usdRetail__c - (ele?.discount?.sample / 100) * +ele.product.usdRetail__c).toFixed(2))
+                                : (price = ele.product.usdRetail__c.includes("$")
+                                  ? (+ele.product.usdRetail__c.substring(1) - (ele?.discount?.margin / 100) * +ele.product.usdRetail__c.substring(1)).toFixed(2)
+                                  : (+ele.product.usdRetail__c - (ele?.discount?.margin / 100) * +ele.product.usdRetail__c).toFixed(2));
+
                           }
+                          price = price * ele.quantity
                           // console.log(price);
                           total += Number(price);
                           // console.log(total);
@@ -200,24 +220,23 @@ function MyBagFinal() {
                     <h2>Shipping Address</h2>
 
                     <div className={Styles.ShipAdress}>
-                      <p>
+                      {buttonActive?<p>
                         928 S Western Ave <br />
                         # 111Los Angeles, CA 90006US
                         <br />
                         Example123@gmail.com |+(442)-XXX-XX00
-                      </p>
+                      </p>:<p>No Shipping Address</p>}
                     </div>
 
                     <div className={Styles.ShipAdress2}>
                       <h4>Note</h4>
-                      <textarea
-                        placeholder="Description"
-                        className="placeholder:font-[Arial-500] text-[14px] tracking-[1.12px] mb-[20px]"
-                      />
+
+                      <textarea onKeyUp={(e) => setOrderDesc(e.target.value)} placeholder="Description" className="placeholder:font-[Arial-500] text-[14px] tracking-[1.12px] mb-[20px]" />
+
                     </div>
 
                     <div className={Styles.ShipBut}>
-                      <button>${Number(total).toFixed(2)} PLACE ORDER</button>
+                      <button onClick={() => { orderPlaceHandler() }} disabled={!buttonActive}>${Number(total).toFixed(2)} PLACE ORDER</button>
                     </div>
                   </div>
                 </div>
