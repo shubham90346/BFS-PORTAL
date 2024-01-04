@@ -6,6 +6,8 @@ const BrandCard = ({ brand, image }) => {
   const navigate = useNavigate();
   return (
     <div className={`w-full last:mb-0 mb-4 ${Page.HoverArrow }`}>
+      <div className="row">
+        <div className="">
       <div className={`border-b-[0.5px] border-[#D0CFCF] flex flex-col gap-4 h-full  ${Page.ImgHover1 }`} >
         {image ? (
           <div className= {`border-[0.5px]  relative  border-[#D0CFCF] ${Page.ImgHover }`}>
@@ -18,7 +20,7 @@ const BrandCard = ({ brand, image }) => {
         ) : null}
         <div className="flex justify-between items-start h-full px-[10px]">
           <div className="flex flex-col justify-between h-full">
-            <div className="font-medium text-black text-[20px] tracking-[1.12px] leading-[20px] [font-family:'Arial-500']">
+            <div className={`font-medium text-black  tracking-[1.12px] leading-[20px] [font-family:'Arial-500'] ${Page.fontSettingBrand}`}>
               {brand.Name}
             </div>
 
@@ -43,6 +45,8 @@ const BrandCard = ({ brand, image }) => {
             </div>
           </div>
         </div>
+      </div>
+      </div>
       </div>
     </div>
   );
