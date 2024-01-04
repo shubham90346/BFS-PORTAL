@@ -43,50 +43,6 @@ const Accordion = ({ data, formattedData }) => {
     setOrders({});
   };
   return (
-
-    <div className={`overflow-auto`}>
-      <div className={styles.accordion}>
-        <table className="table table-hover ">
-          <thead>
-            <tr>
-              <th>Image</th>
-              <th>Title</th>
-              <th>Product Code</th>
-              <th>UPC</th>
-              <th>List Price</th>
-              <th>Sale Price</th>
-              <th>Min Qty</th>
-              <th>Qty</th>
-            </tr>
-          </thead>
-          {Object.keys(formattedData).length ? (
-            <>
-              <tbody>
-                {Object.keys(formattedData)?.map((key, index) => {
-                  let categoryOrderQuantity = 0;
-                  Object.values(orders)?.forEach((order) => {
-                    if (order.product.Category__c === key) {
-                      categoryOrderQuantity += order.quantity;
-                    }
-                  });
-                  // console.log(formattedData);
-                  return (
-                    <CollapsibleRow title={key} quantity={categoryOrderQuantity} key={index}>
-                      {Object.values(formattedData)[index]?.map((value, indexed) => (
-                        <tr className={`w-full ${styles.tableContro}`} key={indexed}>
-                          {/* {console.log(value.Category__c)} */}
-                          <td>
-                            <img src={Img1} alt="img" />
-                          </td>
-                          <td className="text-capitalize">{value.Name}</td>
-                          <td>{value.ProductCode}</td>
-                          <td>{value.ProductUPC__c === null || "n/a" ? "--" : value.ProductUPC__c}</td>
-                          <td>{value.usdRetail__c.includes("$") ? `$${(+value.usdRetail__c.substring(1)).toFixed(2)}` : `$${Number(value.usdRetail__c).toFixed(2)}`}</td>
-                          <td>
-                            {value.Category__c === "TESTER" ? (
-                              <>
-                                $
-
     <>
       {replaceCartModalOpen ? (
         <ModalPage
@@ -162,7 +118,6 @@ const Accordion = ({ data, formattedData }) => {
                                   : value.ProductUPC__c}
                               </td>
                               <td>
-
                                 {value.usdRetail__c.includes("$")
                                   ? `$${(+value.usdRetail__c.substring(
                                       1
