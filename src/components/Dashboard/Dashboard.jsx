@@ -561,7 +561,7 @@ function Dashboard(props) {
             <p className={Styles.Tabletext}>Top Performing Accounts</p>
               <div className="row">
                 {/* TOP PERFORMANCE */}
-                <div className="col-lg-6 col-md-6  ">
+                <div className="col-lg-6 col-md-6 col-sm-6 "> 
                   <div className={Styles.top_perform}>
                     <div className="container">
                       <div className={Styles.top_account}>
@@ -592,7 +592,7 @@ function Dashboard(props) {
                   </div>
                 </div>
 
-                <div className="col-lg-6 col-md-6">
+                <div className="col-lg-6 col-md-6 col-sm-6">
                   <div className={Styles.top_perform}>
                     <div className="container">
                       <div className={Styles.top_account}>
@@ -615,7 +615,7 @@ function Dashboard(props) {
             <div className="col-lg-6">
             <p className={Styles.Tabletext1}>Low Performing Accounts</p>
               <div className="row">
-                <div className="col-lg-6 col-md-6">
+                <div className="col-lg-6 col-md-6 col-sm-6">
                   {/* LOW PERFORMANCE */}
                   <div className={Styles.top_perform2}>
                     <div className="container">
@@ -647,7 +647,7 @@ function Dashboard(props) {
                   </div>
                 </div>
 
-                <div className="col-lg-6 col-md-6">
+                <div className="col-lg-6 col-md-6 col-sm-6">
                   <div className={Styles.top_perform}>
                     <div className="container">
                       <div className={Styles.top_accnew}>

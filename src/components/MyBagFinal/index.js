@@ -1,5 +1,5 @@
+/* eslint-disable no-lone-blocks */
 import React, { useState } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
 import Styles from "./Styles.module.css";
 import Img1 from "./Images/Eye1.png";
 import Img2 from "./Images/Img2.png";
@@ -8,67 +8,57 @@ import Img4 from "./Images/Img4.png";
 import Img5 from "./Images/Img5.png";
 import QuantitySelector from "../BrandDetails/Accordion/QuantitySelector";
 import { useNavigate } from "react-router-dom";
-import { useGlobal } from "../../context/GlobalContext";
+import { GetAuthData, OrderPlaced, POGenerator, fetchBeg } from "../../lib/store";
+import { useBag } from "../../context/BagContext";
 
 function MyBagFinal() {
   const navigate = useNavigate();
-  const [quantity1, setQuantity1] = useState(1);
-  const [quantity2, setQuantity2] = useState(1);
-  const [quantity3, setQuantity3] = useState(1);
-  const [quantity4, setQuantity4] = useState(1);
-  const [quantity5, setQuantity5] = useState(1);
-
-  const increment1 = () => {
-    setQuantity1(quantity1 + 1);
-  };
-
-  const decrement1 = () => {
-    if (quantity1 > 1) {
-      setQuantity1(quantity1 - 1);
-    }
-  };
-
-  const increment2 = () => {
-    setQuantity2(quantity2 + 1);
-  };
-
-  const decrement2 = () => {
-    if (quantity2 > 1) {
-      setQuantity2(quantity2 - 1);
-    }
-  };
-
-  const increment3 = () => {
-    setQuantity3(quantity3 + 1);
-  };
-
-  const decrement3 = () => {
-    if (quantity3 > 1) {
-      setQuantity3(quantity3 - 1);
-    }
-  };
-
-  const increment4 = () => {
-    setQuantity4(quantity4 + 1);
-  };
-
-  const decrement4 = () => {
-    if (quantity4 > 1) {
-      setQuantity4(quantity4 - 1);
-    }
-  };
-
-  const increment5 = () => {
-    setQuantity5(quantity5 + 1);
-  };
-
-  const decrement5 = () => {
-    if (quantity5 > 1) {
-      setQuantity5(quantity5 - 1);
-    }
-  };
-  const { orderQuantity } = useGlobal();
+  const [orderDesc, setOrderDesc] = useState(null);
+  const [PONumber, setPONumber] = useState(POGenerator())
+  const [buttonActive,setButtonActive] = useState(false)
+  const { addOrder, orderQuantity } = useBag();
   let total = 0;
+  let price = "";
+  const orderPlaceHandler = () => {
+    GetAuthData().then((user) => {
+      let begValue = fetchBeg()
+      if (begValue) {
+        setButtonActive(true)
+        let list = []
+        let productLists = Object.values(begValue.orderList)
+        if (productLists.length) {
+          productLists.map((product) => {
+            let temp = {
+              ProductCode: product.product.ProductCode,
+              qty: product.quantity,
+              price: product.product.usdRetail__c.split("$").length == 2 ? product.product.usdRetail__c.split("$")[1] : product.product.usdRetail__c,
+              discount: product.product.Category__c == "TESTER" ? product.discount.testerMargin : product.product.Category__c == "Samples" ? product.discount.sample : product.discount.margin
+            }
+            list.push(temp)
+          })
+        }
+        let begToOrder = {
+          AccountId: begValue?.Account?.id,
+          Name: begValue?.Account?.name,
+          ManufacturerId__c: begValue?.Manufacturer?.id,
+          PONumber: PONumber,
+          desc: orderDesc,
+          SalesRepId: user.Sales_Rep__c,
+          Type: "Wholesale Numbers", list, key: user.x_access_token
+        }
+        OrderPlaced({ order: begToOrder }).then((response) => {
+          if (response) {
+            console.log({ response });
+            window.location.href = "http://localhost:3000/dashboard"
+          }
+        }).catch((err) => {
+          console.error({ err });
+        })
+      }
+    }).catch((error) => {
+      console.error({ error });
+    })
+  }
   return (
     <div className="mt-4">
       <section>
@@ -76,8 +66,14 @@ function MyBagFinal() {
           <div>
             <div className={Styles.MyBagFinalTop}>
               <div className={Styles.MyBagFinalRight}>
-                <button onClick={() => navigate("/my-retailers")}>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="16" viewBox="0 0 24 16" fill="none">
+                <button onClick={() => navigate("/products")}>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="16"
+                    viewBox="0 0 24 16"
+                    fill="none"
+                  >
                     <path
                       d="M8.94284 2.27615C9.46349 1.75544 9.46349 0.911229 8.94284 0.390521C8.42213 -0.130174 7.57792 -0.130174 7.05721 0.390521L2.3911 5.05666C2.39092 5.05684 2.39128 5.05648 2.3911 5.05666L0.390558 7.05721C0.153385 7.29442 0.024252 7.59868 0.00313201 7.90895C-0.00281464 7.99562 -0.000321319 8.08295 0.010852 8.17002C0.0431986 8.42308 0.148118 8.66868 0.325638 8.87322C0.348651 8.89975 0.372651 8.92535 0.397585 8.94989L7.05721 15.6095C7.57792 16.1302 8.42213 16.1302 8.94284 15.6095C9.46349 15.0888 9.46349 14.2446 8.94284 13.7239L4.55231 9.33335H22.6667C23.4031 9.33335 24 8.73642 24 8.00002C24 7.26362 23.4031 6.66668 22.6667 6.66668H4.55231L8.94284 2.27615Z"
                       fill="black"
@@ -85,16 +81,23 @@ function MyBagFinal() {
                   </svg>
                 </button>
                 <h4>
-                  {" "}
-                  <span> {localStorage.getItem("manufacturer")} | </span> {localStorage.getItem("Account")}
-                </h4>{" "}
+
+                  {buttonActive &&<><span> {localStorage.getItem("manufacturer")} | </span> {localStorage.getItem("Account")}</>}
+
+                </h4>
               </div>
 
               <div className={Styles.MyBagFinalleft}>
                 <h5>
-                  PO Number <b>#310475</b>{" "}
+                  PO Number <b>{buttonActive?PONumber:"---"}</b>{" "}
                 </h5>
-                <svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20" fill="none">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="21"
+                  height="20"
+                  viewBox="0 0 21 20"
+                  fill="none"
+                >
                   <path
                     d="M19.3078 10.6932V19.2841C19.3078 19.6794 18.9753 20 18.5652 20H0.742642C0.332504 20 0 19.6794 0 19.2841V2.10217C0 1.70682 0.332504 1.38627 0.742642 1.38627H9.65389C10.064 1.38627 10.3965 1.70682 10.3965 2.10217C10.3965 2.49754 10.064 2.81809 9.65389 2.81809H1.48519V18.5682H17.8226V10.6932C17.8226 10.2979 18.1551 9.97731 18.5652 9.97731C18.9753 9.97731 19.3078 10.2979 19.3078 10.6932ZM17.9926 5.11422L15.6952 2.89943L7.72487 10.5832L7.09297 13.4072L10.0223 12.7981L17.9926 5.11422ZM21 2.2148L18.7027 0L16.8541 1.78215L19.1515 3.99692L21 2.2148Z"
                     fill="black"
@@ -109,16 +112,30 @@ function MyBagFinal() {
                   <div className={Styles.MainBag}>
                     <h3>SHOPPING BAG ({orderQuantity})</h3>
                     <div className={Styles.scrollP}>
-                      <div className={`${Styles.MainInner} overflow-auto` } style={{minHeight:"400px"}}>
-                        {console.log(JSON.parse(localStorage.getItem("orders")))}
-                        {Object.values(JSON.parse(localStorage.getItem("orders"))).map((ele) => {
-                          console.log(ele);
-                          let price =ele.product?.usdRetail__c.includes("$")
-                              ? +ele.product?.usdRetail__c.substring(1) - (localStorage.getItem("discount") / 100) * +ele.product?.usdRetail__c.substring(1)
-                              : +ele.product?.usdRetail__c - (localStorage.getItem("discount") / 100) * +ele.product?.usdRetail__c;
-                              total=total+price;
-                              // console.log(total);
 
+                      <div className={`${Styles.MainInner} overflow-auto`} style={{ minHeight: "400px" }}>
+                        {localStorage.getItem("orders")&&Object.values(JSON.parse(localStorage.getItem("orders"))).length > 0 && Object.values(JSON.parse(localStorage.getItem("orders"))).map((ele) => {
+
+                          // console.log(ele);
+                          {
+                            ele.Category__c === "TESTER"
+                              ? (price = ele.product.usdRetail__c.includes("$")
+
+                                ? (+ele.product.usdRetail__c.substring(1) - (ele?.discount?.testerMargin / 100) * +ele.product.usdRetail__c.substring(1)).toFixed(2)
+                                : (+ele.product.usdRetail__c - (ele?.discount?.testerMargin / 100) * +ele.product.usdRetail__c).toFixed(2))
+                              : ele.Category__c === "Samples"
+                                ? (price = ele.product.usdRetail__c.includes("$")
+                                  ? (+ele.product.usdRetail__c.substring(1) - (ele?.discount?.sample / 100) * +ele.product.usdRetail__c.substring(1)).toFixed(2)
+                                  : (+ele.product.usdRetail__c - (ele?.discount?.sample / 100) * +ele.product.usdRetail__c).toFixed(2))
+                                : (price = ele.product.usdRetail__c.includes("$")
+                                  ? (+ele.product.usdRetail__c.substring(1) - (ele?.discount?.margin / 100) * +ele.product.usdRetail__c.substring(1)).toFixed(2)
+                                  : (+ele.product.usdRetail__c - (ele?.discount?.margin / 100) * +ele.product.usdRetail__c).toFixed(2));
+
+                          }
+                          price = price * ele.quantity
+                          // console.log(price);
+                          total += Number(price);
+                          // console.log(total);
                           return (
                             <div className={Styles.Mainbox}>
                               <div className={Styles.Mainbox1M}>
@@ -129,13 +146,16 @@ function MyBagFinal() {
                                   <h2>{ele.product?.Name}</h2>
                                   <p>
                                     <span className={Styles.Span1}>
-                                      {ele.product?.usdRetail__c.includes("$") ? `$${(+ele.product?.usdRetail__c.substring(1)).toFixed(2)}` : `$${ele.product?.usdRetail__c}.00`}
+                                      {ele.product?.usdRetail__c.includes("$")
+                                        ? `$${(+ele.product?.usdRetail__c.substring(
+                                            1
+                                          )).toFixed(2)}`
+                                        : `$${Number(
+                                            ele.product?.usdRetail__c
+                                          ).toFixed(2)}`}
                                     </span>
                                     <span className={Styles.Span2}>
-                                      $
-                                      {ele.product?.usdRetail__c.includes("$")
-                                        ? (+ele.product?.usdRetail__c.substring(1) - (localStorage.getItem("discount") / 100) * +ele.product?.usdRetail__c.substring(1)).toFixed(2)
-                                        : (+ele.product?.usdRetail__c - (localStorage.getItem("discount") / 100) * +ele.product?.usdRetail__c).toFixed(2)}
+                                      ${Number(price).toFixed(2)}
                                     </span>
                                   </p>
                                 </div>
@@ -143,7 +163,13 @@ function MyBagFinal() {
 
                               <div className={Styles.Mainbox2M}>
                                 <div className={Styles.Mainbox4}>
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="19" viewBox="0 0 14 19" fill="none">
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="14"
+                                    height="19"
+                                    viewBox="0 0 14 19"
+                                    fill="none"
+                                  >
                                     <path
                                       d="M1.02103 2.77521H4.90502V1.78442C4.90522 1.49679 5.0213 1.22098 5.22779 1.01753C5.43429 0.814078 5.71433 0.699599 6.00645 0.699219H7.99421C8.28633 0.699599 8.56637 0.814078 8.77287 1.01753C8.97936 1.22098 9.09545 1.49679 9.09564 1.78442V2.77521H12.9796C13.2504 2.77521 13.51 2.88111 13.7015 3.06962C13.8929 3.25812 14.0005 3.51378 14.0005 3.78036V4.96501C14.0004 5.21951 13.9022 5.4645 13.7258 5.65052C13.5494 5.83654 13.3079 5.94974 13.05 5.96729V16.6215C13.0495 17.1206 12.8481 17.5991 12.4898 17.9521C12.1315 18.3052 11.6457 18.5039 11.1388 18.5047H2.86258C2.35572 18.5039 1.86988 18.3052 1.51161 17.9521C1.15334 17.5991 0.951874 17.1206 0.951392 16.6215V5.96836C0.693394 5.95099 0.451705 5.83786 0.275144 5.65183C0.0985832 5.46579 0.00030899 5.22071 0.000172615 4.96608V3.78144C2.86102e-05 3.64935 0.0263271 3.51853 0.0775661 3.39646C0.128804 3.27438 0.203979 3.16345 0.298788 3.07C0.393598 2.97655 0.506184 2.90241 0.630111 2.85183C0.754039 2.80125 0.886876 2.77521 1.02103 2.77521ZM8.51229 1.78442C8.5122 1.64909 8.4576 1.51933 8.36049 1.42357C8.26337 1.32781 8.13165 1.27388 7.99421 1.27359H6.00645C5.86901 1.27388 5.73729 1.32781 5.64017 1.42357C5.54306 1.51933 5.48847 1.64909 5.48837 1.78442V2.77521H8.51229V1.78442ZM1.53401 16.6215C1.5343 16.9683 1.67424 17.3008 1.92316 17.5462C2.17207 17.7916 2.50964 17.9297 2.86185 17.9304H11.1381C11.4903 17.9297 11.8279 17.7916 12.0768 17.5462C12.3257 17.3008 12.4656 16.9683 12.4659 16.6215V5.97123H1.53401V16.6215ZM0.583519 4.96608C0.583519 5.08033 0.629614 5.1899 0.711662 5.27069C0.793712 5.35148 0.904994 5.39686 1.02103 5.39686H12.9796C13.0957 5.39686 13.2069 5.35148 13.289 5.27069C13.371 5.1899 13.4171 5.08033 13.4171 4.96608V3.78144C13.4171 3.66719 13.371 3.55762 13.289 3.47684C13.2069 3.39605 13.0957 3.35066 12.9796 3.35066H1.02103C0.904994 3.35066 0.793712 3.39605 0.711662 3.47684C0.629614 3.55762 0.583519 3.66719 0.583519 3.78144V4.96608Z"
                                       fill="black"
@@ -159,13 +185,18 @@ function MyBagFinal() {
                                   </svg>
                                 </div>
                                 <div className={Styles.Mainbox5}>
-                                <QuantitySelector
-                              min={ele.quantity|| 0}
-                              onChange={(quantity) => {
-                                // onQuantityChange(value, quantity);
-                              }}
-                              defaultValue={ele.quantity}
-                            />
+                                  <QuantitySelector
+                                    min={ele.product.Min_Order_QTY__c || 0}
+                                    onChange={(quantity) => {
+                                      addOrder(
+                                        ele.product,
+                                        quantity,
+                                        ele.discount
+                                      );
+                                      // onQuantityChange(value, quantity);
+                                    }}
+                                    value={ele.quantity}
+                                  />
                                 </div>
                               </div>
                             </div>
@@ -189,21 +220,23 @@ function MyBagFinal() {
                     <h2>Shipping Address</h2>
 
                     <div className={Styles.ShipAdress}>
-                      <p>
+                      {buttonActive?<p>
                         928 S Western Ave <br />
                         # 111Los Angeles, CA 90006US
                         <br />
                         Example123@gmail.com |+(442)-XXX-XX00
-                      </p>
+                      </p>:<p>No Shipping Address</p>}
                     </div>
 
                     <div className={Styles.ShipAdress2}>
                       <h4>Note</h4>
-                      <textarea placeholder="Description" className="placeholder:font-[Arial-500] text-[14px] tracking-[1.12px] mb-[20px]" />
+
+                      <textarea onKeyUp={(e) => setOrderDesc(e.target.value)} placeholder="Description" className="placeholder:font-[Arial-500] text-[14px] tracking-[1.12px] mb-[20px]" />
+
                     </div>
 
                     <div className={Styles.ShipBut}>
-                      <button>${Number(total).toFixed(2)} PLACE ORDER</button>
+                      <button onClick={() => { orderPlaceHandler() }} disabled={!buttonActive}>${Number(total).toFixed(2)} PLACE ORDER</button>
                     </div>
                   </div>
                 </div>
