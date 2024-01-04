@@ -1,11 +1,13 @@
 import styles from "./style.module.css";
-const Loader = () => {
+function OrderLoader() {
   return (
     <div className={styles.loaderContainer}>
-      <div class="three-body__dot"></div>
-      <div class="three-body__dot"></div>
-      <div class="three-body__dot"></div>
+      <i className={styles.background}></i>
+      <h2 className={styles.titleHolder}>processing, please <strong>Wait</strong></h2>
+      <div className={styles.ballContainer}>
+        <div className={`${styles.ball} ${styles.mb}`}></div>
+      </div>
     </div>
   );
 };
-export default Loader()
+export default OrderLoader;

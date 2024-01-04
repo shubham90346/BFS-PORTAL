@@ -15,9 +15,9 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import Loading from "../Loading";
 import { FilterItem } from "../FilterItem";
 import FilterSearch from "../FilterSearch";
-
 import ModalPage from "../Modal UI";
 import { useBag } from "../../context/BagContext";
+import { fetchBeg } from "../../lib/store";
 
 const groupBy = function (xs, key) {
   return xs?.reduce(function (rv, x) {
@@ -27,6 +27,7 @@ const groupBy = function (xs, key) {
 };
 
 function Product() {
+  const [ emptyBag,setEmptyBag] = useState(false)
   const { orderQuantity } = useBag();
 
   const { user } = useAuth();
@@ -154,6 +155,14 @@ function Product() {
     }, 2000);
     // setRedirect(false);
   };
+  const generateOrderHandler = ()=>{
+    let begValue = fetchBeg()
+    if(begValue?.Account?.id && begValue?.Manufacturer?.id && Object.values(begValue.orderList).length > 0){
+      navigate("/my-bag");
+    }else{
+      setEmptyBag(true)
+    }
+  }
   return (
     <>
       {redirect ? (
@@ -173,6 +182,16 @@ function Product() {
         />
       ) : (
         <div className="container-fluid p-0 m-0">
+          {emptyBag && <ModalPage
+        open
+        content={
+          <div>
+            <p className="text-center">
+              No Product in your bag
+              </p>
+          </div>
+        }
+      />}
           <div className="row p-0 m-0 d-flex flex-column justify-content-around align-items-center col-12">
             {/* TopNav */}
             <div className="col-10">
@@ -307,7 +326,7 @@ function Product() {
                             <h4>Total Number of Products : {orderQuantity}</h4>
                             <button
                               onClick={() => {
-                                navigate("/my-bag");
+                                generateOrderHandler()
                               }}
                             >
                               Generate Order

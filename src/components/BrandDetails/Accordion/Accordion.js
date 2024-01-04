@@ -16,9 +16,9 @@ const Accordion = ({ data, formattedData }) => {
   const onQuantityChange = (product, quantity) => {
     if (Object.values(orders).length) {
       if (
-        Object.values(orders)[0].brand ===
+        Object.values(orders)[0]?.manufacturer?.name ===
           localStorage.getItem("manufacturer") &&
-        Object.values(orders)[0].retailer === localStorage.getItem("Account") &&
+        Object.values(orders)[0].account.name === localStorage.getItem("Account") &&
         Object.values(orders)[0].productType ===
           (product.Category__c === "PREORDER" ? "pre-order" : "wholesale")
       ) {
@@ -92,15 +92,15 @@ const Accordion = ({ data, formattedData }) => {
                   {Object.keys(formattedData)?.map((key, index) => {
                     let categoryOrderQuantity = 0;
                     Object.values(orders)?.forEach((order) => {
-                      if (order.product.Category__c === key) {
+                      if (order.product.Category__c === key || `${order.product.Category__c}` === key) {
                         categoryOrderQuantity += order.quantity;
                       }
                     });
                     // console.log(formattedData);
                     return (
                       <CollapsibleRow
-                        title={key}
-                        quantity={categoryOrderQuantity}
+                        title={key != "null"? key:"No Category"}
+                         quantity={categoryOrderQuantity}
                         key={index}
                       >
                         {Object.values(formattedData)[index]?.map(

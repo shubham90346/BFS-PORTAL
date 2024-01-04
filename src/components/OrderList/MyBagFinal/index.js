@@ -42,7 +42,7 @@ function MyBagFinal() {
 
   }
 
-  const handleback = () =>{
+  const handleback = () => {
     navigate('/order-list')
   }
 
@@ -54,7 +54,7 @@ function MyBagFinal() {
     <div>
       <section>
 
-      
+
         <div className='container mt-4'>
 
           <div>
@@ -78,7 +78,7 @@ function MyBagFinal() {
               <div className='row'>
                 <div className='col-lg-7 col-md-8 col-sm-12'>
                   <div className={Styles.MainBag}>
-                    <h3>SHOPPING BAG (33)</h3>
+                    <h3>Order Details ({OrderData.OpportunityLineItems.length})</h3>
                     <div className={Styles.scrollP}>
                       <div className={Styles.MainInner}>
 
@@ -136,18 +136,18 @@ function MyBagFinal() {
                 <div className='col-lg-5 col-md-4 col-sm-12'>
                   <div className={Styles.ShippControl}>
                     <h2>Shipping Address</h2>
-
                     <div className={Styles.ShipAdress}>
-                      <p>928 S Western Ave <br />
-                        # 111Los Angeles, CA 90006US<br />
-                        Example123@gmail.com |+(442)-XXX-XX00</p>
+                      <p>            {OrderData?.Shipping_Street__c?<>  {OrderData?.Shipping_Street__c}, {OrderData?.Shipping_City__c} <br />
+                          {OrderData?.Shipping_State__c}, {OrderData?.Shipping_Country__c} {OrderData?.Shipping_Zip__c}
+                          <br />
+                          {OrderData?.emaill} | {OrderData?.contact}</>:"No Shipping Address"}</p>
 
                     </div>
 
                     <div className={Styles.ShipAdress2}>
 
                       <h4>Note:-</h4>
-                      <textarea placeholder='' />
+                     {OrderData.Description}
 
                     </div>
 

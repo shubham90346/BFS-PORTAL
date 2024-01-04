@@ -10,6 +10,7 @@ import QuantitySelector from "../BrandDetails/Accordion/QuantitySelector";
 import { useNavigate } from "react-router-dom";
 import { GetAuthData, OrderPlaced, POGenerator, fetchBeg } from "../../lib/store";
 import { useBag } from "../../context/BagContext";
+import OrderLoader from "../loader";
 
 function MyBagFinal() {
   const navigate = useNavigate();
@@ -18,6 +19,8 @@ function MyBagFinal() {
   const [buttonActive, setButtonActive] = useState(false);
   const { addOrder, orderQuantity } = useBag();
   const [bagValue, setBagValue] = useState(fetchBeg());
+  const [isOrderPlaced,setIsOrderPlaced] = useState(0)
+  console.log({bagValue});
   useEffect(() => {
     if (bagValue?.Account?.id && bagValue?.Manufacturer?.id && Object.values(bagValue?.orderList)?.length>0) {
       setButtonActive(true);
@@ -26,6 +29,7 @@ function MyBagFinal() {
   let total = 0;
   let price = "";
   const orderPlaceHandler = () => {
+    setIsOrderPlaced(1)
     GetAuthData()
       .then((user) => {
         // let bagValue = fetchBeg()
@@ -59,6 +63,7 @@ function MyBagFinal() {
             .then((response) => {
               if (response) {
                 console.log({ response });
+                setIsOrderPlaced(2)
                 window.location.href = "http://localhost:3000/dashboard";
               }
             })
@@ -74,6 +79,7 @@ function MyBagFinal() {
   const handleRemoveProductFromCart = (ele) => {
     console.log(ele);
   };
+  if(isOrderPlaced ==1) return <OrderLoader/>
   return (
     <div className="mt-4">
       <section>
@@ -92,7 +98,7 @@ function MyBagFinal() {
                 <h4>
                   {buttonActive ? (
                     <>
-                      <span> {localStorage.getItem("manufacturer")} | </span> {localStorage.getItem("Account")}
+                      <span> {bagValue?.Manufacturer?.name} | </span> {bagValue?.Account?.name}
                     </>):
                     (<span>Empty bag</span>
                   )}
@@ -208,10 +214,10 @@ function MyBagFinal() {
                     <div className={Styles.ShipAdress}>
                       {buttonActive ? (
                         <p>
-                          928 S Western Ave <br />
-                          # 111Los Angeles, CA 90006US
+                          {bagValue?.Account?.address?.street}, {bagValue?.Account?.address?.city} <br />
+                          {bagValue?.Account?.address?.state}, {bagValue?.Account?.address?.country} {bagValue?.Account?.address?.postalCode}
                           <br />
-                          Example123@gmail.com |+(442)-XXX-XX00
+                          {bagValue?.Account?.address?.emaill} | {bagValue?.Account?.address?.contact}
                         </p>
                       ) : (
                         <p>No Shipping Address</p>

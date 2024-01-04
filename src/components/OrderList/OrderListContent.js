@@ -13,8 +13,7 @@ import MyBagFinal from "./MyBagFinal";
 function OrderListContent({ data }) {
   const [Orderdata, setOrderdata] = useState(data || []);
   const [Viewmore, setviewmore] = useState(false);
-  const [isTrackingModal, setIsTrackingModal] = useState(false);
-  const [oppoId, setoppoId] = useState();
+  const [ modalData,setModalData] = useState({});
 
  
 
@@ -75,11 +74,7 @@ function OrderListContent({ data }) {
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div> */}
             <div class="modal-body mt-4 ">
-              <TrackingStatus
-                TrackingData={Orderdata}
-                opportunityId={oppoId}
-
-              />
+              <TrackingStatus data={modalData}              />
             </div>
           </div>
         </div>
@@ -95,10 +90,7 @@ function OrderListContent({ data }) {
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div> */}
             <div class="modal-body  mt-4">
-              <Orderstatus
-                TrackingData={Orderdata}
-                opportunityId={oppoId}
-              />
+              <Orderstatus data={modalData}/>
             </div>
           </div>
         </div>
@@ -192,11 +184,11 @@ function OrderListContent({ data }) {
                     // onClick={() => {
                     //   setIsTrackingModal(true);
                     // }}
-                    onClick={(e) => setoppoId(item.Id)}
+                    onClick={(e) => setModalData(item)}
                   >
                     Tracking Status
                   </h2>
-                  <h3 data-bs-toggle="modal" data-bs-target="#exampleModal2" onClick={(e) => setoppoId(item.Id)}> Order Status</h3>
+                  <h3 data-bs-toggle="modal" data-bs-target="#exampleModal2" onClick={(e) => setModalData(item)}> Order Status</h3>
                   <h4>Invoice </h4>
                 </div>
 
@@ -210,7 +202,7 @@ function OrderListContent({ data }) {
           </div>
         );
       })}
-      {isTrackingModal && <TrackingModal />}
+      {/* {isTrackingModal && <TrackingModal />} */}
 
 
     </>
