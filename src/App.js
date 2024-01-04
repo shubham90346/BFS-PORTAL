@@ -22,9 +22,7 @@ import MarketingCalendar from "./pages/MarketingCalendar";
 import MyBag from "./pages/MyBag";
 import OrderListPage from "./pages/OrderListPage";
 import Product from "./components/BrandDetails/Product";
-import MyBagOrder from "./pages/MyBagOrder";
 import BagProvider from "./context/BagContext";
-
 // import OrderList from "./pages/OrderListPage";
 
 function App() {
@@ -71,8 +69,6 @@ function App() {
             <Route path="/about-us" element={<AboutUs />}></Route>
             {/* <Route path="/wholesale-inquiry" elements={<WholesaleInquiry />}></Route> */}
             <Route path="logout" element={<Logout />}></Route>
-            <Route path="/my-bagorder" element={<MyBagOrder/>}></Route>
-
           </Routes>
         </BrowserRouter>
       </BagProvider>

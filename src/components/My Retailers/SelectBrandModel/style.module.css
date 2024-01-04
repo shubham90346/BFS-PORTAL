@@ -150,13 +150,6 @@ background: #000;
 color: #FFF;
   }
 
-
-  .GridControlResponsive{
-    display: grid;
-    grid-template-columns: repeat(3,auto);
-    gap: 20px;
-  }
-
   @media(max-width:1299px){
     .ModalTop{
         width: 80%;}
@@ -166,16 +159,4 @@ color: #FFF;
 
   @media(max-width:1024px){
   
-  }
-
-  @media(max-width:991.98px){
-    .GridControlResponsive{
-      grid-template-columns: repeat(2,auto);
-    }
-  }
-
-  @media(max-width:630.98px){
-    .GridControlResponsive{
-      grid-template-columns: repeat(1,auto);
-    }
   }

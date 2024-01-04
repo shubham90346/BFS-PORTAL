@@ -394,7 +394,7 @@ function Dashboard(props) {
                             <tr key={e}>
                               <td className={` ps-3 ${Styles.tabletd}`}>{e.ManufacturerName}</td>
                               <td className={Styles.tabletd}>{e.totalOrder}</td>
-                              <td className={Styles.tabletd}>${Number(e.sale).toFixed(2)}</td>
+                              <td className={Styles.tabletd}>${Number(e.sale).toFixed(2)}K</td>
                               <td className={Styles.tabletd}>${e.target}K</td>
                             </tr>
                           );

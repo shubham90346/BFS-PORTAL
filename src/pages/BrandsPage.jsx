@@ -119,16 +119,16 @@ const BrandsPage = () => {
           {isLoading ? (
             <Loading height={"70vh"} />
           ) : (
-            <div className="container">
+            <div>
               <div
-                className="text-center uppercase flex justify-center items-center tracking-[1.8px] my-[48px]"
+                className="uppercase flex justify-center items-center tracking-[1.8px] my-[48px]"
                 style={{ fontFamily: "Montserrat-500" }}
               >
                 Below are the Brands available with “Beauty Fashions Sales
                 Group”
               </div>
               {/* <div className="widthGivenBrandDetailPage grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 grid-cols-2 gap-4  m-auto">    */}   
-              <div className={` ${Page.widthGivenBrandDetailPage}`}> 
+              <div className={`grid-cols-1 grid sm:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 grid-cols-2 gap-4  m-auto ${Page.widthGivenBrandDetailPage}`}> 
                 {filteredPageData?.length ? (
                   <>
                     {filteredPageData?.map((brand) => (

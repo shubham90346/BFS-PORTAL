@@ -17,10 +17,9 @@ function MyBagFinal() {
   const [PONumber, setPONumber] = useState(POGenerator());
   const [buttonActive, setButtonActive] = useState(false);
   const { addOrder, orderQuantity } = useBag();
-  const [begValue, setBegValue] = useState(fetchBeg());
+  const [bagValue, setBagValue] = useState(fetchBeg());
   useEffect(() => {
-    if (begValue?.Account?.id && begValue?.Manufacturer?.id && begValue?.orderList?.length>0) {
-      console.log({begValue});
+    if (bagValue?.Account?.id && bagValue?.Manufacturer?.id && Object.values(bagValue?.orderList)?.length>0) {
       setButtonActive(true);
     }
   }, []);
@@ -29,11 +28,11 @@ function MyBagFinal() {
   const orderPlaceHandler = () => {
     GetAuthData()
       .then((user) => {
-        // let begValue = fetchBeg()
-        if (begValue) {
+        // let bagValue = fetchBeg()
+        if (bagValue) {
           // setButtonActive(true)
           let list = [];
-          let productLists = Object.values(begValue.orderList);
+          let productLists = Object.values(bagValue.orderList);
           if (productLists.length) {
             productLists.map((product) => {
               let temp = {
@@ -46,9 +45,9 @@ function MyBagFinal() {
             });
           }
           let begToOrder = {
-            AccountId: begValue?.Account?.id,
-            Name: begValue?.Account?.name,
-            ManufacturerId__c: begValue?.Manufacturer?.id,
+            AccountId: bagValue?.Account?.id,
+            Name: bagValue?.Account?.name,
+            ManufacturerId__c: bagValue?.Manufacturer?.id,
             PONumber: PONumber,
             desc: orderDesc,
             SalesRepId: user.Sales_Rep__c,
@@ -137,9 +136,9 @@ function MyBagFinal() {
                                     ? (+ele.product.usdRetail__c.substring(1) - (ele?.discount?.margin / 100) * +ele.product.usdRetail__c.substring(1)).toFixed(2)
                                     : (+ele.product.usdRetail__c - (ele?.discount?.margin / 100) * +ele.product.usdRetail__c).toFixed(2));
                             }
-                            price = price * ele.quantity;
+                            // price = price;
                             // console.log(price);
-                            total += Number(price);
+                            total += Number(price)* ele.quantity;
                             // console.log(total);
                             return (
                               <div className={Styles.Mainbox}>

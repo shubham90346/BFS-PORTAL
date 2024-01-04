@@ -172,16 +172,15 @@ function Product() {
           }
         />
       ) : (
-        <div>
-        <div className="container px-4 ">
-          <div className="row  d-flex flex-column justify-content-around align-items-center ">
+        <div className="container-fluid p-0 m-0">
+          <div className="row p-0 m-0 d-flex flex-column justify-content-around align-items-center col-12">
             {/* TopNav */}
-            <div className="col-12">
+            <div className="col-10">
               <TopNav />
             </div>
             <hr className="hrBgColor"></hr>
             {/* all headers */}
-            
+            <div className="col-10">
               <LogoHeader />
               <Header />
               <div className="filter-container">
@@ -236,9 +235,9 @@ function Product() {
                   CLEAR ALL
                 </button>
               </div>
-            
+            </div>
             {/* brand list accordion */}
-            <div className="col-12">
+            <div className="col-10">
               {isLoading ? (
                 <Loading height={"70vh"} />
               ) : (
@@ -246,7 +245,7 @@ function Product() {
                   <section className="py-[34px]">
                     <div className="">
                       <div className={styles.BrandTopShow}>
-                        <h4 className="flex justify-center items-center  uppercase font-[Montserrat-500] tracking-[2.20px]">
+                        <h4 className="flex justify-center items-center gap-4 uppercase font-[Montserrat-500] tracking-[2.20px]">
                           <button
                             onClick={() => {
                               navigate("/my-retailers");
@@ -322,14 +321,13 @@ function Product() {
               )}
             </div>
             {/* footer */}
-          </div>
-        </div>
-            
+            <div className="col-12">
               <HelpSection />
-            
-            
+            </div>
+            <div className="col-10">
               <Footer />
-            
+            </div>
+          </div>
         </div>
       )}
     </>

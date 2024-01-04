@@ -7,7 +7,6 @@ import Footer from "../../components/Footer/Footer";
 import HelpSection from "../../components/Footer/HelpSection";
 import useSalesReport from "../../api/useSalesReport";
 import { useNavigate } from "react-router";
-import MobileHeader from '../../components/All Headers/mobileHeader/MobileHeader'
 
 const SalesReport = () => {
   const apiCall = useSalesReport();
@@ -31,17 +30,15 @@ const SalesReport = () => {
   }, []);
 
   return (
-    <div>
-    <div className="container">
+    <div className="container-fluid">
       <div className="row d-flex justify-content-around align-items-center">
-        <div className="col-12">
+        <div className="col-10">
           <TopNav />
         </div>
         <hr className="hrBgColor"></hr>
-        <div className="col-12">
+        <div className="col-10">
           <LogoHeader />
           <Header />
-          <MobileHeader/>
           <Filters
             salesReportData={salesReportData}
             manufacturers={[
@@ -49,11 +46,11 @@ const SalesReport = () => {
             ]}
           />
         </div>
+        <HelpSection />
+        <div className="col-10">
+          <Footer />
         </div>
       </div>
-        <HelpSection />
- 
-          <Footer />
     </div>
   );
 };

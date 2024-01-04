@@ -4,7 +4,9 @@ import styles from "./index.module.css";
 const MobileHeader = () => {
   return (
     <div className={`${styles.mobileHeader}`}>
+
       <div className="container p-0">
+
       <div className={styles.flexMain1}>
         <div className={styles.flexMain2}>
           <div className="dropdown">
@@ -121,7 +123,6 @@ const MobileHeader = () => {
           </p>
 
         </div>
-    </div>
     </div>
   );
 };

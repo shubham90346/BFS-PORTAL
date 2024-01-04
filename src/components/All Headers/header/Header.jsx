@@ -1,8 +1,9 @@
 import React from "react";
 import styles from "./index.module.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./index.css";
 const Header = () => {
+  const navigate=useNavigate();
   return (
     <div id={`${styles.main}`} className="d-flex justify-content-between  align-items-center my-2 gap-1">
       <p className={`m-0 ${styles.text}`}>
@@ -15,7 +16,7 @@ const Header = () => {
           Marketing Calendar
         </Link>
       </p>
-        
+
       <p className={`m-0  ${styles.text}`}>
         <Link to="/education-center" className="linkStyle">
           Education Center
@@ -35,22 +36,30 @@ const Header = () => {
         </select>
         </p> */}
       <p className={`m-0  ${styles.text}`}>
-        <Link to="/sales-report" className="linkStyle">
-                 
-          <div class="dropdown">
-  <a class=" dropdown-toggle"  role="button" data-bs-toggle="dropdown" aria-expanded="false">
-  Report
-  </a>
-
-  <ul class="dropdown-menu">
-    <li><a href="" class="dropdown-item">Newness Report</a></li>
-    <li><a class="dropdown-item">Comparison Report</a></li>
-  </ul>
-</div>
+        <Link to="" className="linkStyle">
+          <div class="dropdown dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Reports
+            {/* </a> */}
+            <ul class="dropdown-menu">
+              <li>
+                <Link to="/sales-report" className="dropdown-item text-start" onClick={()=>navigate("/sales-report")}>
+                  Sales Report
+                </Link>
+              </li>
+              <li>
+                <Link to="/newness-report" className="dropdown-item text-start" onClick={()=>navigate("/newness-report")}>
+                  Newness Report
+                </Link>
+              </li>
+              <li>
+                <Link to="/comparison-report" className="dropdown-item  text-start"  onClick={()=>navigate("/comparison-report")}>
+                  Comparison Report
+                </Link>
+              </li>
+            </ul>
+          </div>
         </Link>
       </p>
-      
-      
     </div>
   );
 };
