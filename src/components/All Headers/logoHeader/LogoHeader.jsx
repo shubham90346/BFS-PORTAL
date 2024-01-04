@@ -1,10 +1,10 @@
 import React from "react";
 import styles from "../topNav/index.module.css";
 import { Link } from "react-router-dom";
-import { useGlobal } from "../../../context/GlobalContext";
+import { useBag } from "../../../context/BagContext";
 
 const LogoHeader = () => {
-  const { orderQuantity } = useGlobal();
+  const { orderQuantity } = useBag();
 
   return (
     <>
@@ -44,10 +44,10 @@ const LogoHeader = () => {
             <img src={"/assets/images/searchIcon.svg"} alt="img" />
           </p>
           <p className={`m-0  ${styles.language}`}>
-          <Link to="/my-bag" className={`linkStyle`}>
-          My Bag ({orderQuantity??0})
+            <Link to="/my-bag" className={`linkStyle`}>
+              My Bag ({orderQuantity ?? 0})
             </Link>
-           </p>
+          </p>
         </div>
       </div>
     </>
