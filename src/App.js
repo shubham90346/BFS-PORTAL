@@ -12,8 +12,6 @@ import MyRetailersPage from "./pages/MyRetailersPage";
 import DashboardPage from "./pages/DashboardPage";
 import { UserProvider } from "./context/UserContext";
 import BrandsPage from "./pages/BrandsPage";
-import { GlobalProvider } from "./context/GlobalContext";
-import { GlobalProviderForOrderAddition } from "./context/GlobalContextForOrderAddition";
 
 import CustomerCare from "./pages/CustomerCare";
 import AboutUs from "./pages/AboutUs";
@@ -24,6 +22,7 @@ import MarketingCalendar from "./pages/MarketingCalendar";
 import MyBag from "./pages/MyBag";
 import OrderListPage from "./pages/OrderListPage";
 import Product from "./components/BrandDetails/Product";
+import BagProvider from "./context/BagContext";
 // import OrderList from "./pages/OrderListPage";
 
 function App() {
@@ -31,39 +30,49 @@ function App() {
   //   window.location.href = href;
   // };
   return (
-    <GlobalProvider>
-      <UserProvider>
-        <GlobalProviderForOrderAddition>
-          <BrowserRouter>
-            <Routes>
-              <Route path="/sales-report" element={<SalesReport />}></Route>
-              <Route path="/order-list" element={<OrderListPage />}></Route>
-              <Route path="/newness-report" element={<NewnessReport />}></Route>
-              <Route path="/comparison-report" element={<ComparisonReport />}></Route>
-              <Route path="/testing" element={<Testing />}></Route>
-              <Route path="/top-products" element={<TopProducts />}></Route>
-              <Route path="/login" element={<Login />}></Route>
-              <Route path="/" element={<Login />}></Route>
-              <Route path="/logout" element={<Logout />}></Route>
-              <Route path="/my-retailers" element={<MyRetailersPage />}></Route>
-              <Route path="/dashboard" element={<DashboardPage />}></Route>
-              <Route path="/product" element={<Product />}></Route>
-              <Route path="/my-bag" element={<MyBag />}></Route>
-              <Route path="/brand" element={<BrandsPage />}></Route>
-              {/*  */}
-              <Route path="/customer-care" element={<CustomerCare />}></Route>
-              <Route path="/customer-support" element={<CustomerSupport />}></Route>
-              <Route path="/new-arrivals" element={<NewArrivals />}></Route>
-              <Route path="/marketing-calendar" element={<MarketingCalendar />}></Route>
-              <Route path="/education-center" element={<EducationCenter />}></Route>
-              <Route path="/about-us" element={<AboutUs />}></Route>
-              {/* <Route path="/wholesale-inquiry" elements={<WholesaleInquiry />}></Route> */}
-              <Route path="logout" element={<Logout />}></Route>
-            </Routes>
-          </BrowserRouter>
-        </GlobalProviderForOrderAddition>
-      </UserProvider>
-    </GlobalProvider>
+    <UserProvider>
+      <BagProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/sales-report" element={<SalesReport />}></Route>
+            <Route path="/order-list" element={<OrderListPage />}></Route>
+            <Route path="/newness-report" element={<NewnessReport />}></Route>
+            <Route
+              path="/comparison-report"
+              element={<ComparisonReport />}
+            ></Route>
+            <Route path="/testing" element={<Testing />}></Route>
+            <Route path="/top-products" element={<TopProducts />}></Route>
+            <Route path="/login" element={<Login />}></Route>
+            <Route path="/" element={<Login />}></Route>
+            <Route path="/logout" element={<Logout />}></Route>
+            <Route path="/my-retailers" element={<MyRetailersPage />}></Route>
+            <Route path="/dashboard" element={<DashboardPage />}></Route>
+            <Route path="/product" element={<Product />}></Route>
+            <Route path="/my-bag" element={<MyBag />}></Route>
+            <Route path="/brand" element={<BrandsPage />}></Route>
+            {/*  */}
+            <Route path="/customer-care" element={<CustomerCare />}></Route>
+            <Route
+              path="/customer-support"
+              element={<CustomerSupport />}
+            ></Route>
+            <Route path="/new-arrivals" element={<NewArrivals />}></Route>
+            <Route
+              path="/marketing-calendar"
+              element={<MarketingCalendar />}
+            ></Route>
+            <Route
+              path="/education-center"
+              element={<EducationCenter />}
+            ></Route>
+            <Route path="/about-us" element={<AboutUs />}></Route>
+            {/* <Route path="/wholesale-inquiry" elements={<WholesaleInquiry />}></Route> */}
+            <Route path="logout" element={<Logout />}></Route>
+          </Routes>
+        </BrowserRouter>
+      </BagProvider>
+    </UserProvider>
   );
 }
 
