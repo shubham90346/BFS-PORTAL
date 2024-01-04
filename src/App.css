@@ -87,12 +87,3 @@
   color: black;
 }
 
-.container{
-  max-width: 1500px;
-}
-@media (max-width: 992px){
-.container, .container-md, .container-sm {
-    max-width: 800px !important ;
-
-}
-}
