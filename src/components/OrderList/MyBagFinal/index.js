@@ -5,9 +5,10 @@ import Img1 from './Images/Eye1.png'
 
 
 
-function MyBagFinal({opportunityId}) {
-  console.log(opportunityId);
- 
+function MyBagFinal() {
+
+// let KEY = JSON.parse(localStorage.getitem("orderlist"))
+// console.log(KEY);
 
   
  
@@ -15,7 +16,7 @@ function MyBagFinal({opportunityId}) {
   return (
     <div>
       <section>
-        <div className='container mt-4'>
+        <div className='container'>
           <div>
             <div className={Styles.MyBagFinalTop}>
               <div className={Styles.MyBagFinalRight} >
@@ -201,7 +202,7 @@ function MyBagFinal({opportunityId}) {
 
                     <div className={Styles.ShipAdress2}>
                       <h4>Note</h4>
-                      <textarea placeholder='' />
+                      <textarea placeholder='Description' />
                     </div>
 
                     <div className={Styles.ShipBut}>

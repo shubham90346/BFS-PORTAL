@@ -19,7 +19,7 @@ const DashboardPage = () => {
   return (
     <>
       <div className="container ">
-        
+        <div className="row  ">
           {/* TopNav */}
           
             <TopNav />
@@ -35,7 +35,7 @@ const DashboardPage = () => {
           
             <Dashboard />
           
-      
+      </div>
           {/* footer */}
           
         </div>

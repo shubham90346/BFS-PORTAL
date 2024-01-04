@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import Styles from "./style.module.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import ModalPage from "../Modal UI";
+import MyBagFinal from "./MyBagFinal";
+import { AuthCheck } from "../../lib/store";
+import axios from "axios";
 import TrackingStatus from "./TrackingStatus/TrackingStatus";
 import Orderstatus from "./OrderStatus/Orderstatus";
-
-import { Link } from "react-router-dom";
-import MyBagFinal from "./MyBagFinal";
+import { useParams } from "react-router-dom";
 
 
 
@@ -15,8 +16,13 @@ function OrderListContent({ data }) {
   const [Viewmore, setviewmore] = useState(false);
   const [isTrackingModal, setIsTrackingModal] = useState(false);
   const [oppoId, setoppoId] = useState();
-  const [OrderId, setOrderId] = useState();
-  console.log(oppoId);
+
+
+
+
+  const handleclick = () => {
+    setviewmore(!Viewmore);
+  };
 
   const currentDate = new Date();
   const months = [
@@ -53,18 +59,52 @@ function OrderListContent({ data }) {
       />
     );
   };
+  useEffect(() => {
+    ordermodaldata();
+  })
 
 
-  let size = 3;
+  let ab = localStorage.getItem("Api Data")
+  let headersList = {
+    "Accept": "*/*"
+  }
 
+  let Content = new FormData();
+  Content.append("key", JSON.parse(ab).data.access_token);
+  // Content.append("opportunity_id", opportunity);
 
+  const ordermodaldata = async () => {
+    const response = await axios.post(`https://dev.beautyfashionsales.com/beauty/0DS68FOD7s`, Content, headersList)
+    // console.log(response);
+  }
 
+  const handlemodal = () => {
+    Orderdata?.find(
+      (OppId) => setoppoId(OppId.Id)
+    )
+  }
 
 
   return (
     <>
 
-      <MyBagFinal opportunityId={oppoId} />
+
+      {/* MODAL MY BAG */}
+
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-lg">
+          <div class="modal-content">
+            {/* <div class="modal-header">
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div> */}
+            <div class="modal-body  mt-4">
+              <MyBagFinal />
+            </div>
+          </div>
+        </div>
+      </div>
+
+
       {/* TRACKING MODAL */}
 
       <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -94,10 +134,7 @@ function OrderListContent({ data }) {
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div> */}
             <div class="modal-body  mt-4">
-              <Orderstatus
-                TrackingData={Orderdata}
-                opportunityId={oppoId}
-              />
+              <Orderstatus />
             </div>
           </div>
         </div>
@@ -144,17 +181,21 @@ function OrderListContent({ data }) {
 
                   <div className={Styles.ProtuctInnerBox1}>
                     <ul>
-                      {item.OpportunityLineItems?.records.slice(0, size).map((ele) => {
+                      {item.OpportunityLineItems?.records.map((ele) => {
                         return (
                           <>
-                            <li>
+                            {/* <li>{ele.Name}</li> */}
+
+                            <li
+                              className={Styles.tool}
+                              data-bs-toggle="tooltip"
+                              data-bs-placement="top"
+                              onClick={handleclick}
+                            >
                               {Viewmore
                                 ? ele.Name
                                 : `${ele.Name.slice(0, 31)}...`}
-
                             </li>
-
-
                           </>
                         );
                       })}
@@ -177,25 +218,21 @@ function OrderListContent({ data }) {
                     <p>${Number(item.Amount).toFixed(2)}</p>
                   </div>
 
-                  <Link to="/my-bagorder">
-                    <button onClick={(e) => setoppoId(item.Id)}>
-                      View Order Details
-                    </button>
-                  </Link>
+                  <button data-bs-toggle="modal" data-bs-target="#exampleModal" >View Order Details</button>
                 </div>
               </div>
 
               <div className={Styles.StatusOrder}>
                 <div className={Styles.Status1}>
                   <h2 data-bs-toggle="modal" data-bs-target="#exampleModal1"
-                    // onClick={() => {
-                    //   setIsTrackingModal(true);
-                    // }}
-                    onClick={(e) => setoppoId(item.Id)}
+                  // onClick={() => {
+                  //   setIsTrackingModal(true);
+                  // }}
+                  onClick={handlemodal}
                   >
                     Tracking Status
                   </h2>
-                  <h3 data-bs-toggle="modal" data-bs-target="#exampleModal2" onClick={(e) => setoppoId(item.Id)}> Order Status</h3>
+                  <h3 data-bs-toggle="modal" data-bs-target="#exampleModal2">Order Status</h3>
                   <h4>Invoice </h4>
                 </div>
 

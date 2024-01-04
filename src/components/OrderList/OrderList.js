@@ -65,7 +65,10 @@ function OrderList() {
     setviewmore(!Viewmore);
   };
 
+  // const filteredArray = data?.filter((item) => {
+  //   return  console.log( item);item.AccountName.toLowerCase().includes(searchTextfilter.toLowerCase());
 
+  // })
   const handlefilter = (e) => {
     const search = e.target.value;
     const fill = data?.filter(
@@ -215,7 +218,7 @@ function OrderList() {
                 <>
                   <OrderListDataSort />
                 </>
-              ) : cards   ? (
+              ) : cards ? (
                 <>
                   <div className={Styles.orderStatement}>
                     {cards.map((item, index) => {
