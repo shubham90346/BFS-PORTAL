@@ -56,7 +56,7 @@ function Orderstatus({ TrackingData, opportunityId }) {
                                     <div className={Styles.ProtuctInnerBox}>
                                         <div className={Styles.BoxBlack}>
                                             <div className={Styles.Boxwhite}>
-                                                <h1>25 <span>Products</span></h1>
+                                                <h1>{item.ProductCount}</h1>
                                             </div>
                                         </div>
                                     </div>
