@@ -1,7 +1,43 @@
-import React from 'react';
+import React, { useMemo, useState } from 'react';
 import Styles from './Style.module.css'
 
-function Orderstatus(props) {
+function Orderstatus({ TrackingData, opportunityId }) {
+
+
+    const [data, setdata] = useState([]);
+    const [Viewmore, setviewmore] = useState(false);
+
+
+
+    const Values = useMemo(() => {
+        let newId = TrackingData?.filter((data) =>
+            data.Id === opportunityId
+        );
+        setdata(newId)
+    }, [TrackingData, opportunityId])
+
+    const currentDate = new Date();
+    const months = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+    ];
+
+    let date = `${months[currentDate.getMonth()]
+        } ${currentDate.getDate()}, ${currentDate.getFullYear()}`;
+
+    var size = 1;
+
+
     return (
         <div>
             <section>
@@ -9,13 +45,6 @@ function Orderstatus(props) {
                     <h2>Order Status </h2>
                     <div className={Styles.mainControl}>
 
-                        <div className={Styles.ProtuctInnerBox}>
-                            <div className={Styles.BoxBlack}>
-                                <div className={Styles.Boxwhite}>
-                                    <h1>25 <span>Products</span></h1>
-                                </div>
-                            </div>
-                        </div>
 
                         {
                             data.map((item) => {
@@ -83,9 +112,6 @@ function Orderstatus(props) {
 
 
 
-                            </div>
-
-                        </div>
 
                     </div>
 
