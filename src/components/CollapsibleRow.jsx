@@ -1,5 +1,6 @@
 import { useState } from "react";
 import classNames from "classnames";
+import Page from '../pages/page.module.css'
 
 const CollapsibleRow = ({ children, title, onChange, quantity }) => {
   // console.log(quantity);
@@ -7,7 +8,7 @@ const CollapsibleRow = ({ children, title, onChange, quantity }) => {
 
   return (
     <>
-      <tr className="w-full">
+      <tr className={`w-full ${ Page.LabelControl}`}>
         <td colSpan={12}   className={classNames( 
               " w-full border-none py-[1px] px-[3px] "
             )}>
@@ -18,11 +19,11 @@ const CollapsibleRow = ({ children, title, onChange, quantity }) => {
             type="checkbox"
             className="peer sr-only"
           />
-          <label
+          <label 
             htmlFor="expandCollapse"
             className={classNames(
-              "h-[56px] top-0 left-0 bg-[#f8fafb] border border-solid border-[#f7f7f7] w-full",
-              "[font-family:'Montserrat-500'] font-medium text-[#1d1d1d] text-[20px] tracking-[2.00px] leading-[normal] whitespace-nowrap uppercase flex items-center px-[23px] justify-between"
+              "h-[56px]  bg-[#f8fafb] border border-solid border-[#f7f7f7] w-full",
+              "[font-family:'Montserrat-500'] font-medium text-[#1d1d1d] tracking-[2.00px] leading-[normal] whitespace-nowrap uppercase flex items-center px-[23px] justify-between"
             )}
             onClick={() => {
               onChange?.(!open);

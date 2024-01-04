@@ -90,7 +90,7 @@ const Accordion = ({ data, formattedData }) => {
                   return (
                     <CollapsibleRow title={key} quantity={categoryOrderQuantity} key={index}>
                       {Object.values(formattedData)[index]?.map((value, indexed) => (
-                        <tr className="w-full" key={indexed}>
+                        <tr className={`w-full ${styles.tableContro}`} key={indexed}>
                           {/* {console.log(value.Category__c)} */}
                           <td>
                             <img src={Img1} alt="img" />

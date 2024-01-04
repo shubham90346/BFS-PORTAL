@@ -18,7 +18,7 @@ const SelectBrandModel = ({ brands, onClose }) => {
         </h1>
 
         <div className={Styles.BrandInRadio}>
-          <div className="grid grid-cols-3 gap-4">
+          <div className={Styles.GridControlResponsive}>
             {brands?.map((brand,index) => (
               <div className={Styles.BrandName} key={index} >
                 <input
