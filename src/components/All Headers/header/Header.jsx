@@ -35,7 +35,7 @@ const Header = () => {
         </select>
         </p> */}
       <p className={`m-0  ${styles.text}`}>
-        <Link to="" className="linkStyle">
+        <Link to="/sales-report" className="linkStyle">
                  
           <div class="dropdown">
   <a class=" dropdown-toggle"  role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -43,7 +43,7 @@ const Header = () => {
   </a>
 
   <ul class="dropdown-menu">
-    <li><a class="dropdown-item">Newness Report</a></li>
+    <li><a href="" class="dropdown-item">Newness Report</a></li>
     <li><a class="dropdown-item">Comparison Report</a></li>
   </ul>
 </div>
