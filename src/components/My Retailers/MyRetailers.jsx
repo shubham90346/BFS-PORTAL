@@ -5,7 +5,7 @@ import Loading from "../Loading";
 
 const MyRetailers = ({ pageData, filterBy, sortBy, searchBy, isLoading }) => {
   const navigate = useNavigate();
-// console.log("pageData",pageData);
+  // console.log("pageData",pageData);
   useEffect(() => {
     const userData = localStorage.getItem("Name");
     if (!userData) {
@@ -14,18 +14,10 @@ const MyRetailers = ({ pageData, filterBy, sortBy, searchBy, isLoading }) => {
   }, []);
 
   const filteredPageData = useMemo(() => {
-    let newValues = pageData?.filter((data) =>
-      filterBy
-        ? data.data?.some((d) => d.ManufacturerId__c === filterBy.Id)
-        : true
-       
-    );
-
+    let newValues = pageData?.filter((data) => (filterBy ? data.data?.some((d) => d.ManufacturerId__c === filterBy.Id) : true));
 
     if (searchBy) {
-      newValues = newValues?.filter((value) =>
-        value.Name?.toLowerCase().includes(searchBy?.toLowerCase())
-      );
+      newValues = newValues?.filter((value) => value.Name?.toLowerCase().includes(searchBy?.toLowerCase()));
     }
 
     if (sortBy) {
@@ -44,23 +36,14 @@ const MyRetailers = ({ pageData, filterBy, sortBy, searchBy, isLoading }) => {
         {filteredPageData?.length ? (
           <section>
             <div className="grid px-0 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-              {filteredPageData?.map((data) => (
-                <MyRetailerCard
-                  key={data.Name}
-                  accountId={data.Id}
-                  placeName={data.City}
-                  title={data.Name}
-                  brands={data?.data}
-                />
-              ))}
+              {filteredPageData?.map((data) => {
+                console.log(data);
+                return <MyRetailerCard key={data.Name} accountId={data.Id} placeName={data.City} title={data.Name} brands={data?.data} address={data.ShippingAddress}/>;
+              })}
             </div>
           </section>
         ) : null}
-        {!filteredPageData?.length && !isLoading && (
-          <div className="flex justify-center items-center py-4 w-full lg:min-h-[300px] xl:min-h-[380px]">
-            No data found
-          </div>
-        )}
+        {!filteredPageData?.length && !isLoading && <div className="flex justify-center items-center py-4 w-full lg:min-h-[300px] xl:min-h-[380px]">No data found</div>}
         {isLoading ? <Loading height={"70vh"} /> : null}
       </div>
     </>

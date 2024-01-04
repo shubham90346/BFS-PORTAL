@@ -10,6 +10,7 @@ const Logout = () => {
     localStorage.removeItem("AccountId__c");
     localStorage.removeItem("ManufacturerId__c");
     localStorage.removeItem("Account");
+    localStorage.removeItem("address");
     
     window.location.href = "/";
   }, []);

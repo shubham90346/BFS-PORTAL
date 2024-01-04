@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 function MyBagFinal() {
+
   const [OrderData, setOrderData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -48,11 +49,14 @@ function MyBagFinal() {
   if (!isLoading) return <Loading />;
 
 
+
   return (
     <div>
       <section>
+
       
         <div className='container mt-4'>
+
           <div>
             <div className={Styles.MyBagFinalTop}>
               <div className={Styles.MyBagFinalRight} >
@@ -141,8 +145,10 @@ function MyBagFinal() {
                     </div>
 
                     <div className={Styles.ShipAdress2}>
+
                       <h4>Note:-</h4>
                       <textarea placeholder='' />
+
                     </div>
 
                     <div className={Styles.ShipBut}>
