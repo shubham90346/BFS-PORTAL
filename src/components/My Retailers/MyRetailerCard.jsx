@@ -15,7 +15,7 @@ const bgColors = {
   "ESTEE LAUDER": "esteeLauderBg",
 };
 
-const MyRetailerCard = ({ placeName, title, brands, accountId }) => {
+const MyRetailerCard = ({ placeName, title, brands, accountId, address }) => {
   const [modalOpen, setModalOpen] = useState(false);
   return (
     <>
@@ -26,6 +26,7 @@ const MyRetailerCard = ({ placeName, title, brands, accountId }) => {
           setModalOpen(true);
           localStorage.setItem("Account", title);
           localStorage.setItem("AccountId__c", accountId);
+          localStorage.setItem("address", JSON.stringify(address));
         }}
       >
         <div className={`${Styles.mainRetailer} flex flex-col justify-between`}>
@@ -59,7 +60,7 @@ const MyRetailerCard = ({ placeName, title, brands, accountId }) => {
             </div>
             <div className={Styles.BrandName}>
               <div className={Styles.Brandspan}>
-                {brands?.map((brand,index) => {
+                {brands?.map((brand, index) => {
                   return (
                     <span className={`${Styles[bgColors[brand.ManufacturerName__c]]}`} style={{ height: "fit-content" }} key={index}>
                       {brand.ManufacturerName__c}
