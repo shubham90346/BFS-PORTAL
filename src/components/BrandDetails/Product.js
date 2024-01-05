@@ -215,7 +215,7 @@ function Product() {
         />
       ) : (
         <div className="container-fluid p-0 m-0">
-          {emptyBag && <ModalPage
+          {alert == 1 && <ModalPage
             open
             content={
               <div>
@@ -225,7 +225,7 @@ function Product() {
               </div>
             }
           />}
-          {alert == 1 && <ModalPage
+          {alert == 2 && <ModalPage
             open
             content={
               <div>
@@ -235,7 +235,7 @@ function Product() {
               </div>
             }
           />}
-          {alert == 2 && <ModalPage
+          {emptyBag && <ModalPage
             open
             content={
               <div>
