@@ -19,6 +19,7 @@ const BagProvider = ({ children }) => {
   useEffect(() => {
     // Update the local storage whenever the order state is changed
     if (Object.keys(orders)?.length) {
+      deleteOrder();
       localStorage.setItem("orders", JSON.stringify(orders));
     }
   }, [orders]);
@@ -34,11 +35,7 @@ const BagProvider = ({ children }) => {
   const addOrder = (product, quantity, discount) => {
     setOrders((prev) => {
       const obj = { ...prev };
-      obj[product.Id] = parseOrderObjectWithDiscount(
-        product,
-        quantity,
-        discount
-      );
+      obj[product.Id] = parseOrderObjectWithDiscount(product, quantity, discount);
       return obj;
     });
   };
@@ -56,15 +53,30 @@ const BagProvider = ({ children }) => {
       },
       account: {
         name: localStorage.getItem("Account"),
-        id: localStorage.getItem("AccountId__c"), address: localStorage.getItem("address")
+        id: localStorage.getItem("AccountId__c"),
+        address: localStorage.getItem("address"),
       },
       manufacturer: {
         name: localStorage.getItem("manufacturer"),
-        id: localStorage.getItem("ManufacturerId__c")
+        id: localStorage.getItem("ManufacturerId__c"),
       },
-      productType:
-        product.Category__c === "PREORDER" ? "pre-order" : "wholesale",
+      productType: product.Category__c === "PREORDER" ? "pre-order" : "wholesale",
     };
+  };
+  const deleteOrder = () => {
+    Object.keys(orders).forEach((order) => {
+      if (orders[order]["quantity"] === 0) {
+        delete orders[order];
+      }
+    });
+    if (Object.keys(orders).length === 1) {
+      if (Object.values(orders)[0]["quantity"] === 0) {
+        localStorage.removeItem("orders");
+      }
+    }
+    if (Object.keys(orders).length === 0) {
+      localStorage.removeItem("orders");
+    }
   };
 
   return (
