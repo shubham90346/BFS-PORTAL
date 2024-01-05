@@ -2,7 +2,9 @@
   border: 1px solid #e4e4e4;
   padding: 10px 20px;
 }
-
+.Mainbox4:hover{
+  cursor: pointer;
+}
 .MyBagFinalMain {
   border: 1px dashed #000;
   background: #fff;
