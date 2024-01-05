@@ -144,7 +144,7 @@ function MyBagFinal() {
 
                     <div className={Styles.ShipAdress2}>
 
-                      <h4>Note:-</h4>
+                      <h4>Note</h4>
                       {OrderData.Description}
 
                     </div>

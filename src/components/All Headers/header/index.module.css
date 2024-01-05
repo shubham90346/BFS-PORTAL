@@ -1,3 +1,7 @@
+
+
+
+
 .text {
   text-align: start;
   font-family: Montserrat-500;
@@ -22,6 +26,17 @@ text-transform: uppercase;
 text-decoration: none;
 }
 
+#main{
+  width: 100%;
+  background-color:#fff;
+  position: sticky;
+  top: 108px;
+  z-index: 4;
+  padding: 10px;
+  /* border: 1px solid; */
+  
+
+}
 
 
 @media screen and (max-width: 1130px) and (min-width: 700px) {

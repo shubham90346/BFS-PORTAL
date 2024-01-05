@@ -44,7 +44,7 @@ const MyRetailersPage = () => {
 
   return (
     <>
-      <div className="container  ">
+      <div className="container p-0 ">
         <div className="row p-0 m-0 d-flex flex-column justify-content-around align-items-center ">
           {/* TopNav */}
           <TopNav />
@@ -54,7 +54,8 @@ const MyRetailersPage = () => {
             <LogoHeader />
             <Header />
             <MobileHeader/>
-            <div className="filter-container">
+            <div className="col-12">
+            <div className="filter-container  ">
               <FilterItem
                 label="Sort by"
                 value={sortBy}
@@ -97,6 +98,7 @@ const MyRetailersPage = () => {
               >
                 CLEAR ALL
               </button>
+            </div>
             </div>
          
           {/* my retailers */}

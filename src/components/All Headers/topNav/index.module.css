@@ -39,16 +39,41 @@
   display: flex;
 }
 .laptopMode {
+ 
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background-color: #fff;
+  /* width: 100%; */
+ 
 }
 
 
 .lapSetting{
   display: flex;
-  gap: 20px;
+  gap: 30px;
   
+}
+
+.text a{
+  color: #000;
+text-align: center;
+font-family: Montserrat-500;
+font-size: 12px;
+font-style: normal;
+font-weight: 500;
+line-height: 32px; /* 266.667% */
+letter-spacing: 1.2px;
+text-transform: uppercase;
+text-decoration: none;
+}
+
+.laptopModeSticky{
+  position: sticky;
+  top: 57px;
+  background-color: #fff;
+  /* border: 1px solid; */
+  z-index: 4;
 }
 
 
