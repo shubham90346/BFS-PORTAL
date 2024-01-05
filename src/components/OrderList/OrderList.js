@@ -19,6 +19,7 @@ function OrderList() {
   const [loaded, setLoaded] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [Options, setOptions] = useState([]);
+  const [ year,setYaer] = useState(null)
 
 
   function sortingList(data) {
@@ -106,14 +107,7 @@ function OrderList() {
 
   var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   var today = new Date();
-  var d;
-  var month;
-  for (var i = 6; i > 0; i -= 1) {
-    d = new Date(today.getFullYear(), today.getMonth() - i, 1);
-    month = monthNames[d.getMonth()];
-  }
 
-  var previousYearDate = `${d.getFullYear() - 1}`;
 
 
   return (
@@ -133,19 +127,19 @@ function OrderList() {
                 </button>
                 <ul class="dropdown-menu">
                   <li>
-                    <a class="dropdown-item" href="#">
-                      {current}
-                    </a>
+                    <span class="dropdown-item" onClick={()=>setYaer(null)}>
+                      Last 6 Months
+                    </span>
                   </li>
                   <li>
-                    <a class="dropdown-item" href="#">
-                      {month}
-                    </a>
+                    <span class="dropdown-item" onClick={()=>setYaer(today.getFullYear())}>
+                      Current Year
+                    </span>
                   </li>
                   <li>
-                    <a class="dropdown-item" href="#">
-                      {previousYearDate}
-                    </a>
+                    <span class="dropdown-item" onClick={()=>setYaer(today.getFullYear()-1)}>
+                      {today.getFullYear()-1}
+                    </span>
                   </li>
                 </ul>
               </div>

@@ -74,7 +74,7 @@ function OrderListContent({ data }) {
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div> */}
             <div class="modal-body  ">
-              <TrackingStatus data={modalData}              />
+              <TrackingStatus data={modalData} />
             </div>
           </div>
         </div>
@@ -138,13 +138,18 @@ function OrderListContent({ data }) {
                   <div className={Styles.ProtuctInnerBox1}>
                     <ul>
                       {item.OpportunityLineItems?.records.length >0 ?item.OpportunityLineItems?.records.slice(0, size).map((ele) => {
+                        console.log(ele.Name.split(item.Name),item);
                         return (
                           <>
                             <li>
                               {Viewmore
-                                ? ele.Name
-                                : `${ele.Name.slice(0, 31)}...`}
-
+                                ? ele.Name.split(item.AccountName)[1]
+                                : 
+                                ele.Name.split(item.AccountName).length > 1
+                                 ?
+                                 `${ele.Name.split(item.AccountName)[1].slice(0, 31)}...`
+                                 :
+                                 `${ele.Name.split(item.AccountName)[0].slice(0, 31)}...`}
                             </li>
 
 
