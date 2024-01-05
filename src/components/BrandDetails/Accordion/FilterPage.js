@@ -139,7 +139,7 @@ function FilterPage({ data, formattedData, setCategoryFilters, categoryFilters, 
                               }}
                               id={`category-${key}`}
                             />
-                            <label htmlFor={`category-${key}`} className="text-uppercase">{key}</label>
+                            <label htmlFor={`category-${key}`} className="text-uppercase">{key != "null"? key:"No Category"}</label>
                           </div>
                         </div>
                       </div>

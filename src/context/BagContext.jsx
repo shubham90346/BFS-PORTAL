@@ -54,8 +54,14 @@ const BagProvider = ({ children }) => {
         testerMargin: discount.testerMargin,
         testerproductLimit: discount.testerproductLimit,
       },
-      retailer: localStorage.getItem("Account"),
-      brand: localStorage.getItem("manufacturer"),
+      account: {
+        name: localStorage.getItem("Account"),
+        id: localStorage.getItem("AccountId__c"), address: localStorage.getItem("address")
+      },
+      manufacturer: {
+        name: localStorage.getItem("manufacturer"),
+        id: localStorage.getItem("ManufacturerId__c")
+      },
       productType:
         product.Category__c === "PREORDER" ? "pre-order" : "wholesale",
     };

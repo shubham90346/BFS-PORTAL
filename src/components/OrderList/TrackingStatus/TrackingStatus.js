@@ -1,28 +1,27 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import Styles from './Styles.module.css'
 
-function TrackingStatus({ TrackingData, opportunityId }) {
-    const [data, setdata] = useState(TrackingData || []);
-    console.log(opportunityId);
-    console.log(data);
-
-
-
-
-    let newId = TrackingData?.filter((data) =>
-        data.Id === opportunityId
-    );
-
-    const Values = useMemo(() => {
-        let newId = TrackingData?.filter((data) =>
-            data.Id === opportunityId
-        );
-        console.log(newId);
-        setdata(newId)
-    }, [TrackingData, opportunityId])
-
-    
-
+function TrackingStatus({ data}) {
+    var size = 1;
+    const [Viewmore, setviewmore] = useState(false);
+    const currentDate = new Date();
+    const months = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+    ];
+    let cdate = `${currentDate.getDate()} ${months[currentDate.getMonth()]
+    } ${currentDate.getFullYear()}`;
+    useEffect(() => { }, [data])
     return (
         <div>
             <section>
@@ -33,7 +32,7 @@ function TrackingStatus({ TrackingData, opportunityId }) {
                         <div className={Styles.ProtuctInnerBox}>
                             <div className={Styles.BoxBlack}>
                                 <div className={Styles.Boxwhite}>
-                                    <h1>25 <span>Products</span></h1>
+                                    <h1>{data?.ProductCount} <span>Products</span></h1>
                                 </div>
                             </div>
                         </div>
@@ -41,12 +40,24 @@ function TrackingStatus({ TrackingData, opportunityId }) {
 
                         <div className={Styles.ProtuctInnerBoxPara}>
                             <div className={Styles.ProtuctInnerBoxInner}>
-                                <h3>Vitamin Enriched Face Base <span className={Styles.span3}>(+ 24 more)</span></h3>
-                                <p><span className={Styles.Span1}>PO Number :</span>   <span className={Styles.Span2}>#407-9596458</span></p>
-                                <p><span className={Styles.Span1}>Brand :</span>   <span className={Styles.Span2}>Susanne kaufmann</span></p>
-                                <p><span className={Styles.Span1}>Order Placed :</span>   <span className={Styles.Span2}>24 December 2023</span></p>
-                                <p><span className={Styles.Span1}>Tracking Id :</span>   <span className={Styles.Span2}>#2345235</span></p>
-                                <p><span className={Styles.Span1}>Shipment Method :</span>   <span className={Styles.Span2}>FedEx</span></p>
+                                <h3> {
+                                        data?.OpportunityLineItems?.records.slice(0, size).map((ele) => {
+                                            return (
+                                                <>
+
+                                                    {Viewmore
+                                                        ? ele.Name
+                                                        : `${ele.Name.slice(0, 31)}...`}
+
+                                                </>
+                                            )
+                                        })
+                                    }</h3>
+                                <p><span className={Styles.Span1}>PO Number :</span>   <span className={Styles.Span2}>{data.PO_Number__c}</span></p>
+                                <p><span className={Styles.Span1}>Brand :</span>   <span className={Styles.Span2}>{data.ManufacturerName__c}</span></p>
+                                <p><span className={Styles.Span1}>Order Placed :</span>   <span className={Styles.Span2}>{cdate}</span></p>
+                                <p><span className={Styles.Span1}>Tracking Id :</span>   <span className={Styles.Span2}>{data.Tracking__c}</span></p>
+                                <p><span className={Styles.Span1}>Shipment Method :</span>   <span className={Styles.Span2}>{data.Shipping_method__c}</span></p>
 
                             </div>
 
@@ -55,7 +66,7 @@ function TrackingStatus({ TrackingData, opportunityId }) {
                     </div>
 
                     <div className={Styles.ShippedBar}>
-                        <h3>Tracking Status :  <span>Shipped</span></h3>
+                        <h3>Tracking Status :  <span>{data.Status__c?data.Status__c: 'Not Shipped'}</span></h3>
                         <div className={Styles.BtnGroup}>
                             <button type="submit">CANCEL</button>
                             <button>SUBMIT TRACKING STATUS REQUEST </button>

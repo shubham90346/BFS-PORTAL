@@ -15,13 +15,27 @@ export async function AuthCheck() {
 }
 
 export function POGenerator() {
-  let count = localStorage.getItem(POCount) || 1;
+  let count = parseInt(localStorage.getItem(POCount)) || 1;
+  if(count == "NaN") {localStorage.setItem(POCount,1); count = 1;}
   let date = new Date();
   let currentMonth = padNumber(date.getMonth() + 1,true);
   let currentDate = padNumber(date.getDate(),true);
-
+  let beg = fetchBeg()
+  let AcCode = getStrCode(beg?.Account?.name)
+  let MaCode = getStrCode(beg?.Manufacturer?.name)
+  
   let orderCount = padNumber(count);
-  return `${"DSTEST"}${currentDate + currentMonth}-${orderCount}`;
+  return `${AcCode+MaCode}${currentDate + currentMonth}-${orderCount}`;
+}
+
+function getStrCode(str){
+  if(!str) return null;
+ let codeLength =  str.split(" ");
+ if(codeLength.length >= 2){
+   return `${codeLength[0].charAt(0).toUpperCase()+codeLength[1].charAt(0).toUpperCase()}`
+ }else{
+  return `${codeLength[0].charAt(0).toUpperCase()+codeLength[0].charAt(codeLength[0].length - 1).toUpperCase()}`
+ }
 }
 function padNumber(n, isTwoDigit) {
   if (isTwoDigit) {
@@ -46,23 +60,26 @@ function padNumber(n, isTwoDigit) {
 
 export function fetchBeg() {
   let orderStr = localStorage.getItem(orderKey)
-  let accountIdStr = localStorage.getItem(accountIdKey)
-  let brandIdStr = localStorage.getItem(brandIdKey)
-  let brandStr = localStorage.getItem(brandKey)
-  let accountStr = localStorage.getItem(accountKey)
   let orderDetails = {
     orderList: [],
     Account: {
-      name: accountStr,
-      id: accountIdStr
+      name: null,
+      id: null,
+      address:null
     },
     Manufacturer: {
-      name: brandStr,
-      id: brandIdStr
+      name: null,
+      id: null
     }
   }
   if (orderStr) {
-    orderDetails.orderList = JSON.parse(orderStr)
+    let orderList = Object.values(JSON.parse(orderStr));
+    orderDetails.Account.id =orderList[0].account.id
+    orderDetails.Account.name =orderList[0].account.name
+    orderDetails.Account.address =JSON.parse(orderList[0].account.address)
+    orderDetails.Manufacturer.id =orderList[0].manufacturer.id
+    orderDetails.Manufacturer.name =orderList[0].manufacturer.name
+    orderDetails.orderList = orderList
   }
   return orderDetails;
 }
@@ -97,6 +114,7 @@ export async function OrderPlaced({ order }) {
 
 export async function DestoryAuth() {
   localStorage.clear()
+  // window.localStorage.href = "/"
   return true
 }
 
@@ -127,3 +145,22 @@ export async function getOrderList({ user }) {
   return data.data
 }
 
+export async function getDashboardata({ user }) {
+
+  let headersList = {
+    "Accept": "*/*"
+  }
+
+  let bodyContent = new FormData();
+  bodyContent.append("key", user.key);
+  bodyContent.append("salesRepId", user.Sales_Rep__c);
+
+  let response = await fetch(url + "v3/3kMMguJj62cyyf0", {
+    method: "POST",
+    body: bodyContent,
+    headers: headersList
+  });
+  let data = JSON.parse(await response.text());
+  console.log({data});
+  return data.data
+}
