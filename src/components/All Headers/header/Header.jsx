@@ -28,14 +28,6 @@ const Header = () => {
           Customer Support
         </Link>
       </p>
-      {/* <p className={`m-0  ${styles.text}`}>
-        <select defaultValue="">
-          <option value=""  disabled > REPORTS</option>
-          <option value="1" className={`m-0  ${styles.text}`}> Sales Report</option>
-          <option value="2" className={`m-0  ${styles.text}`}> Newness Report</option>
-          <option value="3" className={`m-0  ${styles.text}`}> Comparison Report</option>
-        </select>
-        </p> */}
       <p className={`m-0  ${styles.text}`}>
         <Link to="" className="linkStyle">
           <div class="dropdown dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -46,9 +38,7 @@ const Header = () => {
                   to="/sales-report"
                   className="dropdown-item text-start"
                   onClick={() => {
-                    // setReportName("Sales report");
                     navigate("/sales-report");
-                    // console.log(reportName);
                   }}
                 >
                   Sales Report
@@ -59,9 +49,7 @@ const Header = () => {
                   to="/newness-report"
                   className="dropdown-item text-start"
                   onClick={() => {
-                    // setReportName("newness report");
                     navigate("/newness-report");
-                    // console.log(reportName);
                   }}
                 >
                   Newness Report
@@ -72,9 +60,7 @@ const Header = () => {
                   to="/comparison-report"
                   className="dropdown-item  text-start"
                   onClick={() => {
-                    // setReportName("Comparison report");
                     navigate("/comparison-report");
-                    // console.log(reportName);
                   }}
                 >
                   Comparison Report

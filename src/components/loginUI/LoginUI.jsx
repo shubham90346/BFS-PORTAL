@@ -146,7 +146,7 @@ const LoginUI = () => {
               <div className="col-12">
                 <button
                   type="submit"
-                  className={`bg-dark text-white py-2 w-100 ${styles.loginBtn}`}
+                  className={`text-white py-2 w-100 ${styles.loginBtn}`}
                   onClick={login}
                 >
                   Login

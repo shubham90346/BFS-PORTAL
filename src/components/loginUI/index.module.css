@@ -37,6 +37,7 @@
   line-height: 32px; /* 213.333% */
   letter-spacing: 1.5px;
   text-transform: uppercase;
+  background-color: black;
 }
 
 .closeButton {
