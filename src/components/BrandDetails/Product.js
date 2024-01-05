@@ -150,7 +150,7 @@ function Product() {
     }
   }, []);
   const redirecting = () => {
-    setInterval(() => {
+    setTimeout(() => {
       navigate("/my-retailers");
     }, 2000);
     // setRedirect(false);

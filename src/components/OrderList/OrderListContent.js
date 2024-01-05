@@ -155,7 +155,7 @@ function OrderListContent({ data }) {
                     {/* <span><a > +22More</a></span>*/}
                     <span>
                       <a>
-                        {item.OpportunityLineItems?.totalSize - 3 < 0
+                        {item.OpportunityLineItems?.records?.length > 3
                           ? ""
                           : `{+${item.OpportunityLineItems?.totalSize - 3
                           } More}`}

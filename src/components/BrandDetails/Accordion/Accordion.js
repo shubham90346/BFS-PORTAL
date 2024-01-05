@@ -127,8 +127,7 @@ const Accordion = ({ data, formattedData }) => {
                               <td>
                                 {value.Category__c === "TESTER" ? (
                                   <>
-                                    $
-                                    {value.usdRetail__c.includes("$")
+                                    ${value.usdRetail__c.includes("$")
                                       ? (
                                           +value.usdRetail__c.substring(1) -
                                           (data?.discount?.testerMargin / 100) *
