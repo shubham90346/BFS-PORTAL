@@ -24,8 +24,9 @@ const BrandCard = ({ brand, image }) => {
 
             <button
               className="flex items-center gap-2"
-              onClick={() =>
-                navigate(`/my-retailers?manufacturerId=${brand.Id}`)
+              onClick={() =>{
+                if( brand?.Accounds)
+                navigate(`/my-retailers?manufacturerId=${brand.Id}`)}
               }
             >
               <div className="[font-family:'Montserrat-400'] font-normal text-black text-[12px] tracking-[0] leading-[32px] whitespace-nowrap">
