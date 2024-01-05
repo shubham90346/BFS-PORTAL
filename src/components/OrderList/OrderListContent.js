@@ -69,11 +69,11 @@ function OrderListContent({ data }) {
 
       <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-lg">
-          <div class="modal-content">
+          <div className={`${Styles.modalContrlWidth} modal-content`}>
             {/* <div class="modal-header">
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div> */}
-            <div class="modal-body mt-4 ">
+            <div class="modal-body  ">
               <TrackingStatus data={modalData}              />
             </div>
           </div>
@@ -85,11 +85,11 @@ function OrderListContent({ data }) {
 
       <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-lg">
-          <div class="modal-content">
+          <div className={`${Styles.modalContrlWidth} modal-content`}>
             {/* <div class="modal-header">
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div> */}
-            <div class="modal-body  mt-4">
+            <div class="modal-body ">
               <Orderstatus data={modalData}/>
             </div>
           </div>
@@ -107,12 +107,12 @@ function OrderListContent({ data }) {
           <div className={` ${Styles.orderStatement}`} key={index}>
             <div>
               <div className={Styles.poNumber}>
-                <div>
+                <div className={Styles.poNumb1}>
                   <h3>PO Number</h3>
                   <p>{item.PO_Number__c}</p>
                 </div>
 
-                <div>
+                <div className={Styles.poNumb1}>
                   <h3>Brand</h3>
                   <p>{item.ManufacturerName__c}</p>
                 </div>

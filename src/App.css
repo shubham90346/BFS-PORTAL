@@ -87,3 +87,9 @@
   color: black;
 }
 
+.container{
+  max-width: 1500px;
+}
+
+
+@media(max-width:)
