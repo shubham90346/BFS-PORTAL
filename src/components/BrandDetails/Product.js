@@ -38,7 +38,7 @@ function Product() {
   const [searchBy, setSearchBy] = useState("");
   const navigate = useNavigate();
   const [redirect, setRedirect] = useState(false);
-  const [alert,setalert] = useState(0);
+  const [alert, setalert] = useState(0);
 
   const { data, isLoading } = useProductList({
     key: user?.data.access_token,
@@ -230,7 +230,7 @@ function Product() {
             content={
               <div>
                 <p className="text-center">
-                Please Select Tester Product of minimum Order Amount
+                  Please Select Tester Product of minimum Order Amount
                 </p>
               </div>
             }
