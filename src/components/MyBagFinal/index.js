@@ -20,7 +20,6 @@ function MyBagFinal() {
   const { addOrder, orderQuantity } = useBag();
   const [bagValue, setBagValue] = useState(fetchBeg());
   const [isOrderPlaced,setIsOrderPlaced] = useState(0)
-  console.log({bagValue});
   useEffect(() => {
     if (bagValue?.Account?.id && bagValue?.Manufacturer?.id && Object.values(bagValue?.orderList)?.length>0) {
       setButtonActive(true);
@@ -36,9 +35,11 @@ function MyBagFinal() {
         if (bagValue) {
           // setButtonActive(true)
           let list = [];
+          let orderType = "Wholesale Number";
           let productLists = Object.values(bagValue.orderList);
           if (productLists.length) {
             productLists.map((product) => {
+              if(product.product.Category__c == "PREORDER") orderType = "Pre Order"
               let temp = {
                 ProductCode: product.product.ProductCode,
                 qty: product.quantity,
@@ -55,14 +56,13 @@ function MyBagFinal() {
             PONumber: PONumber,
             desc: orderDesc,
             SalesRepId: user.Sales_Rep__c,
-            Type: "Wholesale Numbers",
+            Type: orderType,
             list,
             key: user.x_access_token,
           };
           OrderPlaced({ order: begToOrder })
             .then((response) => {
               if (response) {
-                console.log({ response });
                 setIsOrderPlaced(2)
                 window.location.href = "http://localhost:3000/dashboard";
               }

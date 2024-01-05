@@ -137,7 +137,7 @@ function OrderListContent({ data }) {
 
                   <div className={Styles.ProtuctInnerBox1}>
                     <ul>
-                      {item.OpportunityLineItems?.records.slice(0, size).map((ele) => {
+                      {item.OpportunityLineItems?.records.length >3 ?item.OpportunityLineItems?.records.slice(0, size).map((ele) => {
                         return (
                           <>
                             <li>
@@ -150,14 +150,14 @@ function OrderListContent({ data }) {
 
                           </>
                         );
-                      })}
+                      }):<p className={Styles.noProductLabel}>No Product</p>}
                     </ul>
                     {/* <span><a > +22More</a></span>*/}
                     <span>
                       <a>
-                        {item.OpportunityLineItems?.records?.length > 3
-                          ? ""
-                          : `{+${item.OpportunityLineItems?.totalSize - 3
+                        {item.OpportunityLineItems?.records?.length && item.OpportunityLineItems?.records?.length > 3
+                          &&
+                          `{+${item.OpportunityLineItems?.totalSize - 3
                           } More}`}
                       </a>
                     </span>
@@ -170,7 +170,7 @@ function OrderListContent({ data }) {
                     <p>${Number(item.Amount).toFixed(2)}</p>
                   </div>
 
-                  <Link to="/my-bagorder">
+                  <Link to="/orderDetails">
                     <button onClick={() => MyBagId(item.Id)}>
                       View Order Details
                     </button>

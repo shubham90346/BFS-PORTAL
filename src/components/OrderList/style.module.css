@@ -247,7 +247,7 @@ text-transform: uppercase;
 }
 
 
-.ProtuctInnerBox1 ul li {
+.ProtuctInnerBox1 ul li,.noProductLabel {
     margin-top: 4%;
     color: #000;
     font-family: "Montserrat";

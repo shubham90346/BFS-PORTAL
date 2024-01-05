@@ -27,7 +27,7 @@ const groupBy = function (xs, key) {
 };
 
 function Product() {
-  const [ emptyBag,setEmptyBag] = useState(false)
+  const [emptyBag, setEmptyBag] = useState(false)
   const { orderQuantity } = useBag();
 
   const { user } = useAuth();
@@ -38,6 +38,7 @@ function Product() {
   const [searchBy, setSearchBy] = useState("");
   const navigate = useNavigate();
   const [redirect, setRedirect] = useState(false);
+  const [alert,setalert] = useState(0);
 
   const { data, isLoading } = useProductList({
     key: user?.data.access_token,
@@ -155,12 +156,43 @@ function Product() {
     }, 2000);
     // setRedirect(false);
   };
-  const generateOrderHandler = ()=>{
+  const generateOrderHandler = () => {
     let begValue = fetchBeg()
-    console.log(begValue);
-    if(begValue?.Account?.id && begValue?.Manufacturer?.id && Object.values(begValue.orderList).length > 0){
-      navigate("/my-bag");
-    }else{
+    if (begValue?.Account?.id && begValue?.Manufacturer?.id && Object.values(begValue.orderList).length > 0) {
+      let bagPrice = 0;
+      let bagTesterPrice = 0;
+      Object.values(begValue.orderList).map((product) => {
+        let productPriceStr = product.product.usdRetail__c;
+        let productQuantity = product.quantity;
+        let productCategories = product.product.Category__c;
+        let productPrice = 0
+        let splitPrice = productPriceStr.split("$");
+        if (splitPrice.length == 2) {
+          productPrice = parseFloat(splitPrice[1]);
+        } else {
+          productPrice = parseFloat(splitPrice[0]);
+        }
+        if (productCategories && productCategories.toUpperCase() == "TESTER") {
+          bagTesterPrice += productPrice * productQuantity - (productPrice * productQuantity * product.discount.testerMargin / 100);
+          bagPrice += bagTesterPrice;
+        }
+        else if (productCategories && productCategories.toUpperCase() == "SAMPLES") {
+          bagPrice += productPrice * productQuantity - (productPrice * productQuantity * product.discount.sample / 100);
+
+        } else {
+          bagPrice += productPrice * productQuantity - (productPrice * productQuantity * product.discount.margin / 100);
+        }
+      })
+      if (data.discount.MinOrderAmount > bagPrice) {
+        setalert(1)
+      } else {
+        if (data.discount.testerproductLimit > bagPrice) {
+          setalert(2)
+        } else {
+          navigate("/my-bag");
+        }
+      }
+    } else {
       setEmptyBag(true)
     }
   }
@@ -183,16 +215,36 @@ function Product() {
         />
       ) : (
         <div className="container-fluid p-0 m-0">
+          {alert == 1 && <ModalPage
+            open
+            content={
+              <div>
+                <p className="text-center">
+                  Please Select Product of minimum Order Amount
+                </p>
+              </div>
+            }
+          />}
+          {alert == 2 && <ModalPage
+            open
+            content={
+              <div>
+                <p className="text-center">
+                Please Select Tester Product of minimum Order Amount
+                </p>
+              </div>
+            }
+          />}
           {emptyBag && <ModalPage
-        open
-        content={
-          <div>
-            <p className="text-center">
-              No Product in your bag
-              </p>
-          </div>
-        }
-      />}
+            open
+            content={
+              <div>
+                <p className="text-center">
+                  No Product in your bag
+                </p>
+              </div>
+            }
+          />}
           <div className="row p-0 m-0 d-flex flex-column justify-content-around align-items-center col-12">
             {/* TopNav */}
             <div className="col-11">

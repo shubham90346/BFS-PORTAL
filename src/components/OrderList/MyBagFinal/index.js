@@ -88,24 +88,30 @@ function MyBagFinal() {
                             </div> */}
                             <div className={Styles.Mainbox3}>
                               {
-                                OrderData.OpportunityLineItems?.map((item) => {
-                                  return (
-                                    <>
-
-                                      <div className={`d-flex g-3 ${Styles.innerBox}`}>
-
-                                        <div className={Styles.Mainbox2}>
-                                          <img src={Img1} alt="" />
-                                        </div>
-                                        <div>
-                                          <h2 className="">{item.Name} </h2>
-                                          <p><span className={Styles.Span1} >{item.ListPrice}</span>
-                                            <span className={Styles.Span2}>{item.UnitPrice}</span></p>
-                                        </div>
+                                OrderData.OpportunityLineItems?.length > 0 ? OrderData.OpportunityLineItems?.map((item) => {
+                                  return (<div className={Styles.Mainbox}>
+                                    <div className={Styles.Mainbox1M}>
+                                      <div className={Styles.Mainbox2}>
+                                        <img src={Img1} alt="" />
                                       </div>
-                                    </>
-                                  )
-                                })
+                                      <div className={Styles.Mainbox3}>
+                                        <h2>{item.Name}</h2>
+                                        <p>
+                                          <span className={Styles.Span1}>
+                                            ${item.ListPrice}
+                                          </span>
+                                          <span className={Styles.Span2}>${item.UnitPrice}</span>
+                                        </p>
+                                      </div>
+                                    </div>
+
+                                    <div className={Styles.Mainbox2M}>
+                                      <div className={Styles.Mainbox5}>
+                                        <button className={Styles.qtyLabelHolder}>{item.Quantity}</button>
+                                      </div>
+                                    </div>
+                                  </div>)
+                                }) : <>No Products.</>
                               }
 
                             </div>
@@ -123,31 +129,23 @@ function MyBagFinal() {
                         </div>
                       </div>
                     </div>
-
-
-
-
-
-
                   </div>
-
                 </div>
-
                 <div className='col-lg-5 col-md-4 col-sm-12'>
                   <div className={Styles.ShippControl}>
                     <h2>Shipping Address</h2>
                     <div className={Styles.ShipAdress}>
-                      <p>            {OrderData?.Shipping_Street__c?<>  {OrderData?.Shipping_Street__c}, {OrderData?.Shipping_City__c} <br />
-                          {OrderData?.Shipping_State__c}, {OrderData?.Shipping_Country__c} {OrderData?.Shipping_Zip__c}
-                          <br />
-                          {OrderData?.emaill} | {OrderData?.contact}</>:"No Shipping Address"}</p>
+                      <p>            {OrderData?.Shipping_Street__c ? <>  {OrderData?.Shipping_Street__c}, {OrderData?.Shipping_City__c} <br />
+                        {OrderData?.Shipping_State__c}, {OrderData?.Shipping_Country__c} {OrderData?.Shipping_Zip__c}
+                        <br />
+                        {OrderData?.emaill} | {OrderData?.contact}</> : "No Shipping Address"}</p>
 
                     </div>
 
                     <div className={Styles.ShipAdress2}>
 
                       <h4>Note:-</h4>
-                     {OrderData.Description}
+                      {OrderData.Description}
 
                     </div>
 
@@ -160,34 +158,11 @@ function MyBagFinal() {
 
                 </div>
               </div>
-
             </div>
-
-
-
-
-            {/* </>
-                )
-              })
-
-            } */}
-
-
-
-
-
-
-
-
-
-
           </div>
 
         </div>
       </section>
-
-
-
     </div>
   )
 }
