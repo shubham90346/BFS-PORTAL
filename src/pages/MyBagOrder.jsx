@@ -5,6 +5,7 @@ import Header from '../components/All Headers/header/Header';
 import MyBagFinal from '../components/OrderList/MyBagFinal';
 import HelpSection from '../components/Footer/HelpSection';
 import Footer from '../components/Footer/Footer';
+import MobileHeader from '../components/All Headers/mobileHeader/MobileHeader';
 
 function MyBagOrder(props) {
     return (
@@ -20,6 +21,7 @@ function MyBagOrder(props) {
           <div className="col-10">
             <LogoHeader/>
             <Header />
+            <MobileHeader/>
             <div className="filter-container">
            
           </div>

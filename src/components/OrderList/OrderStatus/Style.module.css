@@ -188,3 +188,16 @@ font-weight: 700;
 line-height: normal;
 letter-spacing: 1.12px;
 }
+
+
+@media(max-width:1199px)
+{
+    .BoxBlack, .Boxwhite{
+        width: 150px;
+    height: 150px;
+    }
+
+    .Boxwhite h1{        
+    font-size: 54px;
+}
+}

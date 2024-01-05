@@ -148,6 +148,7 @@ text-transform: uppercase;
     border-radius: 8px 8px 0px 0px;
     border: 1px solid #D5D9D9;
     background: #F8F8F8;
+    gap: 10px;
 }
 
 .poNumber .PoOrderLast h3 {
@@ -416,11 +417,38 @@ letter-spacing: 1.12px;
         width: 85%;
         margin: auto;
     }
+    .modalContrlWidth{
+        width: 100%;
+        margin: auto;
+        /* height: 500px; */
+    }
 }
 
 
 
 @media(max-width:767px){
+
+    .Status2{
+        margin-top: 20px;
+    }
+
+
+    .StatusOrder {
+        display: block;
+            }
+
+    .Status1 {
+        display:grid;
+        gap: 20px;
+        align-items: center;
+        justify-content: start;
+    }
+    
+.productDetail {
+ 
+    display: block;
+ 
+}
     .poNumber {
         display: block;
      
