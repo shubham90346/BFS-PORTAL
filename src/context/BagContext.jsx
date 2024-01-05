@@ -63,6 +63,7 @@ const BagProvider = ({ children }) => {
       productType: product.Category__c === "PREORDER" ? "pre-order" : "wholesale",
     };
   };
+  // deletion of orders with quantity 0
   const deleteOrder = () => {
     Object.keys(orders).forEach((order) => {
       if (orders[order]["quantity"] === 0) {
