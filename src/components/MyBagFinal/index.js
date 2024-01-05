@@ -2,10 +2,6 @@
 import React, { useEffect, useState } from "react";
 import Styles from "./Styles.module.css";
 import Img1 from "./Images/Eye1.png";
-import Img2 from "./Images/Img2.png";
-import Img3 from "./Images/Img3.png";
-import Img4 from "./Images/Img4.png";
-import Img5 from "./Images/Img5.png";
 import QuantitySelector from "../BrandDetails/Accordion/QuantitySelector";
 import { useNavigate } from "react-router-dom";
 import { GetAuthData, OrderPlaced, POGenerator, fetchBeg } from "../../lib/store";
