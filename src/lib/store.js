@@ -74,7 +74,7 @@ export function fetchBeg() {
   }
   if (orderStr) {
     let orderList = Object.values(JSON.parse(orderStr));
-    if(orderList.length>1){
+    if(orderList.length>0){
 
       orderDetails.Account.id =orderList[0].account.id
       orderDetails.Account.name =orderList[0].account.name
