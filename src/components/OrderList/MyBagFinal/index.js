@@ -89,14 +89,13 @@ function MyBagFinal() {
                             <div className={Styles.Mainbox3}>
                               {
                                 OrderData.OpportunityLineItems?.length > 0 ? OrderData.OpportunityLineItems?.map((item) => {
-                                  console.log({item});
                                   return (<div className={Styles.Mainbox}>
                                     <div className={Styles.Mainbox1M}>
                                       <div className={Styles.Mainbox2}>
                                         <img src={Img1} alt="" />
                                       </div>
                                       <div className={Styles.Mainbox3}>
-                                        <h2>{item.Name}</h2>
+                                        <h2>{item.Name.split(OrderData.Name)}</h2>
                                         <p>
                                           <span className={Styles.Span1}>
                                             ${item.ListPrice}

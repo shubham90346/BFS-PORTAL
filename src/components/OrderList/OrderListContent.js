@@ -137,7 +137,7 @@ function OrderListContent({ data }) {
 
                   <div className={Styles.ProtuctInnerBox1}>
                     <ul>
-                      {item.OpportunityLineItems?.records.length >3 ?item.OpportunityLineItems?.records.slice(0, size).map((ele) => {
+                      {item.OpportunityLineItems?.records.length >0 ?item.OpportunityLineItems?.records.slice(0, size).map((ele) => {
                         return (
                           <>
                             <li>
