@@ -89,6 +89,7 @@ function MyBagFinal() {
                             <div className={Styles.Mainbox3}>
                               {
                                 OrderData.OpportunityLineItems?.length > 0 ? OrderData.OpportunityLineItems?.map((item) => {
+                                  console.log({item});
                                   return (<div className={Styles.Mainbox}>
                                     <div className={Styles.Mainbox1M}>
                                       <div className={Styles.Mainbox2}>
