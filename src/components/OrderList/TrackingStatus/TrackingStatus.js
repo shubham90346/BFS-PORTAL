@@ -68,7 +68,8 @@ function TrackingStatus({ data}) {
                     <div className={Styles.ShippedBar}>
                         <h3>Tracking Status :  <span>{data.Status__c?data.Status__c: 'Not Shipped'}</span></h3>
                         <div className={Styles.BtnGroup}>
-                            <button type="submit">CANCEL</button>
+                        {/* button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> */}
+                            <button type="submit" data-bs-dismiss="modal">CANCEL</button>
                             <button>SUBMIT TRACKING STATUS REQUEST </button>
 
                         </div>

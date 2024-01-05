@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./index.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import "./index.css";
 const Header = () => {
-  const navigate=useNavigate();
+  const navigate = useNavigate();
+  const path = window.location.pathname;
   return (
     <div id={`${styles.main}`} className="d-flex justify-content-between  align-items-center my-2 gap-1">
       <p className={`m-0 ${styles.text}`}>
@@ -27,32 +28,41 @@ const Header = () => {
           Customer Support
         </Link>
       </p>
-      {/* <p className={`m-0  ${styles.text}`}>
-        <select defaultValue="">
-          <option value=""  disabled > REPORTS</option>
-          <option value="1" className={`m-0  ${styles.text}`}> Sales Report</option>
-          <option value="2" className={`m-0  ${styles.text}`}> Newness Report</option>
-          <option value="3" className={`m-0  ${styles.text}`}> Comparison Report</option>
-        </select>
-        </p> */}
       <p className={`m-0  ${styles.text}`}>
         <Link to="" className="linkStyle">
           <div class="dropdown dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Reports
-            {/* </a> */}
+            {path === "/sales-report" ? "Sales Report" : null || path === "/newness-report" ? "newness Report" : null || path === "/comparison-report" ? "comparison Report" : null || "Reports"}
             <ul class="dropdown-menu">
               <li>
-                <Link to="/sales-report" className="dropdown-item text-start" onClick={()=>navigate("/sales-report")}>
+                <Link
+                  to="/sales-report"
+                  className="dropdown-item text-start"
+                  onClick={() => {
+                    navigate("/sales-report");
+                  }}
+                >
                   Sales Report
                 </Link>
               </li>
               <li>
-                <Link to="/newness-report" className="dropdown-item text-start" onClick={()=>navigate("/newness-report")}>
+                <Link
+                  to="/newness-report"
+                  className="dropdown-item text-start"
+                  onClick={() => {
+                    navigate("/newness-report");
+                  }}
+                >
                   Newness Report
                 </Link>
               </li>
               <li>
-                <Link to="/comparison-report" className="dropdown-item  text-start"  onClick={()=>navigate("/comparison-report")}>
+                <Link
+                  to="/comparison-report"
+                  className="dropdown-item  text-start"
+                  onClick={() => {
+                    navigate("/comparison-report");
+                  }}
+                >
                   Comparison Report
                 </Link>
               </li>
