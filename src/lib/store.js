@@ -149,13 +149,12 @@ export async function getOrderList({ user }) {
 }
 
 export async function getDashboardata({ user }) {
-
   let headersList = {
     "Accept": "*/*"
   }
-
+  
   let bodyContent = new FormData();
-  bodyContent.append("key", user.key);
+  bodyContent.append("key", user.x_access_token);
   bodyContent.append("salesRepId", user.Sales_Rep__c);
 
   let response = await fetch(url + "v3/3kMMguJj62cyyf0", {
@@ -164,6 +163,5 @@ export async function getDashboardata({ user }) {
     headers: headersList
   });
   let data = JSON.parse(await response.text());
-  console.log({data});
   return data.data
 }
