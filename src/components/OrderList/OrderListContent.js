@@ -69,11 +69,11 @@ function OrderListContent({ data }) {
 
       <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-lg">
-          <div class="modal-content">
+          <div className={`${Styles.modalContrlWidth} modal-content`}>
             {/* <div class="modal-header">
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div> */}
-            <div class="modal-body mt-4 ">
+            <div class="modal-body  ">
               <TrackingStatus data={modalData}              />
             </div>
           </div>
@@ -85,11 +85,11 @@ function OrderListContent({ data }) {
 
       <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-lg">
-          <div class="modal-content">
+          <div className={`${Styles.modalContrlWidth} modal-content`}>
             {/* <div class="modal-header">
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div> */}
-            <div class="modal-body  mt-4">
+            <div class="modal-body ">
               <Orderstatus data={modalData}/>
             </div>
           </div>
@@ -107,12 +107,12 @@ function OrderListContent({ data }) {
           <div className={` ${Styles.orderStatement}`} key={index}>
             <div>
               <div className={Styles.poNumber}>
-                <div>
+                <div className={Styles.poNumb1}>
                   <h3>PO Number</h3>
                   <p>{item.PO_Number__c}</p>
                 </div>
 
-                <div>
+                <div className={Styles.poNumb1}>
                   <h3>Brand</h3>
                   <p>{item.ManufacturerName__c}</p>
                 </div>
@@ -137,7 +137,7 @@ function OrderListContent({ data }) {
 
                   <div className={Styles.ProtuctInnerBox1}>
                     <ul>
-                      {item.OpportunityLineItems?.records.slice(0, size).map((ele) => {
+                      {item.OpportunityLineItems?.records.length >3 ?item.OpportunityLineItems?.records.slice(0, size).map((ele) => {
                         return (
                           <>
                             <li>
@@ -150,14 +150,14 @@ function OrderListContent({ data }) {
 
                           </>
                         );
-                      })}
+                      }):<p className={Styles.noProductLabel}>No Product</p>}
                     </ul>
                     {/* <span><a > +22More</a></span>*/}
                     <span>
                       <a>
-                        {item.OpportunityLineItems?.records?.length > 3
-                          ? ""
-                          : `{+${item.OpportunityLineItems?.totalSize - 3
+                        {item.OpportunityLineItems?.records?.length && item.OpportunityLineItems?.records?.length > 3
+                          &&
+                          `{+${item.OpportunityLineItems?.totalSize - 3
                           } More}`}
                       </a>
                     </span>
@@ -170,7 +170,7 @@ function OrderListContent({ data }) {
                     <p>${Number(item.Amount).toFixed(2)}</p>
                   </div>
 
-                  <Link to="/my-bagorder">
+                  <Link to="/orderDetails">
                     <button onClick={() => MyBagId(item.Id)}>
                       View Order Details
                     </button>

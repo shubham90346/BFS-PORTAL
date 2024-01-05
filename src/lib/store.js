@@ -74,12 +74,15 @@ export function fetchBeg() {
   }
   if (orderStr) {
     let orderList = Object.values(JSON.parse(orderStr));
-    orderDetails.Account.id =orderList[0].account.id
-    orderDetails.Account.name =orderList[0].account.name
-    orderDetails.Account.address =JSON.parse(orderList[0].account.address)
-    orderDetails.Manufacturer.id =orderList[0].manufacturer.id
-    orderDetails.Manufacturer.name =orderList[0].manufacturer.name
-    orderDetails.orderList = orderList
+    if(orderList.length>1){
+
+      orderDetails.Account.id =orderList[0].account.id
+      orderDetails.Account.name =orderList[0].account.name
+      orderDetails.Account.address =JSON.parse(orderList[0].account.address)
+      orderDetails.Manufacturer.id =orderList[0].manufacturer.id
+      orderDetails.Manufacturer.name =orderList[0].manufacturer.name
+      orderDetails.orderList = orderList
+    }
   }
   return orderDetails;
 }

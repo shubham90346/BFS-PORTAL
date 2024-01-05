@@ -64,10 +64,10 @@ const NewnessReportTable = ({ newnessData, dataDisplay }) => {
           </div>
         ) : (
           <div className="d-flex justify-content-center align-items-center" style={{ minHeight: "40vh" }}>
-            <Link to="/newness-report" className="linkStyle d-flex">
-              Something went wrong. Try again. 
+            {/* <Link to="/newness-report" className="linkStyle d-flex"> */}
+              No Data Found 
               
-            </Link>
+            {/* </Link> */}
           </div>
         )
       ) : (

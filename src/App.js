@@ -69,7 +69,7 @@ function App() {
             <Route path="/about-us" element={<AboutUs />}></Route>
             {/* <Route path="/wholesale-inquiry" elements={<WholesaleInquiry />}></Route> */}
             <Route path="logout" element={<Logout />}></Route>
-            <Route path="/my-bagorder" element={<MyBagOrder/>}></Route>
+            <Route path="/orderDetails" element={<MyBagOrder/>}></Route>
           </Routes>
         </BrowserRouter>
       </BagProvider>
