@@ -4,6 +4,7 @@ import TopNav from '../components/All Headers/topNav/TopNav'
 import Header from '../components/All Headers/header/Header'
 import HelpSection from '../components/Footer/HelpSection'
 import Footer from '../components/Footer/Footer'
+import MobileHeader from '../components/All Headers/mobileHeader/MobileHeader'
 
 const CustomerCare = () => {
   return (
@@ -19,6 +20,7 @@ const CustomerCare = () => {
           <div className="col-10">
             <LogoHeader />
             <Header />
+            <MobileHeader/>
             
           </div>
           {/* Top products */}

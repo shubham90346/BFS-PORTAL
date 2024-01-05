@@ -226,12 +226,12 @@ function OrderList() {
                       return (
                         <div key={index}>
                           <div className={Styles.poNumber}>
-                            <div>
+                            <div className={Styles.poNumb1}>
                               <h3>PO Number</h3>
                               <p>{item.PO_Number__c}</p>
                             </div>
 
-                            <div>
+                            <div className={Styles.poNumb1}>
                               <h3>Brand</h3>
                               <p>{item.ManufacturerName__c}</p>
                             </div>

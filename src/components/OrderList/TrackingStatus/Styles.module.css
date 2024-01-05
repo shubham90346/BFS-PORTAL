@@ -113,10 +113,10 @@ letter-spacing: 1.12px;
 
 .mainTop{
     border-radius: 10px;
-    border: 1px solid #000;
-    width: 70%;
+    /* border: 1px solid #000; */
+    /* width: 70%; */
     margin: auto;
- padding: 30px 50px 40px;
+ padding: 20px ;
 }
 
 .ProtuctInnerBoxInner p{
@@ -134,14 +134,14 @@ letter-spacing: 1.12px;
     font-weight: 500;
     line-height: normal;
     letter-spacing: 2.2px; 
-    padding-bottom: 50PX;
+    padding-bottom: 40PX;
     /* border: 1px solid; */
 }
 
 .ShippedBar{
     display: flex;
     justify-content: space-between;
-    margin:30px 0 0 0 ;
+    margin:45px 0 0 0 ;
     padding:30px 0 0 0 ;
     border-top: 1px dashed #000 ;
 }
@@ -161,7 +161,8 @@ font-size: 16px;
 font-style: normal;
 font-weight: 600;
 line-height: 33px; /* 206.25% */
-letter-spacing: 1.6px;
+letter-spacing: 1px;
+padding: 0 10px;
 text-transform: uppercase;
 
 }

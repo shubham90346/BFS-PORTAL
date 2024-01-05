@@ -1,5 +1,9 @@
 .widthGivenBrandDetailPage{
     width: 90%;
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    gap: 20px;
+    margin: auto;
   }
 
   .HoverArrow svg{
@@ -54,8 +58,44 @@
 }
 
 
-/* @media(max-width:768.98px){
-  .FilterNoneClass{
-    display: none;
+
+.AcoorWidrth label{
+  
+  color: #000;
+font-family: "Montserrat";
+font-size: 20px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+letter-spacing: 2px;
+}
+
+
+@media(max-width:991.98px){
+  .widthGivenBrandDetailPage{
+
+    grid-template-columns: repeat(3, auto);
+
   }
-} */
+
+  
+.AcoorWidrth label{
+  font-size: 15px;
+}
+}
+
+@media(max-width:768.98px){
+  .widthGivenBrandDetailPage{
+    grid-template-columns: repeat(2, auto);
+  }
+
+  /* .FilterNoneClass{
+    display: none;
+  } */
+}
+
+@media(max-width:600.98px){
+  .widthGivenBrandDetailPage{
+    grid-template-columns: repeat(1, auto);
+  }
+}

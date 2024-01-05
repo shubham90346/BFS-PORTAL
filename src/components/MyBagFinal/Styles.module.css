@@ -310,6 +310,14 @@
 
 
 @media (max-width: 767.98px) {
+  
+  .MyBagFinalRight h4 span{
+  }
+
+  .MyBagFinalRight h4{
+    display: block;
+  }
+
 .MyBagFinalTop {
   display: block;
   justify-content: space-between;
