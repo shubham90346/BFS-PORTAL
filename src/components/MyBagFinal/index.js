@@ -17,18 +17,22 @@ function MyBagFinal() {
   const [orderDesc, setOrderDesc] = useState(null);
   const [PONumber, setPONumber] = useState(POGenerator());
   const [buttonActive, setButtonActive] = useState(false);
-  const { addOrder, orderQuantity } = useBag();
+  const { addOrder, orderQuantity,deleteOrder } = useBag();
   const [bagValue, setBagValue] = useState(fetchBeg());
-  const [isOrderPlaced,setIsOrderPlaced] = useState(0)
+
+  const [isOrderPlaced, setIsOrderPlaced] = useState(0);
+
+  console.log({ bagValue });
+
   useEffect(() => {
-    if (bagValue?.Account?.id && bagValue?.Manufacturer?.id && Object.values(bagValue?.orderList)?.length>0) {
+    if (bagValue?.Account?.id && bagValue?.Manufacturer?.id && Object.values(bagValue?.orderList)?.length > 0) {
       setButtonActive(true);
     }
   }, []);
   let total = 0;
   let price = "";
   const orderPlaceHandler = () => {
-    setIsOrderPlaced(1)
+    setIsOrderPlaced(1);
     GetAuthData()
       .then((user) => {
         // let bagValue = fetchBeg()
@@ -63,7 +67,10 @@ function MyBagFinal() {
           OrderPlaced({ order: begToOrder })
             .then((response) => {
               if (response) {
-                setIsOrderPlaced(2)
+
+                console.log({ response });
+                setIsOrderPlaced(2);
+
                 window.location.href = "http://localhost:3000/dashboard";
               }
             })
@@ -78,8 +85,9 @@ function MyBagFinal() {
   };
   const handleRemoveProductFromCart = (ele) => {
     console.log(ele);
+    addOrder(ele.product, 0, ele.discount);
   };
-  if(isOrderPlaced ==1) return <OrderLoader/>
+  if (isOrderPlaced === 1) return <OrderLoader />;
   return (
     <div className="mt-4">
       <section>
@@ -99,8 +107,9 @@ function MyBagFinal() {
                   {buttonActive ? (
                     <>
                       <span> {bagValue?.Manufacturer?.name} | </span> {bagValue?.Account?.name}
-                    </>):
-                    (<span>Empty bag</span>
+                    </>
+                  ) : (
+                    <span>Empty bag</span>
                   )}
                 </h4>
               </div>
@@ -144,7 +153,7 @@ function MyBagFinal() {
                             }
                             // price = price;
                             // console.log(price);
-                            total += Number(price)* ele.quantity;
+                            total += Number(price) * ele.quantity;
                             // console.log(total);
                             return (
                               <div className={Styles.Mainbox}>
