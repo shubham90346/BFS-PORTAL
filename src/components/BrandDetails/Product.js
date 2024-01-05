@@ -157,6 +157,7 @@ function Product() {
   };
   const generateOrderHandler = ()=>{
     let begValue = fetchBeg()
+    console.log(begValue);
     if(begValue?.Account?.id && begValue?.Manufacturer?.id && Object.values(begValue.orderList).length > 0){
       navigate("/my-bag");
     }else{
