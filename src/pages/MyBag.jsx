@@ -6,6 +6,7 @@ import HelpSection from "../components/Footer/HelpSection";
 import Footer from "../components/Footer/Footer";
 import MyBagFinal from "../components/MyBagFinal";
 import { FilterItem } from "../components/FilterItem";
+import MobileHeader from "../components/All Headers/mobileHeader/MobileHeader";
 
 const MyBag = () => {
   return (
@@ -21,7 +22,8 @@ const MyBag = () => {
           <div className="col-10">
             <LogoHeader />
             <Header />
-            <div className="filter-container">
+            <MobileHeader/>
+            <div className="">
           </div>
           </div>
           {/* My Bag */}
