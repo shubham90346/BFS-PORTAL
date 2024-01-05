@@ -69,7 +69,7 @@ const BrandsPage = () => {
   }, [highestRetailers, searchBy, manufacturers]);
   return (
     <>
-    <div className="container p-0 ">
+    <div className="container  ">
       <div className="row p-0 m-0 d-flex flex-column justify-content-around align-items-center col-12">
         {/* TopNav */}
         <div className="col-12 p-0">
@@ -121,14 +121,14 @@ const BrandsPage = () => {
           ) : (
             <div>
               <div
-                className="uppercase flex justify-center items-center tracking-[1.8px] my-[48px]"
+                className="uppercase text-center flex justify-center items-center tracking-[1.8px] my-[48px]"
                 style={{ fontFamily: "Montserrat-500" }}
               >
                 Below are the Brands available with “Beauty Fashions Sales
                 Group”
               </div>
               {/* <div className="widthGivenBrandDetailPage grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 grid-cols-2 gap-4  m-auto">    */}   
-              <div className={`grid-cols-1 grid sm:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 grid-cols-2 gap-4  m-auto ${Page.widthGivenBrandDetailPage}`}> 
+              <div className={` ${Page.widthGivenBrandDetailPage}`}> 
                 {filteredPageData?.length ? (
                   <>
                     {filteredPageData?.map((brand) => (

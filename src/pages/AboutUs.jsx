@@ -4,6 +4,7 @@ import TopNav from "../components/All Headers/topNav/TopNav";
 import Header from "../components/All Headers/header/Header";
 import HelpSection from "../components/Footer/HelpSection";
 import Footer from "../components/Footer/Footer";
+import MobileHeader from "../components/All Headers/mobileHeader/MobileHeader";
 
 const AboutUs = () => {
   return (
@@ -18,7 +19,8 @@ const AboutUs = () => {
           {/* all headers */}
           <div className="col-10">
             <LogoHeader />
-            <Header />
+            <Header/>
+            <MobileHeader/>
           </div>
           {/* Top products */}
           <div className="row d-flex flex-column justify-content-around align-items-center lg:min-h-[300px] xl:min-h-[400px]">

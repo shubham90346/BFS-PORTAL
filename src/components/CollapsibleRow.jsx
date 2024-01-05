@@ -1,5 +1,6 @@
 import { useState } from "react";
 import classNames from "classnames";
+import Styles from '../pages/page.module.css'
 
 const CollapsibleRow = ({ children, title, onChange, quantity }) => {
   // console.log(quantity);
@@ -7,7 +8,7 @@ const CollapsibleRow = ({ children, title, onChange, quantity }) => {
 
   return (
     <>
-      <tr className="w-full">
+      <tr className={`w-full ${Styles.AcoorWidrth}`}>
         <td colSpan={12}   className={classNames( 
               " w-full border-none py-[1px] px-[3px] "
             )}>

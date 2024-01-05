@@ -150,6 +150,12 @@ background: #000;
 color: #FFF;
   }
 
+  .ModalResponsive{
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    gap: 20px;
+  }
+
   @media(max-width:1299px){
     .ModalTop{
         width: 80%;}
@@ -157,6 +163,18 @@ color: #FFF;
 
 
 
-  @media(max-width:1024px){
-  
+  @media(max-width:900px){
+    .ModalResponsive{
+           grid-template-columns: repeat(2, auto);
+     
+    }
+  }
+
+  @media(max-width:650px){
+    .ModalResponsive{
+           grid-template-columns: repeat(1, auto);
+           height: 250px;
+           overflow: auto;
+     
+    }
   }

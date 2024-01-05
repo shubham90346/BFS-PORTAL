@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styles from "./Style.module.css";
 import Img1 from "./images/makeup1.png";
 import CollapsibleRow from "../../CollapsibleRow";
@@ -8,8 +8,8 @@ import ModalPage from "../../Modal UI";
 import { useBag } from "../../../context/BagContext";
 
 const Accordion = ({ data, formattedData }) => {
-  console.log("Accordion data", data);
-  console.log("Accordion formattedData", formattedData);
+  // console.log("Accordion data", data);
+  // console.log("Accordion formattedData", formattedData);
   const { orders, setOrders, setOrderQuantity, addOrder } = useBag();
   const [replaceCartModalOpen, setReplaceCartModalOpen] = useState(false);
 
