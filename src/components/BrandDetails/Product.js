@@ -241,12 +241,12 @@ function Product() {
 
           <div className="row p-0 m-0 d-flex flex-column justify-content-around align-items-center col-12">
             {/* TopNav */}
-            <div className="col-11">
+            <div className="col-12">
               <TopNav />
             </div>
             <hr className="hrBgColor"></hr>
             {/* all headers */}
-            <div className="col-11">
+            <div className="col-12">
               <LogoHeader />
               <Header />
               <div className="filter-container">
@@ -298,7 +298,7 @@ function Product() {
               </div>
             </div>
             {/* brand list accordion */}
-            <div className="col-11">
+            <div className="col-12">
               {isLoading ? (
                 <Loading height={"70vh"} />
               ) : (
@@ -377,7 +377,7 @@ function Product() {
             <div className="col-12">
               <HelpSection />
             </div>
-            <div className="col-11">
+            <div className="col-12">
               <Footer />
             </div>
           </div>

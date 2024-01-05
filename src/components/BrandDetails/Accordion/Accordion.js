@@ -107,7 +107,7 @@ const Accordion = ({ data, formattedData }) => {
                           (value, indexed) => (
                             <tr className="w-full" key={indexed}>
                               {/* {console.log(value.Category__c)} */}
-                              <td>
+                              <td className={styles.ControlStyle}>
                                 <img src={Img1} alt="img" />
                               </td>
                               <td className="text-capitalize">{value.Name}</td>

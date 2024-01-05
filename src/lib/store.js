@@ -74,7 +74,7 @@ export function fetchBeg() {
   }
   if (orderStr) {
     let orderList = Object.values(JSON.parse(orderStr));
-    if(orderList.length>1){
+    if(orderList.length>0){
 
       orderDetails.Account.id =orderList[0].account.id
       orderDetails.Account.name =orderList[0].account.name
@@ -149,13 +149,12 @@ export async function getOrderList({ user }) {
 }
 
 export async function getDashboardata({ user }) {
-
   let headersList = {
     "Accept": "*/*"
   }
-
+  
   let bodyContent = new FormData();
-  bodyContent.append("key", user.key);
+  bodyContent.append("key", user.x_access_token);
   bodyContent.append("salesRepId", user.Sales_Rep__c);
 
   let response = await fetch(url + "v3/3kMMguJj62cyyf0", {
@@ -164,6 +163,5 @@ export async function getDashboardata({ user }) {
     headers: headersList
   });
   let data = JSON.parse(await response.text());
-  console.log({data});
   return data.data
 }

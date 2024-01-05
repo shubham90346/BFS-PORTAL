@@ -95,7 +95,7 @@ function MyBagFinal() {
                                         <img src={Img1} alt="" />
                                       </div>
                                       <div className={Styles.Mainbox3}>
-                                        <h2>{item.Name}</h2>
+                                        <h2>{item.Name.split(OrderData.Name)}</h2>
                                         <p>
                                           <span className={Styles.Span1}>
                                             ${item.ListPrice}
@@ -144,7 +144,7 @@ function MyBagFinal() {
 
                     <div className={Styles.ShipAdress2}>
 
-                      <h4>Note:-</h4>
+                      <h4>Note</h4>
                       {OrderData.Description}
 
                     </div>

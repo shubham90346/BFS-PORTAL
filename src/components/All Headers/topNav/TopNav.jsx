@@ -15,9 +15,29 @@ const TopNav = () => {
             <img src={"/assets/images/americanFlag.svg"} alt="img" />
             <div className={styles.vr}></div>
             <p className={`m-0 ${styles.language}`}>EN</p>
-            <p className={`m-0 ${styles.language} flex`}>
+            <p className={`m-0 ${styles.language} ${styles.text} flex`}>
+                          <div class="dropdown dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Need Help?&nbsp;
-              <img src={"/assets/images/dropDownArrow.svg"} alt="img" />
+            {/* </a> */}
+            <ul class="dropdown-menu">
+              <li>
+                <Link to="" className="dropdown-item text-start" >
+                Order Status
+                </Link>
+              </li>
+              <li>
+                <Link to="t" className="dropdown-item text-start" >
+                Management Cases
+                </Link>
+              </li>
+              <li>
+                <Link to="" className="dropdown-item  text-start"  >
+                Marketing Support Issues
+                </Link>
+              </li>
+            </ul>
+          </div>
+              {/* <img src={"/assets/images/dropDownArrow.svg"} alt="img" /> */}
             </p>
           </div>
           <div className="d-flex justify-content-center align-items-center gap-3">
