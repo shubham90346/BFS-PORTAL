@@ -21,7 +21,12 @@ function OrderList() {
   const [Options, setOptions] = useState([]);
 
 
-
+  function sortingList(data) {
+    data.sort(function (a, b) {
+      return new Date(b.CreatedDate) - new Date(a.CreatedDate);
+    });
+    return data
+  }
 
   useEffect(() => {
     GetAuthData()
@@ -29,11 +34,12 @@ function OrderList() {
         getOrderList({
           user: {
             key: response.x_access_token,
-            Sales_Rep__c: false?"00530000005AdvsAAC" : response.Sales_Rep__c,
+            Sales_Rep__c: false ? "00530000005AdvsAAC" : response.Sales_Rep__c,
           },
         })
           .then((order) => {
-            setdata(order);
+            let sorting = sortingList(order)
+            setdata(sorting);
             setLoaded(true);
           })
           .catch((error) => {
@@ -80,7 +86,7 @@ function OrderList() {
 
   };
   if (!loaded) return <Loading />;
-  
+
   const OrderListDataSort = () => {
     const currentTableData = useMemo(() => {
       const firstPageIndex = (currentPage - 1) * PageSize;
@@ -305,7 +311,7 @@ function OrderList() {
                           </div>
                         </div>
                       );
-                    })} 
+                    })}
 
                   </div>
                 </>
