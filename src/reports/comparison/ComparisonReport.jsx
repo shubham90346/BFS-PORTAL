@@ -25,13 +25,13 @@ const ComparisonReport = () => {
   // }, []);
 
   return (
-    <div className="container-fluid">
+    <div className="container">
       <div className="row d-flex justify-content-around align-items-center">
-        <div className="col-10">
+        <div className="col-12">
           <TopNav />
         </div>
         <hr className="hrBgColor"></hr>
-        <div className="col-10">
+        <div className="col-12">
           <LogoHeader />
           <Header />
           <FiltersInComparison />
@@ -39,7 +39,7 @@ const ComparisonReport = () => {
           {/* <Filters salesReportData={salesReportData} manufacturers={[...originalApiData.map((ele) => ele.ManufacturerName__c)]} /> */}
         </div>
         <HelpSection />
-        <div className="col-10">
+        <div className="col-12">
           <Footer />
         </div>
       </div>

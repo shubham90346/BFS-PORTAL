@@ -6,6 +6,7 @@ const Header = () => {
   const navigate = useNavigate();
   const path = window.location.pathname;
   return (
+    <div className="">
     <div id={`${styles.main}`} className="d-flex justify-content-between  align-items-center my-2 gap-1">
       <p className={`m-0 ${styles.text}`}>
         <Link to="/top-products" className="linkStyle">
@@ -70,6 +71,7 @@ const Header = () => {
           </div>
         </Link>
       </p>
+    </div>
     </div>
   );
 };
