@@ -69,8 +69,8 @@ text-decoration: none;
 }
 
 .laptopModeSticky{
-  position: sticky;
-  top: 57px;
+  /* position: sticky; */
+  /* top: 57px; */
   background-color: #fff;
   /* border: 1px solid; */
   z-index: 4;

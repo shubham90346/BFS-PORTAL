@@ -202,7 +202,7 @@ function Product() {
           // onClose={false}
         />
       ) : (
-        <div className="container-fluid p-0 m-0">
+        <div className="container p-0 ">
           {/* {alert === 1 && 
           
           <StaticModal heading={"Warning"} content={"Please Select Products of Minimum Order Amount"} button1={"ok"} />}
