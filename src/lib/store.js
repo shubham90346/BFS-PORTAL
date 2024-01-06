@@ -10,6 +10,7 @@ export async function AuthCheck() {
   if (JSON.parse(localStorage.getItem("Api Data"))?.data) {
     return true;
   } else {
+    DestoryAuth();
     return false;
   }
 }
