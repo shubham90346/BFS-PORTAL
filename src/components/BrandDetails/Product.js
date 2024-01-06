@@ -1,7 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
 import styles from "./styles.module.css";
-// import Dropdown from './ShortByDropDown';
-// import Img1 from './images/makeup1.png'
 import Accordion from "./Accordion/Accordion";
 import FilterPage from "./Accordion/FilterPage";
 import TopNav from "../All Headers/topNav/TopNav";
@@ -11,16 +9,14 @@ import HelpSection from "../Footer/HelpSection";
 import Footer from "../Footer/Footer";
 import { useProductList } from "../../api/useProductList";
 import { useAuth } from "../../context/UserContext";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Loading from "../Loading";
 import { FilterItem } from "../FilterItem";
 import FilterSearch from "../FilterSearch";
 import ModalPage from "../Modal UI";
 import { useBag } from "../../context/BagContext";
 import { fetchBeg } from "../../lib/store";
-import StaticModal from "../StaticModal/StaticModal";
-import { Modal } from "bootstrap";
-
+import Styles from "../Modal UI/Styles.module.css";
 const groupBy = function (xs, key) {
   return xs?.reduce(function (rv, x) {
     (rv[x[key]] = rv[x[key]] || []).push(x);
@@ -68,10 +64,7 @@ function Product() {
     return groupedData;
   };
 
-  const formattedData = useMemo(
-    () => groupProductDataByCategory(data?.data?.records),
-    [data?.data?.records]
-  );
+  const formattedData = useMemo(() => groupProductDataByCategory(data?.data?.records), [data?.data?.records]);
 
   const formattedFilterData = useMemo(() => {
     let finalFilteredProducts = { ...formattedData };
@@ -119,10 +112,7 @@ function Product() {
         const value = finalFilteredProducts[key];
 
         value?.sort((a, b) => {
-          return (
-            +a?.usdRetail__c?.replace("$", "") -
-            +b?.usdRetail__c?.replace("$", "")
-          );
+          return +a?.usdRetail__c?.replace("$", "") - +b?.usdRetail__c?.replace("$", "");
         });
       });
     }
@@ -131,11 +121,7 @@ function Product() {
       let newData = {};
       Object.keys(finalFilteredProducts)?.forEach((key) => {
         const value = finalFilteredProducts[key];
-        value?.sort(
-          (a, b) =>
-            +b?.usdRetail__c?.replace("$", "") -
-            +a?.usdRetail__c?.replace("$", "")
-        );
+        value?.sort((a, b) => +b?.usdRetail__c?.replace("$", "") - +a?.usdRetail__c?.replace("$", ""));
       });
     }
 
@@ -143,12 +129,7 @@ function Product() {
   }, [formattedData, categoryFilters, productTypeFilter, sortBy, searchBy]);
 
   useEffect(() => {
-    if (
-      !(
-        localStorage.getItem("ManufacturerId__c") &&
-        localStorage.getItem("AccountId__c")
-      )
-    ) {
+    if (!(localStorage.getItem("ManufacturerId__c") && localStorage.getItem("AccountId__c"))) {
       setRedirect(true);
     }
   }, []);
@@ -176,22 +157,12 @@ function Product() {
           productPrice = parseFloat(splitPrice[0]);
         }
         if (productCategories && productCategories.toUpperCase() === "TESTER") {
-          bagTesterPrice +=
-            productPrice * productQuantity -
-            (productPrice * productQuantity * product.discount.testerMargin) /
-              100;
+          bagTesterPrice += productPrice * productQuantity - (productPrice * productQuantity * product.discount.testerMargin) / 100;
           bagPrice += bagTesterPrice;
-        } else if (
-          productCategories &&
-          productCategories.toUpperCase() === "SAMPLES"
-        ) {
-          bagPrice +=
-            productPrice * productQuantity -
-            (productPrice * productQuantity * product.discount.sample) / 100;
+        } else if (productCategories && productCategories.toUpperCase() === "SAMPLES") {
+          bagPrice += productPrice * productQuantity - (productPrice * productQuantity * product.discount.sample) / 100;
         } else {
-          bagPrice +=
-            productPrice * productQuantity -
-            (productPrice * productQuantity * product.discount.margin) / 100;
+          bagPrice += productPrice * productQuantity - (productPrice * productQuantity * product.discount.margin) / 100;
         }
       });
       console.log("alert", alert);
@@ -243,20 +214,38 @@ function Product() {
             <ModalPage
               open
               content={
-                <div>
-                  <p className="text-center">Please Select Product of Minimum Order Amount</p>
-                </div>
+                <>
+                  <div style={{ maxWidth: "309px" }}>
+                    <h1 className={`fs-5 ${Styles.ModalHeader}`}>Warning</h1>
+                    <p className={` ${Styles.ModalContent}`}>Please Select Products of Minimum Order Amount</p>
+                    <div className="d-flex justify-content-center">
+                      <button class={`${Styles.modalButton}`} onClick={() => setalert(0)}>
+                        OK
+                      </button>
+                    </div>
+                  </div>
+                </>
               }
+              onClose={() => setalert(0)}
             />
           )}
           {alert == 2 && (
             <ModalPage
               open
               content={
-                <div>
-                  <p className="text-center">Please Select Tester Product of Minimum Order Amount</p>
-                </div>
+                <>
+                  <h2>Warning</h2>
+                  <p className="mt-3">Please Select Tester Product of Minimum Order Amount</p>
+                  <div className="d-flex justify-content-center">
+                    <button className={styles.closeButton} onClick={() => setalert(0)}>
+                      OK
+                    </button>
+                  </div>
+                </>
               }
+              onClose={() => {
+                setalert(0);
+              }}
             />
           )}
           {emptyBag && (
@@ -318,12 +307,7 @@ function Product() {
                     setProductTypeFilter(value);
                   }}
                 />
-                <FilterSearch
-                  onChange={(e) => setSearchBy(e.target.value)}
-                  value={searchBy}
-                  placeholder={"Enter Product name"}
-                  width="155px"
-                />
+                <FilterSearch onChange={(e) => setSearchBy(e.target.value)} value={searchBy} placeholder={"Enter Product name"} width="155px" />
                 <button
                   className="border px-2.5 py-1 leading-tight"
                   onClick={() => {
@@ -352,13 +336,7 @@ function Product() {
                             }}
                           >
                             {" "}
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="24"
-                              height="16"
-                              viewBox="0 0 24 16"
-                              fill="none"
-                            >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="16" viewBox="0 0 24 16" fill="none">
                               <path
                                 d="M8.94284 2.27615C9.46349 1.75544 9.46349 0.911229 8.94284 0.390521C8.42213 -0.130174 7.57792 -0.130174 7.05721 0.390521L2.3911 5.05666C2.39128 5.05648 2.39092 5.05684 2.3911 5.05666L0.390558 7.05721C0.153385 7.29442 0.024252 7.59868 0.00313201 7.90895C-0.00281464 7.99562 -0.000321319 8.08295 0.010852 8.17002C0.0431986 8.42308 0.148118 8.66868 0.325638 8.87322C0.348651 8.89975 0.372651 8.92535 0.397585 8.94989L7.05721 15.6095C7.57792 16.1302 8.42213 16.1302 8.94284 15.6095C9.46349 15.0888 9.46349 14.2446 8.94284 13.7239L4.55231 9.33335H22.6667C23.4031 9.33335 24 8.73642 24 8.00002C24 7.26362 23.4031 6.66668 22.6667 6.66668H4.55231L8.94284 2.27615Z"
                                 fill="black"
@@ -369,8 +347,7 @@ function Product() {
                         </h4>
 
                         <p>
-                          <span>Account</span>:{" "}
-                          {localStorage.getItem("Account")}
+                          <span>Account</span>: {localStorage.getItem("Account")}
                         </p>
                       </div>
 
@@ -398,10 +375,7 @@ function Product() {
                               border: "1px dashed black",
                             }}
                           >
-                            <Accordion
-                              data={data}
-                              formattedData={formattedFilterData}
-                            ></Accordion>
+                            <Accordion data={data} formattedData={formattedFilterData}></Accordion>
                           </div>
                           <div className={`${styles.TotalSide} px-3`}>
                             <h4>Total Number of Products : {orderQuantity}</h4>

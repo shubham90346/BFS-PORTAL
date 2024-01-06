@@ -4,7 +4,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useNavigate } from "react-router-dom";
 
 const SelectBrandModel = ({ brands, onClose }) => {
-  // console.log("brands",brands);
   // const [selectedBrandAccountId, setSelectedBrandAccountId] = useState();
   // const [selectedBrandManufacturerId, setSelectedBrandManufacturerId] =
     useState();
