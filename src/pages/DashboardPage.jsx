@@ -7,12 +7,13 @@ import Footer from "../components/Footer/Footer";
 import Dashboard from "../components/Dashboard/Dashboard";
 import { useNavigate } from "react-router-dom";
 import MobileHeader from '../components/All Headers/mobileHeader/MobileHeader'
+import { AuthCheck } from "../lib/store";
 
 
 const DashboardPage = () => {
   const navigate = useNavigate();
   useEffect(() => {
-    if (!localStorage.getItem("Name")) {
+    if (!AuthCheck()) {
       navigate("/");
     }
   }, []);
