@@ -13,10 +13,10 @@ function MyBagFinal() {
   const [orderDesc, setOrderDesc] = useState(null);
   const [PONumber, setPONumber] = useState(POGenerator());
   const [buttonActive, setButtonActive] = useState(false);
-  const { addOrder, orderQuantity,deleteOrder } = useBag();
+  const { addOrder, orderQuantity, deleteOrder } = useBag();
   const [bagValue, setBagValue] = useState(fetchBeg());
-  const [isOrderPlaced,setIsOrderPlaced] = useState(0)
-  const [isPOEditable,setIsPOEditable] = useState(false)
+  const [isOrderPlaced, setIsOrderPlaced] = useState(0);
+  const [isPOEditable, setIsPOEditable] = useState(false);
   useEffect(() => {
     if (bagValue?.Account?.id && bagValue?.Manufacturer?.id && Object.values(bagValue?.orderList)?.length > 0) {
       setButtonActive(true);
@@ -36,7 +36,7 @@ function MyBagFinal() {
           let productLists = Object.values(bagValue.orderList);
           if (productLists.length) {
             productLists.map((product) => {
-              if(product.product.Category__c == "PREORDER") orderType = "Pre Order"
+              if (product.product.Category__c == "PREORDER") orderType = "Pre Order";
               let temp = {
                 ProductCode: product.product.ProductCode,
                 qty: product.quantity,
@@ -60,8 +60,8 @@ function MyBagFinal() {
           OrderPlaced({ order: begToOrder })
             .then((response) => {
               if (response) {
-                navigate("/")
-                setIsOrderPlaced(2)
+                navigate("/");
+                setIsOrderPlaced(2);
               }
             })
             .catch((err) => {
@@ -105,15 +105,15 @@ function MyBagFinal() {
               </div>
 
               <div className={Styles.MyBagFinalleft}>
-                <h5>
-                  PO Number {!isPOEditable ?<b> {buttonActive ? PONumber : "---"}</b>:<input type="text" value={PONumber} onKeyUp={(e)=>setPONumber(e.target.value)}/>}
-                </h5>
-                {!isPOEditable &&<svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20" fill="none" onClick={()=>setIsPOEditable(true)}>
-                  <path
-                    d="M19.3078 10.6932V19.2841C19.3078 19.6794 18.9753 20 18.5652 20H0.742642C0.332504 20 0 19.6794 0 19.2841V2.10217C0 1.70682 0.332504 1.38627 0.742642 1.38627H9.65389C10.064 1.38627 10.3965 1.70682 10.3965 2.10217C10.3965 2.49754 10.064 2.81809 9.65389 2.81809H1.48519V18.5682H17.8226V10.6932C17.8226 10.2979 18.1551 9.97731 18.5652 9.97731C18.9753 9.97731 19.3078 10.2979 19.3078 10.6932ZM17.9926 5.11422L15.6952 2.89943L7.72487 10.5832L7.09297 13.4072L10.0223 12.7981L17.9926 5.11422ZM21 2.2148L18.7027 0L16.8541 1.78215L19.1515 3.99692L21 2.2148Z"
-                    fill="black"
-                  />
-                </svg>}
+                <h5>PO Number {!isPOEditable ? <b> {buttonActive ? PONumber : "---"}</b> : <input type="text" value={PONumber} onKeyUp={(e) => setPONumber(e.target.value)} />}</h5>
+                {!isPOEditable && (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20" fill="none" onClick={() => setIsPOEditable(true)}>
+                    <path
+                      d="M19.3078 10.6932V19.2841C19.3078 19.6794 18.9753 20 18.5652 20H0.742642C0.332504 20 0 19.6794 0 19.2841V2.10217C0 1.70682 0.332504 1.38627 0.742642 1.38627H9.65389C10.064 1.38627 10.3965 1.70682 10.3965 2.10217C10.3965 2.49754 10.064 2.81809 9.65389 2.81809H1.48519V18.5682H17.8226V10.6932C17.8226 10.2979 18.1551 9.97731 18.5652 9.97731C18.9753 9.97731 19.3078 10.2979 19.3078 10.6932ZM17.9926 5.11422L15.6952 2.89943L7.72487 10.5832L7.09297 13.4072L10.0223 12.7981L17.9926 5.11422ZM21 2.2148L18.7027 0L16.8541 1.78215L19.1515 3.99692L21 2.2148Z"
+                      fill="black"
+                    />
+                  </svg>
+                )}
               </div>
             </div>
 
@@ -216,7 +216,7 @@ function MyBagFinal() {
                           {bagValue?.Account?.address?.street}, {bagValue?.Account?.address?.city} <br />
                           {bagValue?.Account?.address?.state}, {bagValue?.Account?.address?.country} {bagValue?.Account?.address?.postalCode}
                           <br />
-                          {bagValue?.Account?.address?.emaill} | {bagValue?.Account?.address?.contact}
+                          {bagValue?.Account?.address?.email} {bagValue?.Account?.address?.contact && `{ |  ${bagValue?.Account?.address?.contact}}`}
                         </p>
                       ) : (
                         <p>No Shipping Address</p>
