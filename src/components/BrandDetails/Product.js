@@ -19,6 +19,7 @@ import ModalPage from "../Modal UI";
 import { useBag } from "../../context/BagContext";
 import { fetchBeg } from "../../lib/store";
 import StaticModal from "../StaticModal/StaticModal";
+import { Modal } from "bootstrap";
 
 const groupBy = function (xs, key) {
   return xs?.reduce(function (rv, x) {
@@ -159,11 +160,8 @@ function Product() {
   };
   const generateOrderHandler = () => {
     let begValue = fetchBeg();
-    if (
-      begValue?.Account?.id &&
-      begValue?.Manufacturer?.id &&
-      Object.values(begValue.orderList).length > 0
-    ) {
+    console.log("alert==", alert, emptyBag, begValue);
+    if (begValue?.Account?.id && begValue?.Manufacturer?.id && Object.values(begValue.orderList).length > 0) {
       let bagPrice = 0;
       let bagTesterPrice = 0;
       Object.values(begValue.orderList).map((product) => {
@@ -196,6 +194,10 @@ function Product() {
             (productPrice * productQuantity * product.discount.margin) / 100;
         }
       });
+      console.log("alert", alert);
+      // console.log("bagPrice", bagPrice, data.discount.MinOrderAmount);
+      setalert(0);
+
       if (data.discount.MinOrderAmount > bagPrice) {
         setalert(1);
         // return;
@@ -203,15 +205,20 @@ function Product() {
         if (data.discount.testerproductLimit > bagPrice) {
           setalert(2);
         } else {
-          setalert(0);
-          console.log("alert", alert);
+          // setalert(0);
           navigate("/my-bag");
         }
       }
+      setEmptyBag(false);
     } else {
       setEmptyBag(true);
+      setalert(0);
     }
   };
+  console.log("alert", alert, emptyBag);
+  useEffect(() => {
+    setEmptyBag(false);
+  }, []);
   return (
     <>
       {redirect ? (
@@ -232,19 +239,12 @@ function Product() {
         />
       ) : (
         <div className="container p-0 ">
-          {/* {alert === 1 && 
-          
-          <StaticModal heading={"Warning"} content={"Please Select Products of Minimum Order Amount"} button1={"ok"} />}
-          {alert === 2 && <StaticModal heading={"Warning"} content={"Please Select Tester Products of Minimum Order Amount"} button1={"ok"} />}
-          {emptyBag && <StaticModal visibility={true} heading={"Warning"} content={"No Product in your bag"} button1={"ok"} />} */}
           {alert == 1 && (
             <ModalPage
               open
               content={
                 <div>
-                  <p className="text-center">
-                    Please Select Product of Minimum Order Amount
-                  </p>
+                  <p className="text-center">Please Select Product of Minimum Order Amount</p>
                 </div>
               }
             />
@@ -254,9 +254,7 @@ function Product() {
               open
               content={
                 <div>
-                  <p className="text-center">
-                    Please Select Tester Product of Minimum Order Amount
-                  </p>
+                  <p className="text-center">Please Select Tester Product of Minimum Order Amount</p>
                 </div>
               }
             />
@@ -412,7 +410,7 @@ function Product() {
                                 generateOrderHandler();
                               }}
                               // data-bs-toggle="modal"
-                              // data-bs-target="#"
+                              // data-bs-target="#staticBackdrop"
                             >
                               Generate Order
                             </button>
@@ -432,6 +430,9 @@ function Product() {
               <Footer />
             </div>
           </div>
+          {/* {alert === 1 && <StaticModal heading={"Warning"} content={"Please Select Products of Minimum Order Amount"} button1={"ok"} />}
+          {alert === 2 && <StaticModal heading={"Warning"} content={"Please Select Tester Products of Minimum Order Amount"} button1={"ok"} />}
+          {emptyBag && <StaticModal visibility={true} heading={"Warning"} content={"No Product in your bag"} button1={"ok"} />} */}
         </div>
       )}
     </>
