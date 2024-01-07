@@ -173,3 +173,21 @@ export async function getDashboardata({ user }) {
   let data = JSON.parse(await response.text());
   return data.data;
 }
+
+export async function getSupportList({ user }) {
+  let headersList = {
+    Accept: "*/*",
+  };
+
+  let bodyContent = new FormData();
+  bodyContent.append("key", user.x_access_token);
+  bodyContent.append("salesRepId", user.Sales_Rep__c);
+
+  let response = await fetch(url + "v3/TDIztRiHo6Juf3I", {
+    method: "POST",
+    body: bodyContent,
+    headers: headersList,
+  });
+  let data = JSON.parse(await response.text());
+  return data.data;
+}
