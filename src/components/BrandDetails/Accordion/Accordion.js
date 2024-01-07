@@ -61,6 +61,9 @@ const Accordion = ({ data, formattedData }) => {
               </div>
             </div>
           }
+          onClose={() => {
+            setReplaceCartModalOpen(false);
+          }}
         />
       ) : null}
       <div className={styles.OverFloweClass}>
@@ -92,7 +95,7 @@ const Accordion = ({ data, formattedData }) => {
                     return (
                       <CollapsibleRow title={key != "null" ? key : "No Category"} quantity={categoryOrderQuantity} key={index}>
                         {Object.values(formattedData)[index]?.map((value, indexed) => {
-                            let listPrice=isNaN(Number(value.usdRetail__c.substring(1)))?(+value.usdRetail__c.substring(2)).toFixed(2):(+value.usdRetail__c.substring(1)).toFixed(2);
+                          let listPrice = isNaN(Number(value.usdRetail__c.substring(1))) ? (+value.usdRetail__c.substring(2)).toFixed(2) : (+value.usdRetail__c.substring(1)).toFixed(2);
                           return (
                             <tr className="w-full" key={indexed}>
                               <td className={styles.ControlStyle}>
@@ -101,9 +104,7 @@ const Accordion = ({ data, formattedData }) => {
                               <td className="text-capitalize">{value.Name}</td>
                               <td>{value.ProductCode}</td>
                               <td>{value.ProductUPC__c === null || "n/a" ? "--" : value.ProductUPC__c}</td>
-                              <td>
-                                {value.usdRetail__c.includes("$") ? `$${listPrice}` : `$${Number(value.usdRetail__c).toFixed(2)}`}
-                              </td>
+                              <td>{value.usdRetail__c.includes("$") ? `$${listPrice}` : `$${Number(value.usdRetail__c).toFixed(2)}`}</td>
                               <td>
                                 {value.Category__c === "TESTER" ? (
                                   <>
@@ -124,7 +125,8 @@ const Accordion = ({ data, formattedData }) => {
                                       </>
                                     ) : (
                                       <>
-                                        ${value.usdRetail__c.includes("$")
+                                        $
+                                        {value.usdRetail__c.includes("$")
                                           ? (listPrice - (data?.discount?.margin / 100) * listPrice).toFixed(2)
                                           : (+value.usdRetail__c - (data?.discount?.margin / 100) * +value.usdRetail__c).toFixed(2)}
                                       </>

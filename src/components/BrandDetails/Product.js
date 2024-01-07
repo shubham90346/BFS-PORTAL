@@ -252,9 +252,17 @@ function Product() {
             <ModalPage
               open
               content={
-                <div>
-                  <p className="text-center">No Product in your bag</p>
-                </div>
+                <>
+                  <div style={{ maxWidth: "309px" }}>
+                    <h1 className={`fs-5 ${Styles.ModalHeader}`}>Warning</h1>
+                    <p className={` ${Styles.ModalContent}`}>No Product in your bag</p>
+                    <div className="d-flex justify-content-center">
+                      <button class={`${Styles.modalButton}`} onClick={() => setEmptyBag(false)}>
+                        OK
+                      </button>
+                    </div>
+                  </div>
+                </>
               }
               onClose={() => {
                 setEmptyBag(false);
