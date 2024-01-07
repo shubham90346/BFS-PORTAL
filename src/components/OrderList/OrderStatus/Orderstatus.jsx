@@ -72,7 +72,7 @@ function Orderstatus({ data }) {
                     <div className={Styles.ShippedBar}>
                         <h3>Order Status :  <span>{data.Status__c ? data.Status__c : "Order Released"}</span></h3>
                         <div className={Styles.BtnGroup}>
-                            <button type="submit" >CANCEL</button>
+                            <button type="submit" data-bs-dismiss="modal" >CANCEL</button>
                         </div>
 
                     </div>

@@ -9,7 +9,7 @@ import MobileHeader from "../components/All Headers/mobileHeader/MobileHeader";
 import Filters from "../components/OrderList/Filters";
 const OrderListPage = () => {
   const [filterValue, onFilterChange] = useState({
-    month: "last-6-months",
+    month: "",
     manufacturer: null,
     search: "",
   });
@@ -44,7 +44,7 @@ const OrderListPage = () => {
                 resetFilter={() => {
                   onFilterChange({
                     manufacturer: null,
-                    month: "last-6-months",
+                    month: "",
                     search: "",
                   });
                 }}

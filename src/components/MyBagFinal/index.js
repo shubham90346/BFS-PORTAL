@@ -124,8 +124,7 @@ function MyBagFinal() {
                     <h3>SHOPPING BAG ({orderQuantity})</h3>
                     <div className={Styles.scrollP}>
                       <div className={`${Styles.MainInner} overflow-auto`} style={{ minHeight: "400px" }}>
-                        {localStorage.getItem("orders") &&
-                          Object.values(JSON.parse(localStorage.getItem("orders"))).length > 0 &&
+                        {localStorage.getItem("orders") && Object.values(JSON.parse(localStorage.getItem("orders"))).length > 0 ? (
                           Object.values(JSON.parse(localStorage.getItem("orders"))).map((ele) => {
                             // console.log(ele);
                             {
@@ -184,7 +183,6 @@ function MyBagFinal() {
                                       min={ele.product.Min_Order_QTY__c || 0}
                                       onChange={(quantity) => {
                                         addOrder(ele.product, quantity, ele.discount);
-                                        // onQuantityChange(value, quantity);
                                       }}
                                       value={ele.quantity}
                                     />
@@ -192,7 +190,14 @@ function MyBagFinal() {
                                 </div>
                               </div>
                             );
-                          })}
+                          })
+                        ) : (
+                          <>
+                            <div className="d-flex justify-content-center align-items-center" style={{ minHeight: "400px" }}>
+                              No Products in Bag
+                            </div>
+                          </>
+                        )}
                       </div>
                       <div className={Styles.TotalPricer}>
                         <div>
