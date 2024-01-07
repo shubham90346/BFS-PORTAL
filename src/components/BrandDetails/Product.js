@@ -1,7 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
 import styles from "./styles.module.css";
-// import Dropdown from './ShortByDropDown';
-// import Img1 from './images/makeup1.png'
 import Accordion from "./Accordion/Accordion";
 import FilterPage from "./Accordion/FilterPage";
 import TopNav from "../All Headers/topNav/TopNav";
@@ -11,15 +9,14 @@ import HelpSection from "../Footer/HelpSection";
 import Footer from "../Footer/Footer";
 import { useProductList } from "../../api/useProductList";
 import { useAuth } from "../../context/UserContext";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Loading from "../Loading";
 import { FilterItem } from "../FilterItem";
 import FilterSearch from "../FilterSearch";
 import ModalPage from "../Modal UI";
 import { useBag } from "../../context/BagContext";
 import { fetchBeg } from "../../lib/store";
-import StaticModal from "../StaticModal/StaticModal";
-
+import Styles from "../Modal UI/Styles.module.css";
 const groupBy = function (xs, key) {
   return xs?.reduce(function (rv, x) {
     (rv[x[key]] = rv[x[key]] || []).push(x);
@@ -144,6 +141,7 @@ function Product() {
   };
   const generateOrderHandler = () => {
     let begValue = fetchBeg();
+    console.log("alert==", alert, emptyBag, begValue);
     if (begValue?.Account?.id && begValue?.Manufacturer?.id && Object.values(begValue.orderList).length > 0) {
       let bagPrice = 0;
       let bagTesterPrice = 0;
@@ -167,6 +165,10 @@ function Product() {
           bagPrice += productPrice * productQuantity - (productPrice * productQuantity * product.discount.margin) / 100;
         }
       });
+      console.log("alert", alert);
+      // console.log("bagPrice", bagPrice, data.discount.MinOrderAmount);
+      setalert(0);
+
       if (data.discount.MinOrderAmount > bagPrice) {
         setalert(1);
         // return;
@@ -174,15 +176,20 @@ function Product() {
         if (data.discount.testerproductLimit > bagPrice) {
           setalert(2);
         } else {
-          setalert(0);
-          console.log("alert",alert);
+          // setalert(0);
           navigate("/my-bag");
         }
       }
+      setEmptyBag(false);
     } else {
       setEmptyBag(true);
+      setalert(0);
     }
   };
+  console.log("alert", alert, emptyBag);
+  useEffect(() => {
+    setEmptyBag(false);
+  }, []);
   return (
     <>
       {redirect ? (
@@ -203,41 +210,57 @@ function Product() {
         />
       ) : (
         <div className="container p-0 ">
-          {/* {alert === 1 && 
-          
-          <StaticModal heading={"Warning"} content={"Please Select Products of Minimum Order Amount"} button1={"ok"} />}
-          {alert === 2 && <StaticModal heading={"Warning"} content={"Please Select Tester Products of Minimum Order Amount"} button1={"ok"} />}
-          {emptyBag && <StaticModal visibility={true} heading={"Warning"} content={"No Product in your bag"} button1={"ok"} />} */}
-          {alert == 1 && <ModalPage
-            open
-            content={
-              <div>
-                <p className="text-center">
-                  Please Select Product of Minimum Order Amount
-                </p>
-              </div>
-            }
-          />}
-          {alert == 2 && <ModalPage
-            open
-            content={
-              <div>
-                <p className="text-center">
-                Please Select Tester Product of Minimum Order Amount
-                </p>
-              </div>
-            }
-          />}
-          {emptyBag && <ModalPage
-            open
-            content={
-              <div>
-                <p className="text-center">
-                  No Product in your bag
-                </p>
-              </div>
-            }
-          />}
+          {alert == 1 && (
+            <ModalPage
+              open
+              content={
+                <>
+                  <div style={{ maxWidth: "309px" }}>
+                    <h1 className={`fs-5 ${Styles.ModalHeader}`}>Warning</h1>
+                    <p className={` ${Styles.ModalContent}`}>Please Select Products of Minimum Order Amount</p>
+                    <div className="d-flex justify-content-center">
+                      <button class={`${Styles.modalButton}`} onClick={() => setalert(0)}>
+                        OK
+                      </button>
+                    </div>
+                  </div>
+                </>
+              }
+              onClose={() => setalert(0)}
+            />
+          )}
+          {alert == 2 && (
+            <ModalPage
+              open
+              content={
+                <>
+                  <h2>Warning</h2>
+                  <p className="mt-3">Please Select Tester Product of Minimum Order Amount</p>
+                  <div className="d-flex justify-content-center">
+                    <button className={styles.closeButton} onClick={() => setalert(0)}>
+                      OK
+                    </button>
+                  </div>
+                </>
+              }
+              onClose={() => {
+                setalert(0);
+              }}
+            />
+          )}
+          {emptyBag && (
+            <ModalPage
+              open
+              content={
+                <div>
+                  <p className="text-center">No Product in your bag</p>
+                </div>
+              }
+              onClose={() => {
+                setEmptyBag(false);
+              }}
+            />
+          )}
 
           <div className="row p-0 m-0 d-flex flex-column justify-content-around align-items-center col-12">
             {/* TopNav */}
@@ -361,7 +384,7 @@ function Product() {
                                 generateOrderHandler();
                               }}
                               // data-bs-toggle="modal"
-                              // data-bs-target="#"
+                              // data-bs-target="#staticBackdrop"
                             >
                               Generate Order
                             </button>
@@ -381,6 +404,9 @@ function Product() {
               <Footer />
             </div>
           </div>
+          {/* {alert === 1 && <StaticModal heading={"Warning"} content={"Please Select Products of Minimum Order Amount"} button1={"ok"} />}
+          {alert === 2 && <StaticModal heading={"Warning"} content={"Please Select Tester Products of Minimum Order Amount"} button1={"ok"} />}
+          {emptyBag && <StaticModal visibility={true} heading={"Warning"} content={"No Product in your bag"} button1={"ok"} />} */}
         </div>
       )}
     </>

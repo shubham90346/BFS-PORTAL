@@ -71,7 +71,7 @@ function MyBagFinal() {
                 </svg>
               </div>
 
-
+...............
             </div>
 
             <div className={Styles.MyBagFinalMain}>
