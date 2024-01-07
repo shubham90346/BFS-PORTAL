@@ -1,0 +1,65 @@
+.container {
+  width: 60%;
+  margin: 2rem auto;
+}
+.containerTitle {
+  color: #000;
+  font-family: Montserrat;
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 2.2px;
+  margin-bottom: 2rem;
+}
+.formContainer {
+  border-radius: 8px;
+  border: 1px solid #d5d9d9;
+  background: #f8fafb;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+.labelHolder {
+  border-radius: 8px;
+  border: 1px solid #d5d9d9;
+  background: #fff;
+  width: 100%;
+  min-height: 70px;
+  display: flex;
+  color: #9c9c9c;
+  padding: 0.5rem 1rem;
+  font-family: Montserrat;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 1.6px;
+  flex-direction: column;
+  margin-bottom: 1.5rem;
+}
+
+.labelHolder select,
+.labelHolder textarea,
+.labelHolder input {
+  color: #000;
+  font-family: Arial;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 1.12px;
+}
+@media (max-width: 769px) {
+  .container {
+    width: 80%;
+  }
+}
+@media (max-width: 500px) {
+  .container {
+    width: 95%;
+  }
+}
