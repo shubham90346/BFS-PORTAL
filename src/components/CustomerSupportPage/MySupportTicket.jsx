@@ -42,7 +42,7 @@ function MySupportTicket({ data, PageSize, currentPage }) {
                                             <p className={Styles.ShopNameLocation}>
                                                 <UserChecked />&nbsp;{item.Account.Name}
                                             </p>
-                                            <p>For&nbsp;<span className={Styles.BrandMName}>{item.ManufacturerName__c}</span></p>
+                                            <p className={Styles.Para2}>For&nbsp;<span className={Styles.BrandMName}>{item.ManufacturerName__c}</span></p>
 
                                         </div>
 

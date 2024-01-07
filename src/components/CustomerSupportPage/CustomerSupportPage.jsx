@@ -10,7 +10,7 @@ function CustomerSupportPage({ data, PageSize, currentPage }) {
             <div className=''>
                 <div className={Styles.supportMain}>
                     <div className='row'>
-                        <div className='col-lg-3 col-md-3 col-sm-12'>
+                        <div className='col-lg-3 col-md-12 col-sm-12'>
                             <div className={Styles.supportLeft}>
 
                                 <Link to={'/order-list'}>
@@ -47,7 +47,7 @@ function CustomerSupportPage({ data, PageSize, currentPage }) {
                         </div>
 
 
-                        <div className='col-lg-9 col-md-9 col-sm-12'>
+                        <div className='col-lg-9 col-md-12 col-sm-12'>
                             <MySupportTicket data={data} currentPage={currentPage} PageSize={PageSize} />
                         </div>
 

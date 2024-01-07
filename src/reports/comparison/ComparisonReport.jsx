@@ -8,6 +8,8 @@ import Footer from "../../components/Footer/Footer";
 // import Filters from "../../components/All Headers/filters/Filters";
 // import useSalesReport from "../../api/useSalesReport";
 import FiltersInComparison from "../../components/All Headers/filters/FiltersInComparison";
+import Layout from "../../components/Layout/Layout";
+
 
 const ComparisonReport = () => {
   // // for sales report
@@ -26,25 +28,19 @@ const ComparisonReport = () => {
 
   return (
     <div>
-    <div className="container">
-      <div className="row d-flex justify-content-around align-items-center">
-        <div className="col-12">
-          <TopNav />
-        </div>
-        <hr className="hrBgColor"></hr>
-        <div className="col-12">
-          <LogoHeader />
-          <Header />
-          <FiltersInComparison />
-          {/* <FiltersInNewness /> */}
-          {/* <Filters salesReportData={salesReportData} manufacturers={[...originalApiData.map((ele) => ele.ManufacturerName__c)]} /> */}
-        </div>
-      </div>
-      </div>
-        <HelpSection />
-        <div className="col-12">
-          <Footer />
-        </div>
+<Layout>
+            <div>
+                {/* <div className="col-12">
+                    <div className="filter-container  ">
+                    </div>
+                </div> */}
+                <div>
+                <FiltersInComparison />
+                    {/* <OrderStatusFormSection /> */}
+                </div>
+            </div>
+        </Layout>
+
     </div>
   );
 };
