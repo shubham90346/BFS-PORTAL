@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import styles from "./style.module.css"
 import { GetAuthData, getSupportFormRaw, postSupport, supportClear, supportDriveBeg, supportShare } from "../../lib/store";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const OrderStatusFormSection = () => {
     const navigate = useNavigate();
     const [prioritiesList, setPrioritiesList] = useState([]);
     const [contactList, setContactList] = useState([]);
     const [supportTicketData, setTicket] = useState();
+    const [activeBtn,setActive] = useState(false)
     useEffect(() => {
         let data = supportDriveBeg();
         setTicket(data)
@@ -39,6 +40,7 @@ const OrderStatusFormSection = () => {
     }
     const onSubmitHandler = (e)=>{
         e.preventDefault();
+        setActive(true);
         GetAuthData().then((user)=>{
             supportTicketData.orderStatusForm.salesRepId = user.Sales_Rep__c;
             supportTicketData.key = user.x_access_token;
@@ -79,8 +81,8 @@ const OrderStatusFormSection = () => {
                 <textarea required rows={4} onChange={(e) => { onChangeHandler('desc', e.target.value) }} value={supportTicketData?.orderStatusForm?.desc}></textarea>
             </label>
             <label><input type="checkbox" checked={supportTicketData?.orderStatusForm?.sendEmail} onChange={(e) => { onChangeHandler('sendEmail', e.target.checked) }} />&nbsp;Send Updates via email</label>
-            <div className={styles.dFlex}> <div className={styles.btn}>Cancel</div>
-                <input type="submit" className={styles.btn} value={"Submit"} />
+            <div className={styles.dFlex}> <Link to={'/order-list'} className={styles.btn}>Cancel</Link>
+                <input type="submit" className={styles.btn} value={"Submit"} disabled={activeBtn}/>
             </div>
         </form>
     </div>)

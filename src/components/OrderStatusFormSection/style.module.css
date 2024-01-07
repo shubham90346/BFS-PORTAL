@@ -59,6 +59,8 @@ background: #FFF;
 text-align: center;
 text-transform: uppercase;
 cursor: pointer;
+text-decoration: none;
+color: #000;
 }
 .btn:hover{
   background: #000;
