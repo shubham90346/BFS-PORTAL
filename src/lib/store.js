@@ -6,6 +6,7 @@ const brandIdKey = "ManufacturerId__c";
 const brandKey = "Account";
 const accountKey = "manufacturer";
 const POCount = "woX5MkCSIOlHXkT";
+const support = "AP0HBuNwbNnuhKR";
 export async function AuthCheck() {
   if (JSON.parse(localStorage.getItem("Api Data"))?.data) {
     return true;
@@ -64,6 +65,22 @@ function padNumber(n, isTwoDigit) {
     } else {
       return n;
     }
+  }
+}
+export function supportDriveBeg(){
+  let supportList = localStorage.getItem(support);
+  return JSON.parse(supportList);
+}
+export async function supportShare(data){
+  localStorage.setItem(support,JSON.stringify(data))
+  return true
+}
+export function supportClear(){
+  localStorage.removeItem(support)
+  if(localStorage.getItem(support)){
+    return true;
+  }else{
+    return false;
   }
 }
 
@@ -204,6 +221,39 @@ export async function getSupportDetails({ rawData }) {
   let response = await fetch(url + "v3/ffBUF1vNs9LTLfz", {
     method: "POST",
     body: bodyContent,
+    headers: headersList,
+  });
+  let data = JSON.parse(await response.text());
+  return data.data;
+}
+
+export async function getSupportFormRaw({ rawData }) {
+  let headersList = {
+    Accept: "*/*",
+  };
+
+  let bodyContent = new FormData();
+  bodyContent.append("key", rawData.key);
+  bodyContent.append("AccountId", rawData.AccountId);
+
+  let response = await fetch(url + "v3/HX0RbhJ3jppDwQX", {
+    method: "POST",
+    body: bodyContent,
+    headers: headersList,
+  });
+  let data = JSON.parse(await response.text());
+  return data.data;
+}
+
+export async function postSupport({ rawData }) {
+  let headersList = {
+    Accept: "*/*",
+    "Content-Type": "application/json"
+  };
+
+  let response = await fetch(url + "v3/hunQaon7f5sTDeb", {
+    method: "POST",
+    body: JSON.stringify(rawData),
     headers: headersList,
   });
   let data = JSON.parse(await response.text());
