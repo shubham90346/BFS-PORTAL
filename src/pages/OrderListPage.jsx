@@ -1,12 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import LogoHeader from "../components/All Headers/logoHeader/LogoHeader";
 import TopNav from "../components/All Headers/topNav/TopNav";
 import Header from "../components/All Headers/header/Header";
 import HelpSection from "../components/Footer/HelpSection";
 import Footer from "../components/Footer/Footer";
-import OrderList from "../components/OrderList/OrderList"
+import OrderList from "../components/OrderList/OrderList";
 import MobileHeader from "../components/All Headers/mobileHeader/MobileHeader";
+import Filters from "../components/OrderList/Filters";
 const OrderListPage = () => {
+  const [filterValue, onFilterChange] = useState({
+    month: "last-6-months",
+    manufacturer: null,
+    search: "",
+  });
+
+  const handleFilterChange = (filterType, value) => {
+    onFilterChange((prev) => {
+      const newData = { ...prev };
+      newData[filterType] = value;
+      return newData;
+    });
+  };
+
   return (
     <>
       <div className="container p-0">
@@ -21,13 +36,23 @@ const OrderListPage = () => {
           <div className="col-12">
             <LogoHeader />
             <Header />
-            <MobileHeader/>
-          <div className="filter-container">
-            
-          </div>
+            <MobileHeader />
+            <div className="filter-container">
+              <Filters
+                onChange={handleFilterChange}
+                value={filterValue}
+                resetFilter={() => {
+                  onFilterChange({
+                    manufacturer: null,
+                    month: "last-6-months",
+                    search: "",
+                  });
+                }}
+              />
+            </div>
           </div>
           {/* Order list */}
-          <OrderList/>
+          <OrderList filterValue={filterValue} />
           {/* footer */}
         </div>
       </div>

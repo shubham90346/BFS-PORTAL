@@ -16,11 +16,9 @@ const Accordion = ({ data, formattedData }) => {
   const onQuantityChange = (product, quantity) => {
     if (Object.values(orders).length) {
       if (
-        Object.values(orders)[0]?.manufacturer?.name ===
-          localStorage.getItem("manufacturer") &&
+        Object.values(orders)[0]?.manufacturer?.name === localStorage.getItem("manufacturer") &&
         Object.values(orders)[0].account.name === localStorage.getItem("Account") &&
-        Object.values(orders)[0].productType ===
-          (product.Category__c === "PREORDER" ? "pre-order" : "wholesale")
+        Object.values(orders)[0].productType === (product.Category__c === "PREORDER" ? "pre-order" : "wholesale")
       ) {
         orderSetting(product, quantity);
         setReplaceCartModalOpen(false);
@@ -54,16 +52,10 @@ const Accordion = ({ data, formattedData }) => {
                 Adding this item will replace<br></br> your current cart
               </p>
               <div className="d-flex justify-content-around ">
-                <button
-                  className={`${styles.modalButton}`}
-                  onClick={replaceCart}
-                >
+                <button className={`${styles.modalButton}`} onClick={replaceCart}>
                   OK
                 </button>
-                <button
-                  className={`${styles.modalButton}`}
-                  onClick={() => setReplaceCartModalOpen(false)}
-                >
+                <button className={`${styles.modalButton}`} onClick={() => setReplaceCartModalOpen(false)}>
                   Cancel
                 </button>
               </div>
@@ -98,46 +90,27 @@ const Accordion = ({ data, formattedData }) => {
                     });
                     // console.log(formattedData);
                     return (
-                      <CollapsibleRow
-                        title={key != "null"? key:"No Category"}
-                         quantity={categoryOrderQuantity}
-                        key={index}
-                      >
-                        {Object.values(formattedData)[index]?.map(
-                          (value, indexed) => (
+                      <CollapsibleRow title={key != "null" ? key : "No Category"} quantity={categoryOrderQuantity} key={index}>
+                        {Object.values(formattedData)[index]?.map((value, indexed) => {
+                            let listPrice=isNaN(Number(value.usdRetail__c.substring(1)))?(+value.usdRetail__c.substring(2)).toFixed(2):(+value.usdRetail__c.substring(1)).toFixed(2);
+                          return (
                             <tr className="w-full" key={indexed}>
-                              {/* {console.log(value.Category__c)} */}
                               <td className={styles.ControlStyle}>
                                 <img src={Img1} alt="img" />
                               </td>
                               <td className="text-capitalize">{value.Name}</td>
                               <td>{value.ProductCode}</td>
+                              <td>{value.ProductUPC__c === null || "n/a" ? "--" : value.ProductUPC__c}</td>
                               <td>
-                                {value.ProductUPC__c === null || "n/a"
-                                  ? "--"
-                                  : value.ProductUPC__c}
-                              </td>
-                              <td>
-                                {value.usdRetail__c.includes("$")
-                                  ? `$${(+value.usdRetail__c.substring(
-                                      1
-                                    )).toFixed(2)}`
-                                  : `$${Number(value.usdRetail__c).toFixed(2)}`}
+                                {value.usdRetail__c.includes("$") ? `$${listPrice}` : `$${Number(value.usdRetail__c).toFixed(2)}`}
                               </td>
                               <td>
                                 {value.Category__c === "TESTER" ? (
                                   <>
-                                    ${value.usdRetail__c.includes("$")
-                                      ? (
-                                          +value.usdRetail__c.substring(1) -
-                                          (data?.discount?.testerMargin / 100) *
-                                            +value.usdRetail__c.substring(1)
-                                        ).toFixed(2)
-                                      : (
-                                          +value.usdRetail__c -
-                                          (data?.discount?.testerMargin / 100) *
-                                            +value.usdRetail__c
-                                        ).toFixed(2)}
+                                    $
+                                    {value.usdRetail__c.includes("$")
+                                      ? (+value.usdRetail__c.substring(1) - (data?.discount?.testerMargin / 100) * +value.usdRetail__c.substring(1)).toFixed(2)
+                                      : (+value.usdRetail__c - (data?.discount?.testerMargin / 100) * +value.usdRetail__c).toFixed(2)}
                                   </>
                                 ) : (
                                   <>
@@ -146,31 +119,14 @@ const Accordion = ({ data, formattedData }) => {
                                         {" "}
                                         $
                                         {value.usdRetail__c.includes("$")
-                                          ? (
-                                              +value.usdRetail__c.substring(1) -
-                                              (data?.discount?.sample / 100) *
-                                                +value.usdRetail__c.substring(1)
-                                            ).toFixed(2)
-                                          : (
-                                              +value.usdRetail__c -
-                                              (data?.discount?.sample / 100) *
-                                                +value.usdRetail__c
-                                            ).toFixed(2)}
+                                          ? (+value.usdRetail__c.substring(1) - (data?.discount?.sample / 100) * +value.usdRetail__c.substring(1)).toFixed(2)
+                                          : (+value.usdRetail__c - (data?.discount?.sample / 100) * +value.usdRetail__c).toFixed(2)}
                                       </>
                                     ) : (
                                       <>
-                                        ${" "}
-                                        {value.usdRetail__c.includes("$")
-                                          ? (
-                                              +value.usdRetail__c.substring(1) -
-                                              (data?.discount?.margin / 100) *
-                                                +value.usdRetail__c.substring(1)
-                                            ).toFixed(2)
-                                          : (
-                                              +value.usdRetail__c -
-                                              (data?.discount?.margin / 100) *
-                                                +value.usdRetail__c
-                                            ).toFixed(2)}
+                                        ${value.usdRetail__c.includes("$")
+                                          ? (listPrice - (data?.discount?.margin / 100) * listPrice).toFixed(2)
+                                          : (+value.usdRetail__c - (data?.discount?.margin / 100) * +value.usdRetail__c).toFixed(2)}
                                       </>
                                     )}
                                   </>
@@ -183,16 +139,12 @@ const Accordion = ({ data, formattedData }) => {
                                   onChange={(quantity) => {
                                     onQuantityChange(value, quantity);
                                   }}
-                                  value={
-                                    Object.values(orders)?.find(
-                                      (order) => order.product.Id === value.Id
-                                    )?.quantity
-                                  }
+                                  value={Object.values(orders)?.find((order) => order.product.Id === value.Id)?.quantity}
                                 />
                               </td>
                             </tr>
-                          )
-                        )}
+                          );
+                        })}
                       </CollapsibleRow>
                     );
                   })}{" "}
@@ -205,9 +157,7 @@ const Accordion = ({ data, formattedData }) => {
                   <td></td>
                   <td></td>
                   <td></td>
-                  <td className="flex justify-start items-center py-4 w-full lg:min-h-[300px] xl:min-h-[380px]">
-                    No Data Found
-                  </td>
+                  <td className="flex justify-start items-center py-4 w-full lg:min-h-[300px] xl:min-h-[380px]">No Data Found</td>
                   <td></td>
                   <td></td>
                   <td></td>
