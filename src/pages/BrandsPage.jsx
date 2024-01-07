@@ -1,16 +1,12 @@
 import React, { useEffect, useMemo, useState } from "react";
-import TopNav from "../components/All Headers/topNav/TopNav";
-import LogoHeader from "../components/All Headers/logoHeader/LogoHeader";
-import Header from "../components/All Headers/header/Header";
-import HelpSection from "../components/Footer/HelpSection";
-import Footer from "../components/Footer/Footer";
 import BrandCard from "../components/BrandCard";
 import { FilterItem } from "../components/FilterItem";
 import FilterSearch from "../components/FilterSearch";
 import { useManufacturer } from "../api/useManufacturer";
 import Loading from "../components/Loading";
 import { useNavigate } from "react-router";
-import MobileHeader from '../components/All Headers/mobileHeader/MobileHeader'
+import Layout from "../components/Layout/Layout";
+
 
 import Page from './page.module.css'
 
@@ -69,19 +65,10 @@ const BrandsPage = () => {
   }, [highestRetailers, searchBy, manufacturers]);
   return (
     <>
-    <div className="container  ">
-      <div className="row p-0 m-0 d-flex flex-column justify-content-around align-items-center col-12">
-        {/* TopNav */}
-        <div className="col-12 p-0">
-          <TopNav />
-        </div>
-        <hr className="hrBgColor"></hr>
-        {/* all headers */}
-        <div className="col-12 p-0">
-          <LogoHeader />
-          <Header />
-          <MobileHeader/>
-          <div className="filter-container">
+    <Layout>
+            <div>
+                <div className="col-12">
+                <div className="filter-container">
             <FilterItem
               minWidth="220px"
               label="Lowest Retailers"
@@ -113,9 +100,12 @@ const BrandsPage = () => {
               CLEAR ALL
             </button>
           </div>
-        </div>
-        {/* brands */}
-        <div className="col-12 p-0">
+
+
+                </div>
+                <div>
+
+                <div className="col-12 p-0">
           {isLoading ? (
             <Loading height={"70vh"} />
           ) : (
@@ -150,15 +140,13 @@ const BrandsPage = () => {
             </div>
           )}
         </div>
-      </div>
-    </div>
-        {/* footer */}
-        <div className="col-12 p-0">
-          <HelpSection />
-        </div>
-        <div className="container">
-          <Footer />
-        </div>
+                    {/* <OrderStatusFormSection /> */}
+                </div>
+            </div>
+        </Layout>
+
+
+
         </>
   )
   ;

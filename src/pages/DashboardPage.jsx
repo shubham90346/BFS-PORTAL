@@ -1,13 +1,9 @@
 import React, { useEffect, useState } from "react";
-import TopNav from "../components/All Headers/topNav/TopNav";
-import LogoHeader from "../components/All Headers/logoHeader/LogoHeader";
-import HelpSection from "../components/Footer/HelpSection";
-import Header from "../components/All Headers/header/Header";
-import Footer from "../components/Footer/Footer";
 import Dashboard from "../components/Dashboard/Dashboard";
 import { useNavigate } from "react-router-dom";
-import MobileHeader from '../components/All Headers/mobileHeader/MobileHeader'
 import { AuthCheck } from "../lib/store";
+import Layout from "../components/Layout/Layout";
+
 
 
 const DashboardPage = () => {
@@ -19,32 +15,19 @@ const DashboardPage = () => {
   }, []);
   return (
     <>
-      <div className="container ">
-        <div className="row  ">
-          {/* TopNav */}
 
-          <TopNav />
-
-          <hr className="hrBgColor"></hr>
-          {/* all headers */}
-
-          <LogoHeader />
-          <Header />
-          <MobileHeader />
-
-          {/* dashboard */}
-
-          <Dashboard/>
-
-        </div>
-        {/* footer */}
-
-      </div>
-      <HelpSection />
-
-
-      <Footer />
-
+<Layout>
+            <div>
+                <div className="col-12">
+                    {/* <div className="filter-container  ">
+                    </div> */}
+                </div>
+                <div>
+                <Dashboard/>
+                    {/* <OrderStatusFormSection /> */}
+                </div>
+            </div>
+        </Layout>
     </>
   );
 };

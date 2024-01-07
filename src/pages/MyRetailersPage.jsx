@@ -1,17 +1,12 @@
 import React, { useEffect, useState } from "react";
-import TopNav from "../components/All Headers/topNav/TopNav";
-import LogoHeader from "../components/All Headers/logoHeader/LogoHeader";
-import HelpSection from "../components/Footer/HelpSection";
-import Header from "../components/All Headers/header/Header";
-import Footer from "../components/Footer/Footer";
 import MyRetailers from "../components/My Retailers/MyRetailers";
 import { FilterItem } from "../components/FilterItem";
 import { useManufacturer } from "../api/useManufacturer";
 import { useRetailersData } from "../api/useRetailersData";
 import FilterSearch from "../components/FilterSearch";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import MobileHeader from '../components/All Headers/mobileHeader/MobileHeader'
 import Page from './page.module.css'
+import Layout from "../components/Layout/Layout";
 
 
 const MyRetailersPage = () => {
@@ -44,16 +39,8 @@ const MyRetailersPage = () => {
 
   return (
     <>
-      <div className="container p-0 ">
-        <div className="row p-0 m-0 d-flex flex-column justify-content-around align-items-center ">
-          {/* TopNav */}
-          <TopNav />
-                    <hr className="hrBgColor"></hr>
-          {/* all headers */}
-          
-            <LogoHeader />
-            <Header />
-            <MobileHeader/>
+<Layout>
+            <div>
             <div className="col-12">
             <div className="filter-container  ">
               <FilterItem
@@ -100,10 +87,8 @@ const MyRetailersPage = () => {
               </button>
             </div>
             </div>
-         
-          {/* my retailers */}
-          
-            <MyRetailers
+                <div>
+                <MyRetailers
               pageData={data?.data}
               sortBy={sortBy}
               searchBy={searchBy}
@@ -116,14 +101,10 @@ const MyRetailersPage = () => {
                   : null
               }
             />
-          </div>
-          {/* footer */}
-      </div>
-        
-          
-            <HelpSection />
-             <Footer />
-          
+   {/* <OrderStatusFormSection /> */}
+                </div>
+            </div>
+        </Layout>
     </>
   );
 };
