@@ -1,6 +1,7 @@
 import React from 'react'
 import Styles from './Style.module.css'
-import MySupportTicket from './MySupportTicket'
+import MySupportTicket from './MySupportTicket';
+import FullQuearyDetail from './FullQuearyDetail'
 
 function CustomerSupportPage() {
   return (
@@ -61,6 +62,8 @@ function CustomerSupportPage() {
     </div>
 
 </div>
+
+<FullQuearyDetail/>
 
 
     </div>
