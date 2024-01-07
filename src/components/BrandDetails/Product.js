@@ -354,7 +354,7 @@ function Product() {
                           >
                             <Accordion data={data} formattedData={formattedFilterData}></Accordion>
                           </div>
-                          <div className={`${styles.TotalSide} px-3`}>
+                          <div className={`${styles.TotalSide} `}>
                             <h4>Total Number of Products : {orderQuantity}</h4>
                             <button
                               onClick={() => {

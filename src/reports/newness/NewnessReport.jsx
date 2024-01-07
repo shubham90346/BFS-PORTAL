@@ -6,6 +6,8 @@ import HelpSection from "../../components/Footer/HelpSection";
 import Footer from "../../components/Footer/Footer";
 import FiltersInNewness from "../../components/All Headers/filters/FiltersInNewness";
 import { useNavigate } from "react-router";
+import MobileHeader from "../../components/All Headers/mobileHeader/MobileHeader";
+import Page from '../sales_report/index.module.css'
 
 const NewnessReport = () => {
   const navigate = useNavigate();
@@ -16,6 +18,7 @@ const NewnessReport = () => {
     }
   }, []);
   return (
+    <div>
     <div className="container">
       <div className="row d-flex justify-content-around align-items-center">
         <div className="col-12">
@@ -25,13 +28,15 @@ const NewnessReport = () => {
         <div className="col-12">
           <LogoHeader />
           <Header />
+          <MobileHeader/>
           <FiltersInNewness />
         </div>
+      </div>
+    </div>
         <HelpSection />
         <div className="col-12">
           <Footer />
         </div>
-      </div>
     </div>
   );
 };

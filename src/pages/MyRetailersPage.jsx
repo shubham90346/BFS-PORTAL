@@ -122,9 +122,7 @@ const MyRetailersPage = () => {
         
           
             <HelpSection />
-          
-          
-            <Footer />
+             <Footer />
           
     </>
   );
