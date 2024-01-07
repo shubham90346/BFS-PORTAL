@@ -192,6 +192,7 @@ const LoginUI = () => {
               </div>
             </>
           }
+          onClose={() => setModalOpen(false)}
         />
       ) : (
         ""
