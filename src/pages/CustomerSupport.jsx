@@ -46,7 +46,7 @@ const CustomerSupport = () => {
             <MobileHeader/>
             <div className="col-12">
             <div className="filter-container  ">
-              <FilterItem
+              {/* <FilterItem
                 label="Sort by"
                 value={"a-z"}
                 options={[
@@ -91,7 +91,7 @@ const CustomerSupport = () => {
                 onClick={() => {}}
               >
                 CLEAR ALL
-              </button>
+              </button> */}
             </div>
             </div>
           </div>
