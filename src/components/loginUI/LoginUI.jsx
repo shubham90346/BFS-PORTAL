@@ -44,7 +44,6 @@ const LoginUI = () => {
       localStorage.setItem("Api Data", JSON.stringify(apiData))
       const fetched = localStorage.getItem("Api Data");
       setUserValue(JSON.parse(fetched));
-      // navigate("/testing");
       navigate("/dashboard");
     } else if (apiData?.status === 400) {
       clearInput();
@@ -55,12 +54,6 @@ const LoginUI = () => {
     }
   };
 
-  useEffect(() => {
-    // const userData = localStorage.getItem("Name");
-    // if (userData) {
-    //   navigate("/dashboard");
-    // }
-  }, []);
   return (
     <>
       {loading ? (

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Page from '../pages/page.module.css'
+import Page from "../pages/page.module.css";
 
 export const FilterItem = ({ label, options, onChange, minWidth, value }) => {
   const [selectedOption, setSelectedOption] = useState();
@@ -13,11 +13,16 @@ export const FilterItem = ({ label, options, onChange, minWidth, value }) => {
           setIsOpen((prev) => !prev);
         }}
       >
-        {value ? options?.find((option) => option.value === value)?.label : label}
+        {value
+          ? options?.find((option) => option.value === value)?.label
+          : label}
         <img src={"/assets/images/downArrowWhite.svg"} alt="img" />
       </div>
       {isOpen ? (
-        <ul className="bg-white z-10 rounded-[5px] shadow-sm text-black absolute py-2 pr-2 flex flex-col gap-2 list-disc" style={{ minWidth: minWidth || "120px" }}>
+        <ul
+          className="bg-white z-10 rounded-[5px] shadow-sm text-black absolute py-2 pr-2 flex flex-col gap-2 list-disc"
+          style={{ minWidth: minWidth || "120px" }}
+        >
           {options?.map((option) => (
             <li
               onClick={() => {
