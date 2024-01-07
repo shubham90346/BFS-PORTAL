@@ -195,18 +195,34 @@ function Product() {
       {redirect ? (
         <ModalPage
           open
+          // content={
+          //   <div>
+          //     <p className="text-center">
+          //       Data is not available for selected Account and Manufacturer.
+          //       <br></br>
+          //       <br></br>
+          //       Redirecting to My Retailers page...
+          //     </p>
+          //     {redirect ? redirecting() : null}
+          //   </div>
+          // }
           content={
-            <div>
-              <p className="text-center">
-                Data is not available for selected Account and Manufacturer.
-                <br></br>
-                <br></br>
-                Redirecting to My Retailers page...
-              </p>
-              {redirect ? redirecting() : null}
-            </div>
+            <>
+              <div style={{ maxWidth: "309px" }}>
+                <h1 className={`fs-5 ${Styles.ModalHeader}`}>Warning</h1>
+                <p className={` ${Styles.ModalContent}`}>
+                  Data is not available for selected Account and Manufacturer.
+                  {/* No Data available */}
+                  <br />
+                </p>
+                <p>Redirecting to My Retailers page...</p>
+                {redirect ? redirecting() : null}
+                <div className="d-flex justify-content-center">
+                </div>
+              </div>
+            </>
           }
-          // onClose={false}
+          onClose={() => setRedirect(false)}
         />
       ) : (
         <div className="container p-0 ">

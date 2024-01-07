@@ -1,12 +1,8 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import Styles from "./style.module.css";
-import "bootstrap/dist/css/bootstrap.min.css";
-import ModalPage from "../Modal UI";
 import TrackingStatus from "./TrackingStatus/TrackingStatus";
 import Orderstatus from "./OrderStatus/Orderstatus";
-
 import { Link } from "react-router-dom";
-import MyBagFinal from "./MyBagFinal";
 
 function OrderListContent({ data, PageSize, currentPage }) {
   const [searchShipBy, setSearchShipBy] = useState();
@@ -14,44 +10,8 @@ function OrderListContent({ data, PageSize, currentPage }) {
   const [modalData, setModalData] = useState({});
 
   const currentDate = new Date();
-  const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-  let date = `${
-    months[currentDate.getMonth()]
-  } ${currentDate.getDate()}, ${currentDate.getFullYear()}`;
-
-  const TrackingModal = () => {
-    return (
-      <ModalPage
-        open
-        content={
-          <div>
-            <p className="text-center">
-              Data is not available for selected Account and Manufacturer.{" "}
-              <br></br>
-              <br></br>
-              Redirecting to My Retailers page...
-            </p>
-          </div>
-        }
-      />
-    );
-  };
-
+  const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   let size = 3;
-
   const MyBagId = (id) => {
     localStorage.setItem("OpportunityId", JSON.stringify(id));
   };
@@ -65,13 +25,8 @@ function OrderListContent({ data, PageSize, currentPage }) {
           if (orderItems?.length) {
             return (
               orderItems?.some((item) => {
-                return item.Name?.toLowerCase().includes(
-                  searchShipBy?.toLowerCase()
-                );
-              }) ||
-              order.PO_Number__c?.toLowerCase().includes(
-                searchShipBy?.toLowerCase()
-              )
+                return item.Name?.toLowerCase().includes(searchShipBy?.toLowerCase());
+              }) || order.PO_Number__c?.toLowerCase().includes(searchShipBy?.toLowerCase())
             );
           }
           return false;
@@ -94,11 +49,7 @@ function OrderListContent({ data, PageSize, currentPage }) {
           }}
         >
           <div className={`d-flex align-items-center ${Styles.InputControll}`}>
-            <input
-              type="text"
-              name="searchShipBy"
-              placeholder="Search All Orders"
-            />
+            <input type="text" name="searchShipBy" placeholder="Search All Orders" />
             <button>Search Orders</button>
           </div>
         </form>
@@ -106,13 +57,7 @@ function OrderListContent({ data, PageSize, currentPage }) {
 
       {/* TRACKING MODAL */}
 
-      <div
-        class="modal fade"
-        id="exampleModal1"
-        tabindex="-1"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-      >
+      <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-lg">
           <div className={`${Styles.modalContrlWidth} modal-content`}>
             {/* <div class="modal-header">
@@ -127,13 +72,7 @@ function OrderListContent({ data, PageSize, currentPage }) {
 
       {/* ORDER STATUS MODAL */}
 
-      <div
-        class="modal fade"
-        id="exampleModal2"
-        tabindex="-1"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-      >
+      <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-lg">
           <div className={`${Styles.modalContrlWidth} modal-content`}>
             {/* <div class="modal-header">
@@ -148,10 +87,8 @@ function OrderListContent({ data, PageSize, currentPage }) {
 
       {filteredOrders?.length ? (
         filteredOrders?.map((item, index) => {
-          date = new Date(item.CreatedDate);
-          let cdate = `${currentDate.getDate()} ${
-            months[currentDate.getMonth()]
-          } ${currentDate.getFullYear()}`;
+          // let date = new Date(item.CreatedDate);
+          let cdate = `${currentDate.getDate()} ${months[currentDate.getMonth()]} ${currentDate.getFullYear()}`;
 
           return (
             <div className={` ${Styles.orderStatement}`} key={index}>
@@ -188,54 +125,34 @@ function OrderListContent({ data, PageSize, currentPage }) {
                     <div className={Styles.ProtuctInnerBox1}>
                       <ul>
                         {item.OpportunityLineItems?.records.length > 0 ? (
-                          item.OpportunityLineItems?.records
-                            .slice(0, size)
-                            .map((ele) => {
-                              console.log(
-                                // ele.Name.split(item.Name),
-                                // item,
-                                ele.Name.split(item.AccountName)[1].substring(
-                                  1,
-                                  20
-                                )
-                              );
-                              return (
-                                <>
-                                  <li>
-                                    {Viewmore
-                                      ? ele.Name.split(item.AccountName)[1]
-                                      : ele.Name.split(item.AccountName)
-                                          .length > 1
-                                      ? ele.Name.split(item.AccountName)[1]
-                                          .length >= 31
-                                        ? `${ele.Name.split(
-                                            item.AccountName
-                                          )[1].substring(0, 28)}...`
-                                        : `${ele.Name.split(
-                                            item.AccountName
-                                          )[1].substring(0, 31)}`
-                                      : ele.Name.split(item.AccountName)[0]
-                                          .length >= 31
-                                      ? `${ele.Name.split(
-                                          item.AccountName
-                                        )[0].substring(0, 28)}...`
-                                      : `${ele.Name.split(
-                                          item.AccountName
-                                        )[0].substring(0, 31)}`}
-                                  </li>
-                                </>
-                              );
-                            })
+                          item.OpportunityLineItems?.records.slice(0, size).map((ele) => {
+                            console.log(
+                              // ele.Name.split(item.Name),
+                              // item,
+                              ele.Name.split(item.AccountName)[1].substring(1, 20)
+                            );
+                            return (
+                              <>
+                                <li>
+                                  {Viewmore
+                                    ? ele.Name.split(item.AccountName)[1]
+                                    : ele.Name.split(item.AccountName).length > 1
+                                    ? ele.Name.split(item.AccountName)[1].length >= 31
+                                      ? `${ele.Name.split(item.AccountName)[1].substring(0, 28)}...`
+                                      : `${ele.Name.split(item.AccountName)[1].substring(0, 31)}`
+                                    : ele.Name.split(item.AccountName)[0].length >= 31
+                                    ? `${ele.Name.split(item.AccountName)[0].substring(0, 28)}...`
+                                    : `${ele.Name.split(item.AccountName)[0].substring(0, 31)}`}
+                                </li>
+                              </>
+                            );
+                          })
                         ) : (
                           <p className={Styles.noProductLabel}>No Product</p>
                         )}
                       </ul>
                       <span>
-                        <a>
-                          {item.OpportunityLineItems?.records?.length &&
-                            item.OpportunityLineItems?.records?.length > 3 &&
-                            `+${item.OpportunityLineItems?.totalSize - 3} More`}
-                        </a>
+                        <a>{item.OpportunityLineItems?.records?.length && item.OpportunityLineItems?.records?.length > 3 && `+${item.OpportunityLineItems?.totalSize - 3} More`}</a>
                       </span>
                     </div>
                   </div>
@@ -245,31 +162,19 @@ function OrderListContent({ data, PageSize, currentPage }) {
                       <h3>Total</h3>
                       <p>${Number(item.Amount).toFixed(2)}</p>
                     </div>
-                    <button className="me-4">
-                        View Ticket
-                      </button>
+                    <button className="me-4">View Ticket</button>
                     <Link to="/orderDetails">
-                      <button onClick={() => MyBagId(item.Id)}>
-                        View Order Details
-                      </button>
+                      <button onClick={() => MyBagId(item.Id)}>View Order Details</button>
                     </Link>
                   </div>
                 </div>
 
                 <div className={Styles.StatusOrder}>
                   <div className={Styles.Status1}>
-                    <h2
-                      data-bs-toggle="modal"
-                      data-bs-target="#exampleModal1"
-                      onClick={(e) => setModalData(item)}
-                    >
+                    <h2 data-bs-toggle="modal" data-bs-target="#exampleModal1" onClick={(e) => setModalData(item)}>
                       Tracking Status
                     </h2>
-                    <h3
-                      data-bs-toggle="modal"
-                      data-bs-target="#exampleModal2"
-                      onClick={(e) => setModalData(item)}
-                    >
+                    <h3 data-bs-toggle="modal" data-bs-target="#exampleModal2" onClick={(e) => setModalData(item)}>
                       {" "}
                       Order Status
                     </h3>
@@ -287,9 +192,7 @@ function OrderListContent({ data, PageSize, currentPage }) {
           );
         })
       ) : (
-        <div className="flex justify-center items-center py-4 w-full lg:min-h-[300px] xl:min-h-[380px]">
-          No data found
-        </div>
+        <div className="flex justify-center items-center py-4 w-full lg:min-h-[300px] xl:min-h-[380px]">No data found</div>
       )}
       {/* {isTrackingModal && <TrackingModal />} */}
     </>
