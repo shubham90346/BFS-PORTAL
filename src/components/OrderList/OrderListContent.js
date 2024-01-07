@@ -245,7 +245,9 @@ function OrderListContent({ data, PageSize, currentPage }) {
                       <h3>Total</h3>
                       <p>${Number(item.Amount).toFixed(2)}</p>
                     </div>
-
+                    <button className="me-4">
+                        View Ticket
+                      </button>
                     <Link to="/orderDetails">
                       <button onClick={() => MyBagId(item.Id)}>
                         View Order Details
@@ -259,9 +261,6 @@ function OrderListContent({ data, PageSize, currentPage }) {
                     <h2
                       data-bs-toggle="modal"
                       data-bs-target="#exampleModal1"
-                      // onClick={() => {
-                      //   setIsTrackingModal(true);
-                      // }}
                       onClick={(e) => setModalData(item)}
                     >
                       Tracking Status
