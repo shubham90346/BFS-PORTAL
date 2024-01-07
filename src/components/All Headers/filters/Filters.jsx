@@ -104,11 +104,11 @@ const Filters = ({ salesReportData, manufacturers }) => {
   console.log(salesData);
   return (
     <>
-      <div className="d-flex bg-dark justify-content-center  align-items-center my-2 gap-5 p-1">
+      <div className="d-flex bg-black justify-content-center  align-items-center my-2 gap-5 p-1">
         {/* all manufactures */}
         <div className="d-flex">
           {(length = filter.selectedManufacturer.length <= 10 ? filter.selectedManufacturer.length * 14.5 : filter.selectedManufacturer.length * 12)}
-          <select className={`${styles.text} bg-dark`} style={{ outline: "none", maxWidth: `${length}px` }} onChange={handleManufacturerChange} value={filter.selectedManufacturer}>
+          <select className={`${styles.text} bg-black`} style={{ outline: "none", maxWidth: `${length}px` }} onChange={handleManufacturerChange} value={filter.selectedManufacturer}>
             <option value="All Manufacturers" className={`${styles.option}`}>
               All Manufacturers
             </option>
@@ -124,7 +124,7 @@ const Filters = ({ salesReportData, manufacturers }) => {
           {/* <img src={"/assets/images/downArrowWhite.svg"} alt="img" /> */}
         </div>
         {/* sort by orders */}
-        <select className={`${styles.text} bg-dark`} style={{ outline: "none" }} onChange={handleSortBy} value={filter.sortBy}>
+        <select className={`${styles.text} bg-black`} style={{ outline: "none" }} onChange={handleSortBy} value={filter.sortBy}>
           <option value="highest" className={`${styles.option}`}>
             Highest Orders
           </option>
@@ -135,13 +135,13 @@ const Filters = ({ salesReportData, manufacturers }) => {
         </select>
         {/* clear filters */}
         <p className={`m-0  ${styles.text} `}>
-          <button style={{ border: "1px solid white", lineHeight: "20px" }} className={`m-0 px-1 ${styles.text} bg-dark`} onClick={clearFilters}>
+          <button style={{ border: "1px solid white", lineHeight: "20px" }} className={`m-0 px-1 ${styles.text} bg-black`} onClick={clearFilters}>
             clear all
           </button>
         </p>
         {/* export excel */}
         <p className={`m-0  ${styles.text}`}>
-          <button style={{ border: "1px solid white", lineHeight: "20px" }} className={`m-0 px-1 ${styles.text} bg-dark`} onClick={exportToExcel}>
+          <button style={{ border: "1px solid white", lineHeight: "20px" }} className={`m-0 px-1 ${styles.text} bg-black`} onClick={exportToExcel}>
             export
           </button>
         </p>

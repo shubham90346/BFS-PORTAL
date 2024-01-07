@@ -30,6 +30,7 @@ const SalesReport = () => {
   }, []);
 
   return (
+    <div>
     <div className="container">
       <div className="row d-flex justify-content-around align-items-center">
         <div className="col-12">
@@ -46,11 +47,14 @@ const SalesReport = () => {
             ]}
           />
         </div>
+      </div>
+    </div>
+        <div>
         <HelpSection />
+        </div>
         <div className="col-12">
           <Footer />
         </div>
-      </div>
     </div>
   );
 };

@@ -14,7 +14,7 @@ const DashboardPage = () => {
   const navigate = useNavigate();
   useEffect(() => {
     if (!AuthCheck()) {
-      navigate("/");
+      // navigate("/");
     }
   }, []);
   return (

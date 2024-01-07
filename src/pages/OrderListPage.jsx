@@ -27,6 +27,7 @@ const OrderListPage = () => {
       <div className="container p-0">
         <div className="row p-0 m-0 d-flex flex-column justify-content-around align-items-center col-12">
           {/* TopNav */}
+          
           <div className="col-12">
             <TopNav />
           </div>
@@ -53,14 +54,14 @@ const OrderListPage = () => {
           {/* Order list */}
           <OrderList filterValue={filterValue} />
           {/* footer */}
+        </div>
+      </div>
           <div className="col-12">
             <HelpSection />
           </div>
-          <div className="col-10">
+          <div className="col-12">
             <Footer />
           </div>
-        </div>
-      </div>
     </>
   );
 };

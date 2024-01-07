@@ -116,10 +116,11 @@ const FiltersInNewness = () => {
     <>
       {/* {manufacturers?.status === 200 && manufacturers.data.length ? ( */}
       <>
-        <div className="d-flex bg-dark justify-content-evenly py-1 align-items-center my-2 gap-3">
+      
+        <div className= {`${styles.FliterNewNessNone}  bg-black justify-content-evenly py-1 align-items-center my-2 gap-2`}>
           {/* filer manufacturer */}
           <select
-            className={`${styles.text} bg-dark`}
+            className={`${styles.text} bg-black`}
             style={{
               outline: "none",
               maxWidth: `${selectedManufacturerLength}px`,
@@ -137,7 +138,7 @@ const FiltersInNewness = () => {
           </select>
 
           {/* filer price/quantity */}
-          <select className={`${styles.text} bg-dark`} style={{ outline: "none", maxWidth: `${length}px` }} onChange={handleDataDisplay} value={filter.dataDisplay}>
+          <select className={`${styles.text} bg-black`} style={{ outline: "none", maxWidth: `${length}px` }} onChange={handleDataDisplay} value={filter.dataDisplay}>
             <option value="quantity" className={`${styles.option}`}>
               Quantity
             </option>
@@ -148,30 +149,31 @@ const FiltersInNewness = () => {
           {/* First Calender Filter-- from date */}
           <p className={`m-0 ${styles.text} d-flex gap-1 justify-content-center align-items-center`}>
             start date
-            <input type="date" className={`${styles.text} bg-dark`} defaultValue={filter.fromDate} onChange={handleFromDate} style={{ outline: "none", maxWidth: "95px", colorScheme: "dark" }} />
+            <input type="date" className={`${styles.text} bg-black`} defaultValue={filter.fromDate} onChange={handleFromDate} style={{ outline: "none", maxWidth: "80px", colorScheme: "dark" }} />
           </p>
           {/* Second Calender Filter -- to date */}
-          <p className={`m-0 ${styles.text}  d-flex gap-1 justify-content-center align-items-center`}>
+          <p className={`m-0 ${styles.text} ${styles.text2}  d-flex gap-1 justify-content-center align-items-center`}>
             end date
-            <input type="date" className={`${styles.text} bg-dark`} style={{ maxWidth: "95px", colorScheme: "dark", outline: "none" }} onChange={handleToDate} defaultValue={filter.toDate} />
+            <input type="date" className={`${styles.text} bg-black`} style={{ maxWidth: "80px", colorScheme: "dark", outline: "none" }} onChange={handleToDate} defaultValue={filter.toDate} />
           </p>
 
           {/* clear and apply filters */}
           <p className={`m-0  ${styles.text} d-flex gap-3`}>
-            {/* <button style={{ border: "1px solid white", lineHeight: "20px" }} className={`m-0 px-1 ${styles.text} bg-dark`} onClick={applyFilters}>
+            {/* <button style={{ border: "1px solid white", lineHeight: "20px" }} className={`m-0 px-1 ${styles.text} bg-black`} onClick={applyFilters}>
               apply
             </button> */}
-            <button style={{ border: "1px solid white", lineHeight: "20px" }} className={`m-0 px-1 ${styles.text} bg-dark`} onClick={clearFilters}>
+            <button style={{ border: "1px solid white", lineHeight: "20px" }} className={`m-0 px-1 ${styles.text} bg-black`} onClick={clearFilters}>
               clear all
             </button>
           </p>
           {/* export excel */}
           <p className={`m-0  ${styles.text}`}>
-            <button style={{ border: "1px solid white", lineHeight: "20px" }} className={`m-0 px-1 ${styles.text} bg-dark`} onClick={exportToExcel}>
+            <button style={{ border: "1px solid white", lineHeight: "20px" }} className={`m-0 px-1 ${styles.text} bg-black`} onClick={exportToExcel}>
               export
             </button>
           </p>
         </div>
+        <br/>
         {loading ? <Loading height={"70vh"} /> : <NewnessReportTable newnessData={newnessData} dataDisplay={filter.dataDisplay} />}
       </>
     </>
