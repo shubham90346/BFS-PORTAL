@@ -63,7 +63,7 @@ const Accordion = ({ data, formattedData }) => {
           }
         />
       ) : null}
-      <div className={`overflow-auto`}>
+      <div className={styles.OverFloweClass}>
         <div className={styles.accordion}>
           <table className="table table-hover ">
             <thead>

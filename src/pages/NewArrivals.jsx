@@ -28,14 +28,14 @@ const NewArrivals = () => {
         </div>
         </div>
           {/* footer */}
+        </div>
+      </div>
           <div className="col-12">
             <HelpSection />
           </div>
           <div className="col-12">
             <Footer />
           </div>
-        </div>
-      </div>
     </>
    
   )

@@ -76,9 +76,9 @@ const FiltersInComparison = () => {
     <>
       {originalApiData?.status === 200 && apiData ? (
         <>
-          <div className="d-flex bg-dark justify-content-center py-1 align-items-center my-2 gap-5">
+          <div className="d-flex bg-black justify-content-center py-1 align-items-center my-2 gap-5">
             {/* filer manufacturer */}
-            <select className={`${styles.text} bg-dark`} style={{ outline: "none", maxWidth: `${selectedManufacturerLength}px` }} onChange={handleManufacturerFilter} value={filter.ManufacturerId__c}>
+            <select className={`${styles.text} bg-black`} style={{ outline: "none", maxWidth: `${selectedManufacturerLength}px` }} onChange={handleManufacturerFilter} value={filter.ManufacturerId__c}>
               {originalApiData?.date?.brandsList?.map((ele, index) => {
                 return (
                   <option key={index} value={ele?.Id} className={`${styles.option}`}>
@@ -89,7 +89,7 @@ const FiltersInComparison = () => {
             </select>
 
             {/* Month Filter  */}
-            <select className={`${styles.text} bg-dark`} style={{ outline: "none", maxWidth: `${selectedMonthLength}px` }} onChange={handleMonthReport} value={filter.month}>
+            <select className={`${styles.text} bg-black`} style={{ outline: "none", maxWidth: `${selectedMonthLength}px` }} onChange={handleMonthReport} value={filter.month}>
               {originalApiData?.date?.monthList?.map((ele, index) => {
                 return (
                   <option key={index} value={ele.value} className={`${styles.option}`}>
@@ -100,7 +100,7 @@ const FiltersInComparison = () => {
             </select>
 
             {/* Year Filter  */}
-            <select className={`${styles.text} bg-dark`} style={{ outline: "none", maxWidth: `${200}px` }} onChange={handleYearReport} value={filter.year}>
+            <select className={`${styles.text} bg-black`} style={{ outline: "none", maxWidth: `${200}px` }} onChange={handleYearReport} value={filter.year}>
               {originalApiData?.date?.yearList?.map((ele, index) => {
                 return (
                   <option key={index} value={ele.value} className={`${styles.option}`}>
@@ -112,13 +112,13 @@ const FiltersInComparison = () => {
 
             {/* clear filters */}
             <p className={`m-0  ${styles.text} `}>
-              <button style={{ border: "1px solid white", lineHeight: "20px" }} className={`m-0 px-1 ${styles.text} bg-dark`} onClick={handleClearFilter}>
+              <button style={{ border: "1px solid white", lineHeight: "20px" }} className={`m-0 px-1 ${styles.text} bg-black`} onClick={handleClearFilter}>
                 clear all
               </button>
             </p>
             {/* export excel */}
             <p className={`m-0  ${styles.text}`}>
-              <button style={{ border: "1px solid white", lineHeight: "20px" }} className={`m-0 px-1 ${styles.text} bg-dark`} onClick={exportToExcel}>
+              <button style={{ border: "1px solid white", lineHeight: "20px" }} className={`m-0 px-1 ${styles.text} bg-black`} onClick={exportToExcel}>
                 export
               </button>
             </p>

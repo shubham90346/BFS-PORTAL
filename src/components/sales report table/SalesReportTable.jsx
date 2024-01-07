@@ -24,7 +24,7 @@ const SalesReportTable = ({ salesData }) => {
       {salesData.length ? (
         <div className={`d-flex p-3 ${styles.tableBoundary} mb-5`}>
           <div
-            className="table-responsive overflow-scroll"
+            className=""
             style={{ maxHeight: "73vh", minHeight: "40vh" }}
           >
             <table id="salesReportTable" className="table table-responsive">
