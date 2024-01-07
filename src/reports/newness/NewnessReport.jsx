@@ -8,6 +8,8 @@ import FiltersInNewness from "../../components/All Headers/filters/FiltersInNewn
 import { useNavigate } from "react-router";
 import MobileHeader from "../../components/All Headers/mobileHeader/MobileHeader";
 import Page from '../sales_report/index.module.css'
+import Layout from "../../components/Layout/Layout";
+
 
 const NewnessReport = () => {
   const navigate = useNavigate();
@@ -19,24 +21,20 @@ const NewnessReport = () => {
   }, []);
   return (
     <div>
-    <div className="container">
-      <div className="row d-flex justify-content-around align-items-center">
-        <div className="col-12">
-          <TopNav />
-        </div>
-        <hr className="hrBgColor"></hr>
-        <div className="col-12">
-          <LogoHeader />
-          <Header />
-          <MobileHeader/>
-          <FiltersInNewness />
-        </div>
-      </div>
-    </div>
-        <HelpSection />
-        <div className="col-12">
-          <Footer />
-        </div>
+<Layout>
+            <div>
+                {/* <div className="col-12">
+                    <div className="filter-container  ">
+                    </div>
+                </div> */}
+                <div>
+                <FiltersInNewness />
+                    {/* <OrderStatusFormSection /> */}
+                </div>
+            </div>
+        </Layout>
+
+   
     </div>
   );
 };

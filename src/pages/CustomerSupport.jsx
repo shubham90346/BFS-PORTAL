@@ -11,6 +11,8 @@ import FilterSearch from "../components/FilterSearch";
 import { GetAuthData, getSupportList } from '../lib/store'
 import Loading from '../components/Loading'
 import Pagination from '../components/Pagination/Pagination'
+import Layout from "../components/Layout/Layout";
+
 
 let PageSize = 10;
 const CustomerSupport = () => {
@@ -32,18 +34,8 @@ const CustomerSupport = () => {
 
   return (
     <>
-    <div className="container p-0 ">
-        <div className="row p-0 m-0 d-flex flex-column justify-content-around align-items-center col-12">
-          {/* TopNav */}
-          <div className="col-12">
-            <TopNav />
-          </div>
-          <hr className="hrBgColor"></hr>
-          {/* all headers */}
-          <div className="col-12">
-            <LogoHeader />
-            <Header />
-            <MobileHeader/>
+<Layout>
+            <div>
             <div className="col-12">
             <div className="filter-container  ">
               {/* <FilterItem
@@ -94,14 +86,8 @@ const CustomerSupport = () => {
               </button> */}
             </div>
             </div>
-          </div>
-          {/* Top products */}
-      {/* <div className="row d-flex flex-column justify-content-around align-items-center lg:min-h-[300px] xl:min-h-[400px]">
-        <div className="col-4">
-            <p className="m-0 fs-2 font-[Montserrat-400] text-[14px] tracking-[2.20px]">Under development...</p>
-        </div>
-        </div> */}
-        {!loaded ? <Loading />:
+                <div>
+                {!loaded ? <Loading />:
         <CustomerSupportPage data={supportList}                 currentPage={currentPage}
         PageSize={PageSize}/>}
         <Pagination
@@ -111,15 +97,12 @@ const CustomerSupport = () => {
               pageSize={PageSize}
               onPageChange={(page) => setCurrentPage(page)}
             />
-          {/* footer */}
-        </div>
-      </div>
-          <div className="col-12">
-            <HelpSection />
-          </div>
-          <div className="col-12">
-            <Footer />
-          </div>
+                    {/* <OrderStatusFormSection /> */}
+                </div>
+            </div>
+        </Layout>
+
+  
     </>
    
   )

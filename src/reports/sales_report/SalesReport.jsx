@@ -7,6 +7,8 @@ import Footer from "../../components/Footer/Footer";
 import HelpSection from "../../components/Footer/HelpSection";
 import useSalesReport from "../../api/useSalesReport";
 import { useNavigate } from "react-router";
+import Layout from "../../components/Layout/Layout";
+
 
 const SalesReport = () => {
   const apiCall = useSalesReport();
@@ -31,30 +33,24 @@ const SalesReport = () => {
 
   return (
     <div>
-    <div className="container">
-      <div className="row d-flex justify-content-around align-items-center">
-        <div className="col-12">
-          <TopNav />
-        </div>
-        <hr className="hrBgColor"></hr>
-        <div className="col-12">
-          <LogoHeader />
-          <Header />
-          <Filters
+       <Layout>
+            <div>
+                <div className="col-12">
+                    {/* <div className="filter-container  ">
+                    </div> */}
+                    <Filters
             salesReportData={salesReportData}
             manufacturers={[
               ...originalApiData.map((ele) => ele.ManufacturerName__c),
             ]}
           />
-        </div>
-      </div>
-    </div>
-        <div>
-        <HelpSection />
-        </div>
-        <div className="col-12">
-          <Footer />
-        </div>
+                </div>
+                <div>
+                    {/* <OrderStatusFormSection /> */}
+                </div>
+            </div>
+        </Layout>
+   
     </div>
   );
 };
