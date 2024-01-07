@@ -1,7 +1,6 @@
 import React from 'react'
 import Styles from './Style.module.css'
 import MySupportTicket from './MySupportTicket';
-import FullQuearyDetail from './FullQuearyDetail'
 import { Link } from 'react-router-dom'
 import { CustomerServiceIcon, OrderStatusIcon } from '../../lib/svg'
 
@@ -17,7 +16,7 @@ function CustomerSupportPage({ data, PageSize, currentPage }) {
                                 <Link to={'/order-list'}>
                                     <div className={Styles.supportLeftBox}>
                                         <div className={Styles.supportLeftImg}>
-                                           <OrderStatusIcon width={42} height={42}/>
+                                            <OrderStatusIcon width={42} height={42} />
                                         </div>
 
                                         <div className={Styles.supportLeftContent}>
@@ -31,7 +30,7 @@ function CustomerSupportPage({ data, PageSize, currentPage }) {
 
                                 <div className={Styles.supportLeftBox}>
                                     <div className={Styles.supportLeftImg}>
-                                      <CustomerServiceIcon width={42} height={42}/>
+                                        <CustomerServiceIcon width={42} height={42} />
                                     </div>
 
                                     <div className={Styles.supportLeftContent}>
@@ -46,8 +45,6 @@ function CustomerSupportPage({ data, PageSize, currentPage }) {
 
 
                         </div>
-
-<FullQuearyDetail/>
 
 
                         <div className='col-lg-9 col-md-9 col-sm-12'>

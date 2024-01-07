@@ -32,7 +32,7 @@ export function POGenerator() {
   return `${AcCode + MaCode}${currentDate + currentMonth}-${orderCount}`;
 }
 
-function getStrCode(str) {
+export function getStrCode(str) {
   if (!str) return null;
   let codeLength = str.split(" ");
   if (codeLength.length >= 2) {
@@ -184,6 +184,24 @@ export async function getSupportList({ user }) {
   bodyContent.append("salesRepId", user.Sales_Rep__c);
 
   let response = await fetch(url + "v3/TDIztRiHo6Juf3I", {
+    method: "POST",
+    body: bodyContent,
+    headers: headersList,
+  });
+  let data = JSON.parse(await response.text());
+  return data.data;
+}
+
+export async function getSupportDetails({ rawData }) {
+  let headersList = {
+    Accept: "*/*",
+  };
+
+  let bodyContent = new FormData();
+  bodyContent.append("key", rawData.key);
+  bodyContent.append("caseId", rawData.caseId);
+
+  let response = await fetch(url + "v3/ffBUF1vNs9LTLfz", {
     method: "POST",
     body: bodyContent,
     headers: headersList,
