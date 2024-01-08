@@ -104,7 +104,7 @@ const Filters = ({ salesReportData, manufacturers }) => {
   console.log(salesData);
   return (
     <>
-      <div className="d-flex bg-black justify-content-center  align-items-center my-2 gap-5 p-1">
+      <div className={`${styles.heightFix} d-flex bg-black justify-content-center  align-items-center  gap-5 `}>
         {/* all manufactures */}
         <div className="d-flex">
           {(length = filter.selectedManufacturer.length <= 10 ? filter.selectedManufacturer.length * 14.5 : filter.selectedManufacturer.length * 12)}

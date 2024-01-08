@@ -76,7 +76,7 @@ const FiltersInComparison = () => {
     <>
       {originalApiData?.status === 200 && apiData ? (
         <>
-          <div className="d-flex bg-black justify-content-center py-1 align-items-center my-2 gap-5">
+          <div className={`${styles.heightFix} d-flex bg-black justify-content-center  align-items-center  gap-5 `}>
             {/* filer manufacturer */}
             <select className={`${styles.text} bg-black`} style={{ outline: "none", maxWidth: `${selectedManufacturerLength}px` }} onChange={handleManufacturerFilter} value={filter.ManufacturerId__c}>
               {originalApiData?.date?.brandsList?.map((ele, index) => {
