@@ -8,7 +8,9 @@ function CustomerSupportPage({ data, PageSize, currentPage, manufacturerFilter, 
   console.log(data, manufacturerFilter, searchBy);
   const filteredData = useMemo(() => {
     let newValues = data;
-    // ;?.filter((data) => (manufacturerFilter ? data.data?.some((d) => d.ManufacturerId__c === filterBy.Id) : true));
+    if (manufacturerFilter) {
+      newValues = newValues.filter((item) => item.ManufacturerId__c === manufacturerFilter);
+    }
     if (searchBy) {
       newValues = newValues?.filter((value) => value.CaseNumber?.toLowerCase().includes(searchBy?.toLowerCase()));
     }
@@ -49,8 +51,11 @@ function CustomerSupportPage({ data, PageSize, currentPage, manufacturerFilter, 
             </div>
 
             <div className="col-lg-9 col-md-12 col-sm-12">
-             {/* {if} */}
-            <MySupportTicket data={filteredData} currentPage={currentPage} PageSize={PageSize} />
+              {filteredData.length ? (
+                <MySupportTicket data={filteredData} currentPage={currentPage} PageSize={PageSize} />
+              ) : (
+                <div className="flex justify-center items-center py-4 w-full lg:min-h-[300px] xl:min-h-[380px]">No data found</div>
+              )}
             </div>
           </div>
         </div>

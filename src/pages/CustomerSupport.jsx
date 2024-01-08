@@ -40,7 +40,7 @@ const CustomerSupport = () => {
         <div>
           <div className="col-12">
             <div className="filter-container">
-              {/* <FilterItem
+              <FilterItem
                 minWidth="220px"
                 label="Manufacturer"
                 value={manufacturerFilter}
@@ -52,9 +52,12 @@ const CustomerSupport = () => {
               />
               <FilterSearch onChange={(e) => setSearchBy(e.target.value)} value={searchBy} placeholder={"Search by case number"} width="173px" />
 
-              <button className="border px-2.5 py-1 leading-tight" onClick={() => {}}>
+              <button className="border px-2.5 py-1 leading-tight" onClick={() => {
+                 setManufacturerFilter(null);
+                 setSearchBy("");
+              }}>
                 CLEAR ALL
-              </button> */}
+              </button>
             </div>
           </div>
           <div>
