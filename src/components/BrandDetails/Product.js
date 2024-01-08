@@ -388,8 +388,6 @@ function Product() {
                               onClick={() => {
                                 generateOrderHandler();
                               }}
-                              // data-bs-toggle="modal"
-                              // data-bs-target="#staticBackdrop"
                             >
                               Generate Order
                             </button>
