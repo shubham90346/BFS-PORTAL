@@ -260,3 +260,19 @@ export async function postSupport({ rawData }) {
   console.log({data});
   return data.data;
 }
+
+export async function postSupportComment({ rawData }) {
+  let headersList = {
+    Accept: "*/*",
+    "Content-Type": "application/json"
+  };
+
+  let response = await fetch(url + "v3/dgwz2CbCvN2QzAk", {
+    method: "POST",
+    body: JSON.stringify(rawData),
+    headers: headersList,
+  });
+  let data = JSON.parse(await response.text());
+  console.log({data});
+  return data.data;
+}
