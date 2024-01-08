@@ -152,11 +152,6 @@ function OrderListContent({ data, PageSize, currentPage }) {
                       <ul>
                         {item.OpportunityLineItems?.records.length > 0 ? (
                           item.OpportunityLineItems?.records.slice(0, size).map((ele) => {
-                            console.log(
-                              // ele.Name.split(item.Name),
-                              // item,
-                              ele.Name.split(item.AccountName)[1].substring(1, 20)
-                            );
                             return (
                               <>
                                 <li>
@@ -178,7 +173,7 @@ function OrderListContent({ data, PageSize, currentPage }) {
                         )}
                       </ul>
                       <span>
-                        <a>{item.OpportunityLineItems?.records?.length && item.OpportunityLineItems?.records?.length > 3 && `+${item.OpportunityLineItems?.totalSize - 3} More`}</a>
+                        <Link to="/orderDetails" className="linkStyling">{item.OpportunityLineItems?.records?.length && item.OpportunityLineItems?.records?.length > 3 && `+${item.OpportunityLineItems?.totalSize - 3} More`}</Link>
                       </span>
                     </div>
                   </div>
