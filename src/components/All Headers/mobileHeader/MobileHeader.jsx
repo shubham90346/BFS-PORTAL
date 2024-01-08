@@ -5,7 +5,7 @@ const MobileHeader = () => {
   return (
     <div className={`${styles.mobileHeader}`}>
 
-      <div className="container p-0">
+      <div className="">
 
       <div className={styles.flexMain1}>
         <div className={styles.flexMain2}>
