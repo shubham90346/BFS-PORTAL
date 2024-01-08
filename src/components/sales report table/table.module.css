@@ -1,6 +1,6 @@
 .tableBoundary {
   border: 1px dashed #000;
-  overflow: auto;
+  /* overflow: auto; */
 }
 
 .th {

@@ -72,6 +72,8 @@ const MyRetailerCard = ({ placeName, title, brands, accountId, address }) => {
           </div>
         </div>
       </div>
+
+      
     </>
   );
 };
