@@ -257,5 +257,6 @@ export async function postSupport({ rawData }) {
     headers: headersList,
   });
   let data = JSON.parse(await response.text());
+  console.log({data});
   return data.data;
 }
