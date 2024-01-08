@@ -1,3 +1,4 @@
+
 .access {
   color: #000;
   font-family: Montserrat-600;
@@ -76,4 +77,10 @@
   line-height: 32px;
   letter-spacing: 1.12px;
   text-decoration-line: underline;
+}
+
+
+
+.rememInput input[type=checkbox]:checked {
+  accent-color: #000;
 }

@@ -68,10 +68,10 @@ const LoginUI = () => {
           onClose={() => setLoading(false)}
         />
       ) : null}
-      <div className="container-fluid d-flex flex-column justify-content-center " style={{ minHeight: "70vh" }}>
+      <div className="container d-flex flex-column justify-content-center " style={{ minHeight: "70vh" }}>
         <div className="row d-flex justify-content-around align-items-center">
           <div className="col-5">
-            <p className={`mb-3 pt-2 ${styles.access} col-12`}>Access My Account</p>
+            <p className={`mb-3 pt-2 mt-5 ${styles.access} col-12`}>Access My Account</p>
             <form id="form-input">
               {/* email */}
               <div className="col-12 mb-5 d-flex justify-content-center align-items-center">
@@ -86,7 +86,7 @@ const LoginUI = () => {
                 </div>
               </div>
               {/* password */}
-              <div className="col-12 mb-4 d-flex justify-content-center align-items-center">
+              <div className="col-12 mb-3 d-flex justify-content-center align-items-center">
                 <div className="col-2 col-xxl-1 d-flex justify-content-start align-items-center">
                   <img src={"/assets/images/lock.svg"} alt="img" />
                 </div>
@@ -99,7 +99,7 @@ const LoginUI = () => {
               </div>
               {/* remember me */}
               <div className="col-12 mb-4 d-flex justify-content-between align-items-center">
-                <div className=" d-flex justify-content-start align-items-center gap-2">
+                <div className= {`${styles.rememInput} d-flex justify-content-start align-items-center gap-2`}>
                   <input type="checkbox" name="remember" id="remember" style={{ height: "14px", width: "14px" }} />
                   <p className={`${styles.remember} m-0`}>Remember me</p>
                 </div>
