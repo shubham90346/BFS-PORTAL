@@ -152,7 +152,7 @@ function OrderListContent({ data, PageSize, currentPage }) {
                         )}
                       </ul>
                       <span>
-                        <a>{item.OpportunityLineItems?.records?.length && item.OpportunityLineItems?.records?.length > 3 && `+${item.OpportunityLineItems?.totalSize - 3} More`}</a>
+                        <Link to="/orderDetails" className="linkStyling">{item.OpportunityLineItems?.records?.length && item.OpportunityLineItems?.records?.length > 3 && `+${item.OpportunityLineItems?.totalSize - 3} More`}</Link>
                       </span>
                     </div>
                   </div>

@@ -10,6 +10,12 @@
   position: relative;
   padding-bottom: 4px;
 }
+.linkStyling {
+  text-decoration: none;
+  color: black;
+  position: relative;
+  padding-bottom: 4px;
+}
 @font-face {
   font-family: "Montserrat-400";
   src: url("../public/assets/css/fonts/Montserrat-Regular.ttf") format("truetype");

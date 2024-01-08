@@ -49,7 +49,7 @@ const Accordion = ({ data, formattedData }) => {
             <div className="d-flex flex-column gap-3">
               <h2 className={`${styles.warning} `}>Warning</h2>
               <p className={`${styles.warningContent} `}>
-                Adding this item will replace<br></br> your current cart
+                Adding this item will replace <br></br> your current cart
               </p>
               <div className="d-flex justify-content-around ">
                 <button className={`${styles.modalButton}`} onClick={replaceCart}>
