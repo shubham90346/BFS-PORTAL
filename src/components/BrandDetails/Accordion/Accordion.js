@@ -25,7 +25,6 @@ const Accordion = ({ data, formattedData }) => {
       } else {
         setReplaceCartModalOpen(true);
         setReplaceCartProduct({ product, quantity });
-        console.log(replaceCartProduct);
       }
     } else {
       orderSetting(product, quantity);
