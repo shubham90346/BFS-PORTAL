@@ -7,6 +7,7 @@ import HelpSection from "../Footer/HelpSection";
 
 const Layout = ({ children }) => {
     return (
+        <div>
         <div className="container p-0 ">
             <div className="row p-0 m-0 d-flex flex-column justify-content-around align-items-center col-12">
                 {/* TopNav */}
@@ -21,13 +22,14 @@ const Layout = ({ children }) => {
             </div>
                 <main>{children}</main>
             </div>
+        </div>
             <div className="col-12">
                 <HelpSection />
             </div>
             <div className="col-12">
                 <Footer />
             </div>
-        </div>
+            </div>
     )
 }
 export default Layout;

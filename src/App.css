@@ -110,25 +110,6 @@ input#searchright {
   border-bottom: 1px solid;
 }
 
-.button {
-display: inline-block;
-margin: 4px 2px;
-/* background-color: #444; */
-font-size: 14px;
-padding-left: 32px;
-padding-right: 32px;
-height: 30px;
-line-height: 50px;
-text-align: center;
-color: rgb(0, 0, 0);
-text-decoration: none;
-cursor: pointer;
--moz-user-select: none;
--khtml-user-select: none;
--webkit-user-select: none;
--ms-user-select: none;
-user-select: none;
-}
 
 .button:hover {
 transition-duration: 0.4s;
@@ -330,7 +311,7 @@ left: auto;
 }
 
 .search-container input.expandright:focus {
-  width: 150px; /* Bar width+1px */
+  width: 190px; 
 padding: 0 16px 0 0;
 padding: 0 0 0 8px;
 }

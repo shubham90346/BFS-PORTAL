@@ -456,7 +456,7 @@ function Dashboard({ dashboardData }) {
             <div className="col-lg-6 my-2">
               <p className={Styles.Tabletext}>Leads by Brand</p>
               <div className={Styles.goaltable1}>
-                <div className=" container">
+                <div className="">
                   <table class="table table-borderless mt-2">
                     <thead>
                       <tr className={Styles.tablerow}>
@@ -500,7 +500,7 @@ function Dashboard({ dashboardData }) {
             <div className="col-lg-6 my-2">
               <p className={Styles.Tabletext}>Month bill date(MTD): Sales By Rep</p>
               <div className={Styles.goaltable}>
-                <div className="container">
+                <div className="">
                   <div className={Styles.table_scroll}>
 
                     <table class="table table-borderless ">
@@ -547,7 +547,7 @@ function Dashboard({ dashboardData }) {
             <div className="col-lg-6 my-2">
               <p className={Styles.Tabletext}>Year bill date(MTD): Sales By Rep</p>
               <div className={Styles.goaltable}>
-                <div className="container">
+                <div className="">
                   <div className={Styles.table_scroll}>
                     <table class="table table-borderless ">
                       <thead>
@@ -811,7 +811,7 @@ function Dashboard({ dashboardData }) {
           </div>
 
           <div className="row mt-5">
-            <div className="container">
+            <div className="">
               <p className={Styles.Tabletext}>Total Sale By Brand</p>
               <div className={Styles.graphmain}>
                 <Chart options={dataa.options} series={dataa.series} type="area" width="100%" height="100%" />
