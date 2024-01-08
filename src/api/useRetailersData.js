@@ -7,6 +7,5 @@ export const useRetailersData = () => {
       method: "POST",
     }
   );
-  // console.log(fetchedRetailers);
   return fetchedRetailers;
 };

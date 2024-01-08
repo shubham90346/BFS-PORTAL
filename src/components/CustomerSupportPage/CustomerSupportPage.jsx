@@ -4,8 +4,7 @@ import MySupportTicket from './MySupportTicket';
 import { Link } from 'react-router-dom'
 import { CustomerServiceIcon, OrderStatusIcon } from '../../lib/svg'
 
-function CustomerSupportPage({ data, PageSize, currentPage, manufacturerFilter, searchBy }) {
-  console.log(data, manufacturerFilter, searchBy);
+function CustomerSupportPage({ data, PageSize, currentPage, manufacturerFilter, searchBy,retailerFilter }) {
   const filteredData = useMemo(() => {
     let newValues = data;
     if (manufacturerFilter) {
@@ -14,9 +13,11 @@ function CustomerSupportPage({ data, PageSize, currentPage, manufacturerFilter, 
     if (searchBy) {
       newValues = newValues?.filter((value) => value.CaseNumber?.toLowerCase().includes(searchBy?.toLowerCase()));
     }
-    console.log("new values", newValues);
+    if(retailerFilter){
+        newValues=newValues.filter((item)=>item.AccountId===retailerFilter)
+    }
     return newValues;
-  }, [data, manufacturerFilter, searchBy]);
+  }, [data,retailerFilter, manufacturerFilter, searchBy]);
   return (
     <div>
       <div className="">

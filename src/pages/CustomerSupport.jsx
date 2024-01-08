@@ -7,6 +7,7 @@ import Loading from "../components/Loading";
 import Pagination from "../components/Pagination/Pagination";
 import Layout from "../components/Layout/Layout";
 import { useManufacturer } from "../api/useManufacturer";
+import { useRetailersData } from "../api/useRetailersData";
 
 let PageSize = 10;
 const CustomerSupport = () => {
@@ -15,7 +16,9 @@ const CustomerSupport = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchBy, setSearchBy] = useState("");
   const [manufacturerFilter, setManufacturerFilter] = useState(null);
+  const [retailerFilter, setRetailerFilter] = useState(null);
   const { data: manufacturers } = useManufacturer();
+  const { data: retailerData } = useRetailersData();
 
   useEffect(() => {
     GetAuthData()
@@ -33,13 +36,22 @@ const CustomerSupport = () => {
         console.error(err);
       });
   }, []);
-
   return (
     <>
       <Layout>
         <div>
           <div className="col-12">
             <div className="filter-container">
+              <FilterItem
+                minWidth="220px"
+                label="Retailer"
+                value={retailerFilter}
+                options={retailerData?.data?.map((retailer) => ({
+                  label: retailer.Name,
+                  value: retailer.Id,
+                }))}
+                onChange={(value) => setRetailerFilter(value)}
+              />
               <FilterItem
                 minWidth="220px"
                 label="Manufacturer"
@@ -52,16 +64,24 @@ const CustomerSupport = () => {
               />
               <FilterSearch onChange={(e) => setSearchBy(e.target.value)} value={searchBy} placeholder={"Search by case number"} minWidth="173px" />
 
-              <button className="border px-2.5 py-1 leading-tight" onClick={() => {
-                 setManufacturerFilter(null);
-                 setSearchBy("");
-              }}>
+              <button
+                className="border px-2.5 py-1 leading-tight"
+                onClick={() => {
+                  setManufacturerFilter(null);
+                  setRetailerFilter(null);
+                  setSearchBy("");
+                }}
+              >
                 CLEAR ALL
               </button>
             </div>
           </div>
           <div>
-            {!loaded ? <Loading /> : <CustomerSupportPage data={supportList} currentPage={currentPage} PageSize={PageSize} manufacturerFilter={manufacturerFilter} searchBy={searchBy} />}
+            {!loaded ? (
+              <Loading />
+            ) : (
+              <CustomerSupportPage data={supportList} currentPage={currentPage} PageSize={PageSize} manufacturerFilter={manufacturerFilter} searchBy={searchBy} retailerFilter={retailerFilter} />
+            )}
             <Pagination className="pagination-bar" currentPage={currentPage} totalCount={supportList.length} pageSize={PageSize} onPageChange={(page) => setCurrentPage(page)} />
             {/* <OrderStatusFormSection /> */}
           </div>
