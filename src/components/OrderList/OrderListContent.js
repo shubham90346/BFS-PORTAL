@@ -38,11 +38,11 @@ function OrderListContent({ data, PageSize, currentPage }) {
       ?.slice((currentPage - 1) * PageSize, currentPage * PageSize);
   }, [data, currentPage, PageSize, searchShipBy]);
 
-  const generateSuportHandler = ({ data }) => {
+  const generateSuportHandler = ({ data,value }) => {
     let beg = {
       orderStatusForm: {
         salesRepId: null,
-        reason: "Status of Order",
+        reason: value,
         contactId: null,
         accountId: data.AccountId,
         orderNumber: data?.Order_Number__c,
@@ -55,7 +55,6 @@ function OrderListContent({ data, PageSize, currentPage }) {
       }
     }
     let statusOfSupport = supportShare(beg).then((response)=>{
-      console.log({response});
       if (response) navigate("/orderStatusForm")
     }).catch((error)=>{
       console.error({error});
@@ -192,14 +191,15 @@ function OrderListContent({ data, PageSize, currentPage }) {
 
                 <div className={Styles.StatusOrder}>
                   <div className={Styles.Status1}>
-                    <h2 data-bs-toggle="modal" data-bs-target="#exampleModal1" onClick={(e) => setModalData(item)}>
-                      Tracking Status
+                    <h2 onClick={(e) => generateSuportHandler({ data: item,value:"Charges" })}>
+                      Charges
                     </h2>
-                    <h3 onClick={(e) => generateSuportHandler({ data: item })}>
+                    <h3 onClick={(e) => generateSuportHandler({ data: item,value:"Status of Order" })}>
                       {" "}
                       Status of Order
                     </h3>
-                    <h4>Invoice </h4>
+                    <h4 onClick={(e) => generateSuportHandler({ data: item,value:"Invoice" })}>Invoice </h4>
+                    <h4 onClick={(e) => generateSuportHandler({ data: item,value:"Tracking Status" })}>Tracking Status </h4>
                   </div>
 
                   <div className={Styles.Status2}>

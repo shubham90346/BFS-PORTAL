@@ -44,7 +44,26 @@ function FullQuearyDetail({ data }) {
 
                             <h6>Activity</h6>
                             <div className={Detail.HeightGiven}>
+                            {data.CaseComments && data.CaseComments.records.length>0 &&<>
+                            {data.CaseComments.records.map((activity,index)=>{
+                                const itemDate = new Date(activity.CreatedDate);
+                                return(<div className={Detail.ActivityBox}>
 
+                                <div className={`${Detail.ActivityProfile} ${activity?.CreatedById != data?.salesRepId && Detail.ActiDark}`}>
+                                    <h6>{activity?.CreatedById == data?.salesRepId ?getStrCode(data.salesRepName):"CS"}</h6>
+                                </div>
+                                <div className={Detail.ActivityContentImform}>
+                                    <h2>{activity?.CreatedById == data?.salesRepId ?data.salesRepName:"Customer Support"}</h2>
+                                    <p>Hi, {activity?.CreatedById != data?.salesRepId ?data.salesRepName:"Customer Support"},</p>
+                                    <p className={Detail.Para2} dangerouslySetInnerHTML={{__html:activity?.CommentBody}}/>
+
+                                </div>
+                                <div className={Detail.ActivityDate}>
+                                    <p>{itemDate.getDate()}/{monthNames[itemDate.getMonth()]}/{itemDate.getFullYear()} {formatAMPM(itemDate)}</p>
+                                </div>
+                            </div>)
+                            })}
+                              </>}
                             {data.ActivityHistories && data.ActivityHistories.records.length>0 &&<>
                             {data.ActivityHistories.records.map((activity,index)=>{
                                 const itemDate = new Date(activity.StartDateTime);
