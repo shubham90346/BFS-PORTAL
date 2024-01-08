@@ -16,7 +16,7 @@ const BrandCard = ({ brand, image }) => {
             />
           </div>
         ) : null}
-        <div className="flex justify-between items-start h-full px-[10px]">
+        <div className="flex justify-between items-start h-full px-[10px]  ">
           <div className="flex flex-col justify-between h-full">
             <div className="font-medium text-black text-[20px] tracking-[1.12px] leading-[20px] [font-family:'Arial-500']">
               {brand.Name}

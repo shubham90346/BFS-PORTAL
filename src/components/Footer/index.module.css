@@ -11,6 +11,7 @@ text-transform: uppercase;
 }
 .underline {
   text-decoration-line: underline;
+  text-underline-offset: 3px;
 }
 .heading {
   /* text-align: center; */
