@@ -186,7 +186,6 @@ function Product() {
       setalert(0);
     }
   };
-  console.log("alert", alert, emptyBag);
   useEffect(() => {
     setEmptyBag(false);
   }, []);
@@ -195,17 +194,6 @@ function Product() {
       {redirect ? (
         <ModalPage
           open
-          // content={
-          //   <div>
-          //     <p className="text-center">
-          //       Data is not available for selected Account and Manufacturer.
-          //       <br></br>
-          //       <br></br>
-          //       Redirecting to My Retailers page...
-          //     </p>
-          //     {redirect ? redirecting() : null}
-          //   </div>
-          // }
           content={
             <>
               <div style={{ maxWidth: "309px" }}>

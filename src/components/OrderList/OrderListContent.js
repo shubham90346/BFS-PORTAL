@@ -126,11 +126,6 @@ function OrderListContent({ data, PageSize, currentPage }) {
                       <ul>
                         {item.OpportunityLineItems?.records.length > 0 ? (
                           item.OpportunityLineItems?.records.slice(0, size).map((ele) => {
-                            console.log(
-                              // ele.Name.split(item.Name),
-                              // item,
-                              ele.Name.split(item.AccountName)[1].substring(1, 20)
-                            );
                             return (
                               <>
                                 <li>
