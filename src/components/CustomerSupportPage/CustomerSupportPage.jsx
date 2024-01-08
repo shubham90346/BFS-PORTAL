@@ -111,16 +111,37 @@ function CustomerSupportPage({ data, PageSize, currentPage }) {
                         <div className='col-lg-9 col-md-12 col-sm-12'>
                             <MySupportTicket data={data} currentPage={currentPage} PageSize={PageSize} />
                         </div>
-
                     </div>
 
-                </div>
+                    <div className={Styles.supportLeftContent}>
+                      <h2>Order Status</h2>
+                      <p>Track Your Orders with Ease.</p>
+                    </div>
+                  </div>
+                </Link>
 
+                <div className={Styles.supportLeftBox}>
+                  <div className={Styles.supportLeftImg}>
+                    <CustomerServiceIcon width={42} height={42} />
+                  </div>
+
+                  <div className={Styles.supportLeftContent}>
+                    <h2>Customer Services </h2>
+                    <p>Resolving Concerns Serving Solutions</p>
+                  </div>
+                </div>
+              </div>
             </div>
 
-
+            <div className="col-lg-9 col-md-12 col-sm-12">
+             {/* {if} */}
+            <MySupportTicket data={filteredData} currentPage={currentPage} PageSize={PageSize} />
+            </div>
+          </div>
         </div>
-    )
+      </div>
+    </div>
+  );
 }
 
-export default CustomerSupportPage
+export default CustomerSupportPage;
