@@ -44,9 +44,9 @@ const OrderStatusFormSection = () => {
         GetAuthData().then((user)=>{
             supportTicketData.orderStatusForm.salesRepId = user.Sales_Rep__c;
             supportTicketData.key = user.x_access_token;
-            console.log({supportTicketData});
             postSupport({rawData:supportTicketData}).then((response)=>{
                 if(response){
+                    console.log({response});
                     let flush = supportClear()
                     if(flush) navigate("/CustomerSupportDetails?id="+response)
                 }else{
@@ -73,6 +73,7 @@ const OrderStatusFormSection = () => {
             <label className={styles.labelHolder}>
                 Contact Name
                 <select onChange={(e) => { onChangeHandler('contactId', e.target.value) }} required>
+                    <option val>select Contact</option>
                     {contactList.map((priority) => { return (<option value={priority.Id} selected={priority.Id == supportTicketData?.orderStatusForm?.contactId}>{priority.Name}</option>) })}
                 </select>
             </label>
