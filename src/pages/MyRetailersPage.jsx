@@ -5,20 +5,14 @@ import { useManufacturer } from "../api/useManufacturer";
 import { useRetailersData } from "../api/useRetailersData";
 import FilterSearch from "../components/FilterSearch";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import Page from './page.module.css'
 import Layout from "../components/Layout/Layout";
-
 
 const MyRetailersPage = () => {
   const { data: manufacturers } = useManufacturer();
   const [searchParams] = useSearchParams();
   const manufacturerId = searchParams.get("manufacturerId");
- 
-
-  // console.log(manufacturers);
   const { data, isLoading } = useRetailersData();
   const [manufacturerFilter, setManufacturerFilter] = useState(manufacturerId);
-
   const [sortBy, setSortBy] = useState();
   const [searchBy, setSearchBy] = useState("");
 
@@ -39,9 +33,9 @@ const MyRetailersPage = () => {
 
   return (
     <>
-<Layout>
-            <div>
-            <div className="col-12">
+      <Layout>
+        <div>
+          <div className="col-12">
             <div className="filter-container  ">
               <FilterItem
                 label="Sort by"
@@ -70,12 +64,7 @@ const MyRetailersPage = () => {
                 }))}
                 onChange={(value) => setManufacturerFilter(value)}
               />
-              <FilterSearch
-                onChange={(e) => setSearchBy(e.target.value)}
-                value={searchBy}
-                placeholder={"Search by account"}
-                minWidth={"142px"}
-              />
+              <FilterSearch onChange={(e) => setSearchBy(e.target.value)} value={searchBy} placeholder={"Search by account"} minWidth={"142px"} />
               <button
                 className="border px-2.5 py-1 leading-tight"
                 onClick={() => {
@@ -87,25 +76,19 @@ const MyRetailersPage = () => {
                 CLEAR ALL
               </button>
             </div>
-            </div>
-                <div>
-                <MyRetailers
+          </div>
+          <div>
+            <MyRetailers
               pageData={data?.data}
               sortBy={sortBy}
               searchBy={searchBy}
               isLoading={isLoading}
-              filterBy={
-                manufacturerFilter
-                  ? manufacturers?.data?.find(
-                      (manufacturer) => manufacturer.Id === manufacturerFilter
-                    )
-                  : null
-              }
+              filterBy={manufacturerFilter ? manufacturers?.data?.find((manufacturer) => manufacturer.Id === manufacturerFilter) : null}
             />
-   {/* <OrderStatusFormSection /> */}
-                </div>
-            </div>
-        </Layout>
+            {/* <OrderStatusFormSection /> */}
+          </div>
+        </div>
+      </Layout>
     </>
   );
 };
