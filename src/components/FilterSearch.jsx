@@ -1,7 +1,6 @@
 import React from "react";
 
 const FilterSearch = ({ onChange, value, placeholder, minWidth}) => {
-  console.log(minWidth);
   return (
     <div className="flex">
       <input
