@@ -241,6 +241,12 @@ height: 79px;
         display: grid;
         grid-template-columns: repeat(2,auto);
     }
+
+    .LeftMainDiv {
+        border-right: 0px dashed #000;
+        padding: 0 0px 0 0;
+        width: 100%;
+    }
 }
 
 
