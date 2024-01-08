@@ -68,7 +68,6 @@ function Orderstatus({ data }) {
 
                         </div>
                     </div>
-                    {console.log({ data })}
                     <div className={Styles.ShippedBar}>
                         <h3>Order Status :  <span>{data.Status__c ? data.Status__c : "Order Released"}</span></h3>
                         <div className={Styles.BtnGroup}>

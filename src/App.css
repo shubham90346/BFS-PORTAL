@@ -10,6 +10,12 @@
   position: relative;
   padding-bottom: 4px;
 }
+.linkStyling {
+  text-decoration: none;
+  color: black;
+  position: relative;
+  padding-bottom: 4px;
+}
 
 a{
   text-decoration: none !important;
@@ -326,8 +332,6 @@ padding: 0 0 0 8px;
   border-top: unset;
   border-left: unset;
 }
-
-
 
 .searchCode {
   font-size: 12px;

@@ -37,7 +37,6 @@ const MyRetailers = ({ pageData, filterBy, sortBy, searchBy, isLoading }) => {
           <section>
             <div className="grid px-0 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
               {filteredPageData?.map((data) => {
-                console.log(data);
                 return <MyRetailerCard key={data.Name} accountId={data.Id} placeName={data.City} title={data.Name} brands={data?.data} address={data.ShippingAddress}/>;
               })}
             </div>
