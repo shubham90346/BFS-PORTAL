@@ -77,7 +77,6 @@ function MyBagFinal() {
       });
   };
   const handleRemoveProductFromCart = (ele) => {
-    console.log(ele);
     addOrder(ele.product, 0, ele.discount);
   };
   if (isOrderPlaced === 1) return <OrderLoader />;
