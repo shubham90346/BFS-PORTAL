@@ -16,7 +16,6 @@ const FiltersInComparison = () => {
   const [filter, setFilter] = useState(initialValues);
   const originalApiData = useComparisonReport(filter);
   const [apiData, setApiData] = useState(originalApiData || {});
-  console.log("originalApiData", originalApiData);
   const handleManufacturerFilter = (e) => {
     let filteredData = originalApiData?.date?.brandsList?.filter((ele) => ele.Id === e.target.value);
     setFilter((prev) => ({
@@ -33,7 +32,6 @@ const FiltersInComparison = () => {
   };
   const handleMonthReport = (e) => {
     let filteredMonth = originalApiData?.date?.monthList?.filter((ele) => ele.value == e.target.value);
-    // console.log("filteredData", filteredData);
     setFilter((prev) => ({
       ...prev,
       month: e.target.value,
@@ -58,7 +56,6 @@ const FiltersInComparison = () => {
     setFilter(() => initialValues);
   };
   let selectedManufacturerLength = filter?.selectedManufacturer?.length < 10 ? filter?.selectedManufacturer?.length * 14 : filter?.selectedManufacturer?.length * 12;
-  console.log(originalApiData, filter);
   let selectedMonthLength = filter?.selectedMonth?.length < 5 ? filter?.selectedMonth?.length * 18 : filter?.selectedMonth?.length * 15;
   useEffect(() => {
     setApiData(originalApiData);

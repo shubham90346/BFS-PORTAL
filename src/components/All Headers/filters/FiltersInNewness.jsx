@@ -22,7 +22,6 @@ const FiltersInNewness = () => {
   // console.log(manufacturers);
   const [newnessData, setNewnessData] = useState(originalApiData || {});
   const [loading, setLoading] = useState(false);
-  console.log(originalApiData);
   useEffect(() => {
     // if(loading){
       setLoading(true);
@@ -37,8 +36,6 @@ const FiltersInNewness = () => {
     // const data=await useNewnessReport(filter)
     setNewnessData(originalApiData );
     setLoading(false);
-    console.log(loading);
-    console.log(loading);
   };
   const clearFilters = () => {
     setFilter((prev) => ({
@@ -88,7 +85,6 @@ const FiltersInNewness = () => {
   };
   let length = 0;
   const handleFromDate = (e) => {
-    console.log(e.target.value);
     setFilter((prev) => ({
       ...prev,
       fromDate: e.target.value,

@@ -26,7 +26,6 @@ const Filters = ({ salesReportData, manufacturers }) => {
       salesReportData.map((ele) => ele.Orders.sort((a, b) => a.totalOrders - b.totalOrders));
     } else {
       salesReportData.map((ele) => ele.Orders.sort((a, b) => b.totalOrders - a.totalOrders));
-      console.log(salesReportData);
     }
   };
   let csvData = [];
@@ -65,7 +64,6 @@ const Filters = ({ salesReportData, manufacturers }) => {
       })
     )
   );
-  // console.log(csvData);
   useEffect(() => {
     handleManufacturerFilter();
     handleSortFilter();
@@ -101,7 +99,6 @@ const Filters = ({ salesReportData, manufacturers }) => {
     FileSaver.saveAs(data, `Sales Report ${new Date()}` + fileExtension);
   };
 
-  console.log(salesData);
   return (
     <>
       <div className={`${styles.heightFix} d-flex bg-black justify-content-center  align-items-center  gap-5 `}>

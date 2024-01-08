@@ -11,7 +11,6 @@ const useSalesReport = (props) => {
         }
       );
       // const response = await axios.post("https://dev.beautyfashionsales.com/report/4i1cKeDt9");
-      console.log(response);
       return response;
     },
   };
