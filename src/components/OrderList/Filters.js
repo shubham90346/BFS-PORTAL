@@ -47,7 +47,7 @@ const Filters = ({ value, onChange, resetFilter }) => {
         onChange={(e) => handleSearchFilter(e.target.value)}
         value={value.search}
         placeholder="Search By Account"
-        width="155px"
+        minWidth="144px"
       />
       <button
         className="border px-2.5 py-1 leading-tight"

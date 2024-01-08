@@ -388,9 +388,6 @@ function Dashboard({ dashboardData }) {
     month: "long",
   };
   let current = date.toLocaleString("en-IN", options);
-
-  console.log({salesByBrandData});
-
   return (
     <>
       {isLoading ? (

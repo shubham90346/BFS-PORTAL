@@ -2,7 +2,6 @@ import React from "react";
 import styles from "./table.module.css";
 import Loading from "../Loading";
 const SalesReportTable = ({ salesData }) => {
-  console.log(salesData);
   let totalOrder = 0,
     totalOrderPrice = 0;
   let monthTotalAmount = {
