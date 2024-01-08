@@ -231,9 +231,9 @@ function MyBagFinal() {
                     </div>
 
                     <div className={Styles.ShipAdress2}>
-                      <h4>Note</h4>
+                      
 
-                      <textarea onKeyUp={(e) => setOrderDesc(e.target.value)} placeholder="" className="placeholder:font-[Arial-500] text-[14px] tracking-[1.12px] mb-[20px]" />
+                      <textarea  onKeyUp={(e) => setOrderDesc(e.target.value)} placeholder="Note" className="placeholder:font-[Arial-500] text-[14px] tracking-[1.12px] mb-[20px]" />
                     </div>
                     {!PONumberFilled ? (
                       <ModalPage
