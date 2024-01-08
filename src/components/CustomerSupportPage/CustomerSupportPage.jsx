@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import Styles from './Style.module.css'
 import MySupportTicket from './MySupportTicket';
 import { Link } from 'react-router-dom'
@@ -108,8 +108,12 @@ function CustomerSupportPage({ data, PageSize, currentPage }) {
                         </div>
 
 
-                        <div className='col-lg-9 col-md-12 col-sm-12'>
-                            <MySupportTicket data={data} currentPage={currentPage} PageSize={PageSize} />
+            <div className="col-lg-9 col-md-12 col-sm-12">
+              {filteredData.length ? (
+                <MySupportTicket data={filteredData} currentPage={currentPage} PageSize={PageSize} />
+              ) : (
+                <div className="flex justify-center items-center py-4 w-full lg:min-h-[300px] xl:min-h-[380px]">No data found</div>
+              )}
                         </div>
 
                     </div>
