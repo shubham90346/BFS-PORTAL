@@ -3,8 +3,10 @@ import Styles from "./style.module.css";
 import TrackingStatus from "./TrackingStatus/TrackingStatus";
 import Orderstatus from "./OrderStatus/Orderstatus";
 import { Link } from "react-router-dom";
-
+import { GetAuthData, supportShare } from "../../lib/store";
+import { useNavigate } from "react-router-dom";
 function OrderListContent({ data, PageSize, currentPage }) {
+  const navigate = useNavigate();
   const [searchShipBy, setSearchShipBy] = useState();
   const [Viewmore, setviewmore] = useState(false);
   const [modalData, setModalData] = useState({});
@@ -35,6 +37,30 @@ function OrderListContent({ data, PageSize, currentPage }) {
       })
       ?.slice((currentPage - 1) * PageSize, currentPage * PageSize);
   }, [data, currentPage, PageSize, searchShipBy]);
+
+  const generateSuportHandler = ({ data }) => {
+    let beg = {
+      orderStatusForm: {
+        salesRepId: null,
+        reason: "Status of Order",
+        contactId: null,
+        accountId: data.AccountId,
+        orderNumber: data?.Order_Number__c,
+        poNumber: data.PO_Number__c,
+        manufacturerId: data.ManufacturerId__c,
+        desc: null,
+        opportunityId: data.Id,
+        priority: "Medium",
+        sendEmail:false
+      }
+    }
+    let statusOfSupport = supportShare(beg).then((response)=>{
+      console.log({response});
+      if (response) navigate("/orderStatusForm")
+    }).catch((error)=>{
+      console.error({error});
+    })
+  }
 
   return (
     <>
@@ -132,12 +158,12 @@ function OrderListContent({ data, PageSize, currentPage }) {
                                   {Viewmore
                                     ? ele.Name.split(item.AccountName)[1]
                                     : ele.Name.split(item.AccountName).length > 1
-                                    ? ele.Name.split(item.AccountName)[1].length >= 31
-                                      ? `${ele.Name.split(item.AccountName)[1].substring(0, 28)}...`
-                                      : `${ele.Name.split(item.AccountName)[1].substring(0, 31)}`
-                                    : ele.Name.split(item.AccountName)[0].length >= 31
-                                    ? `${ele.Name.split(item.AccountName)[0].substring(0, 28)}...`
-                                    : `${ele.Name.split(item.AccountName)[0].substring(0, 31)}`}
+                                      ? ele.Name.split(item.AccountName)[1].length >= 31
+                                        ? `${ele.Name.split(item.AccountName)[1].substring(0, 28)}...`
+                                        : `${ele.Name.split(item.AccountName)[1].substring(0, 31)}`
+                                      : ele.Name.split(item.AccountName)[0].length >= 31
+                                        ? `${ele.Name.split(item.AccountName)[0].substring(0, 28)}...`
+                                        : `${ele.Name.split(item.AccountName)[0].substring(0, 31)}`}
                                 </li>
                               </>
                             );
@@ -169,9 +195,9 @@ function OrderListContent({ data, PageSize, currentPage }) {
                     <h2 data-bs-toggle="modal" data-bs-target="#exampleModal1" onClick={(e) => setModalData(item)}>
                       Tracking Status
                     </h2>
-                    <h3 data-bs-toggle="modal" data-bs-target="#exampleModal2" onClick={(e) => setModalData(item)}>
+                    <h3 onClick={(e) => generateSuportHandler({ data: item })}>
                       {" "}
-                      Order Status
+                      Status of Order
                     </h3>
                     <h4>Invoice </h4>
                   </div>

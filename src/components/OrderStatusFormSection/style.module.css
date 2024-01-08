@@ -20,7 +20,6 @@
   flex-wrap: wrap;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
   padding: 2rem;
 }
 .labelHolder {
@@ -52,6 +51,24 @@
   font-weight: 400;
   line-height: normal;
   letter-spacing: 1.12px;
+}
+.btn{
+  padding: 0.5rem 2rem;
+border: 1px solid #000;
+background: #FFF;
+text-align: center;
+text-transform: uppercase;
+cursor: pointer;
+text-decoration: none;
+color: #000;
+}
+.btn:hover{
+  background: #000;
+  color: #fff;
+}
+.dFlex{
+  display: flex;
+  margin: 1rem auto;
 }
 @media (max-width: 769px) {
   .container {

@@ -7,38 +7,27 @@ import Footer from "../components/Footer/Footer";
 import MyBagFinal from "../components/MyBagFinal";
 import { FilterItem } from "../components/FilterItem";
 import MobileHeader from "../components/All Headers/mobileHeader/MobileHeader";
+import Layout from "../components/Layout/Layout";
+
 
 const MyBag = () => {
   return (
     <>
-      <div className="container p-0 ">
-        <div className="row m-0  d-flex flex-column justify-content-around align-items-center col-12">
-          {/* TopNav */}
-          <div className="col-12">
-            <TopNav />
-          </div>
-          <hr className="hrBgColor"></hr>
-          {/* all headers */}
-          <div className="col-12">
-            <LogoHeader />
-            <Header />
-            <MobileHeader/>
-            <div className="">
-          </div>
-          </div>
-          {/* My Bag */}
-          <div className="col-12 p-0">
+    <Layout>
+            <div>
+                <div className="col-12">
+                    <div className="filter-container  ">
+                    </div>
+                </div>
+                <div>
+                <div className="col-12 p-0">
            <MyBagFinal/>
           </div>
-          {/* footer */}
-        </div>
-      </div>
-          <div className="col-12">
-            <HelpSection />
-          </div>
-          <div className="col-12">
-            <Footer />
-          </div>
+                    {/* <OrderStatusFormSection /> */}
+                </div>
+            </div>
+        </Layout>
+     
     </>
   );
 };

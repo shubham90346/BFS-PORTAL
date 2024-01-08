@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react'
 import Styles from './Style.module.css'
 import { CustomerServiceIcon, DefaultSupportIcon, MarketingSupportIcon, OrderStatusIcon, SupportStatusGreen, SupportStatusRed, SupportStatusYellow, UserChecked } from '../../lib/svg'
+import { Link } from 'react-router-dom';
 const monthNames = ["January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
 ];
@@ -9,7 +10,6 @@ function MySupportTicket({ data, PageSize, currentPage }) {
     const filteredOrders = useMemo(() => {
         return data?.slice((currentPage - 1) * PageSize, currentPage * PageSize);
     }, [data, currentPage, PageSize]);
-    console.log({data});
     return (
         <div>
             <div className=''>
@@ -20,7 +20,7 @@ function MySupportTicket({ data, PageSize, currentPage }) {
                         {filteredOrders?.length > 0 && filteredOrders.map((item, index) => {
                             const date = new Date(item.Date_Opened__c);
                             return (
-                                <div className={Styles.QuearyTicket}>
+                                <Link to={`${'/CustomerSupportDetails?id='+item.Id}`} className={Styles.QuearyTicket}>
                                     <div className={Styles.customerProblem}>
                                         <p>
                                         {item.RecordType?.Name ? item.RecordType?.Name == "Customer Service Issues" ?<CustomerServiceIcon />: item.RecordType?.Name == "Order Status"?
@@ -42,7 +42,7 @@ function MySupportTicket({ data, PageSize, currentPage }) {
                                             <p className={Styles.ShopNameLocation}>
                                                 <UserChecked />&nbsp;{item.Account.Name}
                                             </p>
-                                            <p>For&nbsp;<span className={Styles.BrandMName}>{item.ManufacturerName__c}</span></p>
+                                            <p className={Styles.Para2}>For&nbsp;<span className={Styles.BrandMName}>{item.ManufacturerName__c}</span></p>
 
                                         </div>
 
@@ -52,11 +52,11 @@ function MySupportTicket({ data, PageSize, currentPage }) {
                                         </div>
 
                                         <div className={Styles.CustomerCloneColor}>
-                                            {item.Status == "New" ? <SupportStatusGreen /> : item.Status == "Closed" ? <SupportStatusRed /> : <SupportStatusYellow />}
+                                        {item.Priority == "High"?<SupportStatusGreen/> :item.Priority == "Medium"?<SupportStatusYellow/>:<SupportStatusRed/>}
 
                                         </div>
                                     </div>
-                                </div>
+                                </Link>
                             )
                         })}
 
