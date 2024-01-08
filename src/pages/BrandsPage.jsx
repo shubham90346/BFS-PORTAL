@@ -89,6 +89,7 @@ const BrandsPage = () => {
               onChange={(e) => setSearchBy(e.target.value)}
               value={searchBy}
               placeholder={"Search by brand"}
+              minWidth={"125px"}
             />
             <button
               className="border px-2.5 py-1 leading-tight"

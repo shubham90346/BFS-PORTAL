@@ -74,6 +74,7 @@ const MyRetailersPage = () => {
                 onChange={(e) => setSearchBy(e.target.value)}
                 value={searchBy}
                 placeholder={"Search by account"}
+                minWidth={"142px"}
               />
               <button
                 className="border px-2.5 py-1 leading-tight"

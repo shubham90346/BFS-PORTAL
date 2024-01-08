@@ -1,7 +1,7 @@
 import React from "react";
 
-const FilterSearch = ({ onChange, value, placeholder,}) => {
-  
+const FilterSearch = ({ onChange, value, placeholder, minWidth}) => {
+  console.log(minWidth);
   return (
     <div className="flex">
       <input
@@ -9,6 +9,7 @@ const FilterSearch = ({ onChange, value, placeholder,}) => {
         className="bg-transparent placeholder:uppercase placeholder:text-white placeholder:underline placeholder:underline-offset-2 focus:outline-none leading-tight " 
         onChange={onChange}
         value={value}
+        style={{ width: minWidth || "120px" }}
       />
       <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
   <circle cx="8.24951" cy="8.25" r="4.5" stroke="white"/>
