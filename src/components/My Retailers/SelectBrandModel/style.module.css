@@ -111,11 +111,11 @@ padding: 27px;
   }
   
   .BrandName input[type="radio"]:checked:after {
-    border: 7px solid #000;
+    border: 8px solid #000;
     transition: 0.5s;
   }
   .BrandName input[type="radio"]:not(:checked):before {
-    border: 3px solid #8c8c8c;
+    border: 1px solid #8c8c8c;
     transition: 0.5s;
   }
 
