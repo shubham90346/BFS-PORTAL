@@ -32,8 +32,8 @@ function FullQuearyDetail({ data }) {
                 <h4 className={Detail.FullQuearyDetailH4}>Customer Services for Case Reason <span>- Charges</span> </h4>
 
 
-                <div className='row'>
-                    <div className='col-lg-9 col-md-9 col-sm-7'>
+                <div className={`row ${Detail.FlexReverse}`}>
+                    <div className='col-lg-9 col-md-9 col-sm-12'>
                         <div className={Detail.LeftMainDiv}>
                             <div className={Detail.LeftMainTopBox}>
                                 <p>
@@ -43,7 +43,27 @@ function FullQuearyDetail({ data }) {
                             </div>
 
                             <h6>Activity</h6>
+                            <div className={Detail.HeightGiven}>
+                            {data.CaseComments && data.CaseComments.records.length>0 &&<>
+                            {data.CaseComments.records.map((activity,index)=>{
+                                const itemDate = new Date(activity.CreatedDate);
+                                return(<div className={Detail.ActivityBox}>
 
+                                <div className={`${Detail.ActivityProfile} ${activity?.CreatedById != data?.salesRepId && Detail.ActiDark}`}>
+                                    <h6>{activity?.CreatedById == data?.salesRepId ?getStrCode(data.salesRepName):"CS"}</h6>
+                                </div>
+                                <div className={Detail.ActivityContentImform}>
+                                    <h2>{activity?.CreatedById == data?.salesRepId ?data.salesRepName:"Customer Support"}</h2>
+                                    <p>Hi, {activity?.CreatedById != data?.salesRepId ?data.salesRepName:"Customer Support"},</p>
+                                    <p className={Detail.Para2} dangerouslySetInnerHTML={{__html:activity?.CommentBody}}/>
+
+                                </div>
+                                <div className={Detail.ActivityDate}>
+                                    <p>{itemDate.getDate()}/{monthNames[itemDate.getMonth()]}/{itemDate.getFullYear()} {formatAMPM(itemDate)}</p>
+                                </div>
+                            </div>)
+                            })}
+                              </>}
                             {data.ActivityHistories && data.ActivityHistories.records.length>0 &&<>
                             {data.ActivityHistories.records.map((activity,index)=>{
                                 const itemDate = new Date(activity.StartDateTime);
@@ -66,6 +86,7 @@ function FullQuearyDetail({ data }) {
                             </>}
 
 
+                            </div>
                             {/* Active Comment Box STARTING */}
                             <div className={Detail.CommentBox}>
                                 <div className={Detail.ActivityBox}>
@@ -84,7 +105,7 @@ function FullQuearyDetail({ data }) {
                         </div>
                     </div>
 
-                    <div className='col-lg-3 col-md-3 col-sm-5'>
+                    <div className='col-lg-3 col-md-3 col-sm-12'>
 
                         <div className={Detail.RightMainDiv}>
 

@@ -1,8 +1,8 @@
-import React, { useMemo } from "react";
-import Styles from "./Style.module.css";
-import MySupportTicket from "./MySupportTicket";
-import { Link } from "react-router-dom";
-import { CustomerServiceIcon, OrderStatusIcon } from "../../lib/svg";
+import React, { useMemo } from 'react'
+import Styles from './Style.module.css'
+import MySupportTicket from './MySupportTicket';
+import { Link } from 'react-router-dom'
+import { CustomerServiceIcon, OrderStatusIcon } from '../../lib/svg'
 
 function CustomerSupportPage({ data, PageSize, currentPage, manufacturerFilter, searchBy }) {
   console.log(data, manufacturerFilter, searchBy);
