@@ -117,7 +117,7 @@ const FiltersInNewness = () => {
       {/* {manufacturers?.status === 200 && manufacturers.data.length ? ( */}
       <>
       
-        <div className= {`${styles.FliterNewNessNone}  bg-black justify-content-evenly py-1 align-items-center my-2 gap-2`}>
+        <div className= {`${styles.FliterNewNessNone}  bg-black justify-content-evenly  align-items-center  gap-2`}>
           {/* filer manufacturer */}
           <select
             className={`${styles.text} bg-black`}

@@ -1,5 +1,11 @@
+.heightFix{
+  height: 50px;
+}
+
+
 .FliterNewNessNone{
   display: flex ;
+  height: 50px;
 }
 
 .text {

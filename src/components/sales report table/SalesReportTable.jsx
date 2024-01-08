@@ -25,7 +25,7 @@ const SalesReportTable = ({ salesData }) => {
         <div className={`d-flex p-3 ${styles.tableBoundary} mb-5`}>
           <div
             className=""
-            style={{ maxHeight: "73vh", minHeight: "40vh" }}
+            style={{ maxHeight: "73vh", minHeight: "40vh", overflow: "auto" }}
           >
             <table id="salesReportTable" className="table table-responsive">
               <thead>
