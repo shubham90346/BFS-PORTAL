@@ -141,7 +141,6 @@ function Product() {
   };
   const generateOrderHandler = () => {
     let begValue = fetchBeg();
-    console.log("alert==", alert, emptyBag, begValue);
     if (begValue?.Account?.id && begValue?.Manufacturer?.id && Object.values(begValue.orderList).length > 0) {
       let bagPrice = 0;
       let bagTesterPrice = 0;
@@ -165,18 +164,13 @@ function Product() {
           bagPrice += productPrice * productQuantity - (productPrice * productQuantity * product.discount.margin) / 100;
         }
       });
-      console.log("alert", alert);
-      // console.log("bagPrice", bagPrice, data.discount.MinOrderAmount);
       setalert(0);
-
       if (data.discount.MinOrderAmount > bagPrice) {
         setalert(1);
-        // return;
       } else {
         if (data.discount.testerproductLimit > bagPrice) {
           setalert(2);
         } else {
-          // setalert(0);
           navigate("/my-bag");
         }
       }
@@ -205,8 +199,7 @@ function Product() {
                 </p>
                 <p>Redirecting to My Retailers page...</p>
                 {redirect ? redirecting() : null}
-                <div className="d-flex justify-content-center">
-                </div>
+                <div className="d-flex justify-content-center"></div>
               </div>
             </>
           }
@@ -416,9 +409,6 @@ function Product() {
               <Footer />
             </div>
           </div>
-          {/* {alert === 1 && <StaticModal heading={"Warning"} content={"Please Select Products of Minimum Order Amount"} button1={"ok"} />}
-          {alert === 2 && <StaticModal heading={"Warning"} content={"Please Select Tester Products of Minimum Order Amount"} button1={"ok"} />}
-          {emptyBag && <StaticModal visibility={true} heading={"Warning"} content={"No Product in your bag"} button1={"ok"} />} */}
         </div>
       )}
     </>
