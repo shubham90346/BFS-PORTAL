@@ -219,6 +219,9 @@ height: 79px;
 
 .HeightGiven{
     height: 400px;
+    overflow: auto;
+    padding: 15px 0;background-color: #ffff;
+
 }
 
 .ActivityContentImform textarea::-moz-placeholder{
