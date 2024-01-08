@@ -63,7 +63,7 @@ function MyBagFinal() {
           OrderPlaced({ order: begToOrder })
             .then((response) => {
               if (response) {
-                navigate("/");
+                navigate("/order-list");
                 setIsOrderPlaced(2);
               }
             })
