@@ -7,7 +7,6 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
 ];
 
 function MySupportTicket({ data, PageSize, currentPage }) {
-    console.log("support", data);
     const filteredOrders = useMemo(() => {
         return data?.slice((currentPage - 1) * PageSize, currentPage * PageSize);
     }, [data, currentPage, PageSize]);
@@ -53,7 +52,7 @@ function MySupportTicket({ data, PageSize, currentPage }) {
                                         </div>
 
                                         <div className={Styles.CustomerCloneColor}>
-                                        {item.Priority == "High"?<SupportStatusGreen/> :item.Priority == "Medium"?<SupportStatusYellow/>:<SupportStatusRed/>}
+                                        {item.Priority == "High"?<SupportStatusRed/> :item.Priority == "Medium"?<SupportStatusYellow/>:<SupportStatusGreen/>}
 
                                         </div>
                                     </div>

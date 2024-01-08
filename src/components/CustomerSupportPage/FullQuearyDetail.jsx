@@ -7,8 +7,9 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
 ];
 function FullQuearyDetail({ data }) {
+    console.log({ data });
     const date = new Date(data.Date_Opened__c);
-    const [comment,setComment] = useState('');
+    const [comment, setComment] = useState('');
     function formatAMPM(date) {
         var hours = date.getHours();
         var minutes = date.getMinutes();
@@ -19,10 +20,9 @@ function FullQuearyDetail({ data }) {
         var strTime = hours + ':' + minutes + ' ' + ampm;
         return strTime;
     }
-    const CommentPostHandler = ()=>{
-        if(comment != ''){
-            GetAuthData().then((user)=>{
-
+    const CommentPostHandler = () => {
+        if (comment != '') {
+            GetAuthData().then((user) => {
                 let rawData = {
                     key: user.x_access_token,
                     comment: {
@@ -30,17 +30,17 @@ function FullQuearyDetail({ data }) {
                         CommentBody: comment
                     }
                 }
-                postSupportComment({rawData}).then((response)=>{
-                    if(response.success){
+                postSupportComment({ rawData }).then((response) => {
+                    if (response.success) {
                         window.location.reload()
-                    }else{
+                    } else {
                         alert("something went wrong")
                     }
-                }).catch((err)=>{
-                    console.error({err});
+                }).catch((err) => {
+                    console.error({ err });
                 })
-            }).catch((error)=>{
-                console.error({error});
+            }).catch((error) => {
+                console.error({ error });
             })
         }
     }
@@ -67,6 +67,7 @@ function FullQuearyDetail({ data }) {
                                     <span>{data.Account.Name}</span>&nbsp; raised this on {date.getDate()}/{monthNames[date.getMonth()]}/{date.getFullYear()} {formatAMPM(date)}</p>
 
                             </div>
+                            <p style={{marginTop:"1rem"}}>{data.Description}</p>
 
                             <h6>Activity</h6>
                             <div className={Detail.HeightGiven}>
@@ -148,7 +149,7 @@ function FullQuearyDetail({ data }) {
                             <div className={Detail.ControlPriority}>
                                 <h3>Priority</h3>
                                 <p>
-                                    {data.Priority == "High" ? <SupportStatusGreen /> : data.Priority == "Medium" ? <SupportStatusYellow /> : <SupportStatusRed />}
+                                    {data.Priority == "High" ? <SupportStatusRed /> : data.Priority == "Medium" ? <SupportStatusYellow /> : <SupportStatusGreen />}
                                     {data.Priority} Priority</p>
                             </div>
 
