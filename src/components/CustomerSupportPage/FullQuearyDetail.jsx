@@ -32,8 +32,8 @@ function FullQuearyDetail({ data }) {
                 <h4 className={Detail.FullQuearyDetailH4}>Customer Services for Case Reason <span>- Charges</span> </h4>
 
 
-                <div className='row'>
-                    <div className='col-lg-9 col-md-9 col-sm-7'>
+                <div className={`row ${Detail.FlexReverse}`}>
+                    <div className='col-lg-9 col-md-9 col-sm-12'>
                         <div className={Detail.LeftMainDiv}>
                             <div className={Detail.LeftMainTopBox}>
                                 <p>
@@ -43,6 +43,7 @@ function FullQuearyDetail({ data }) {
                             </div>
 
                             <h6>Activity</h6>
+                            <div className={Detail.HeightGiven}>
 
                             {data.ActivityHistories && data.ActivityHistories.records.length>0 &&<>
                             {data.ActivityHistories.records.map((activity,index)=>{
@@ -66,6 +67,7 @@ function FullQuearyDetail({ data }) {
                             </>}
 
 
+                            </div>
                             {/* Active Comment Box STARTING */}
                             <div className={Detail.CommentBox}>
                                 <div className={Detail.ActivityBox}>
@@ -84,7 +86,7 @@ function FullQuearyDetail({ data }) {
                         </div>
                     </div>
 
-                    <div className='col-lg-3 col-md-3 col-sm-5'>
+                    <div className='col-lg-3 col-md-3 col-sm-12'>
 
                         <div className={Detail.RightMainDiv}>
 
