@@ -53,7 +53,7 @@ function MySupportTicket({ data, PageSize, currentPage }) {
                                         </div>
 
                                         <div className={Styles.CustomerCloneColor}>
-                                        {item.Priority == "High"?<SupportStatusGreen/> :item.Priority == "Medium"?<SupportStatusYellow/>:<SupportStatusRed/>}
+                                        {item.Priority == "High"?<SupportStatusRed/> :item.Priority == "Medium"?<SupportStatusYellow/>:<SupportStatusGreen/>}
 
                                         </div>
                                     </div>

@@ -7,6 +7,7 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
 ];
 function FullQuearyDetail({ data }) {
+    console.log({data});
     const date = new Date(data.Date_Opened__c);
     const [comment,setComment] = useState('');
     function formatAMPM(date) {
@@ -22,7 +23,6 @@ function FullQuearyDetail({ data }) {
     const CommentPostHandler = ()=>{
         if(comment != ''){
             GetAuthData().then((user)=>{
-
                 let rawData = {
                     key: user.x_access_token,
                     comment: {
@@ -143,7 +143,7 @@ function FullQuearyDetail({ data }) {
                             <div className={Detail.ControlPriority}>
                                 <h3>Priority</h3>
                                 <p>
-                                    {data.Priority == "High" ? <SupportStatusGreen /> : data.Priority == "Medium" ? <SupportStatusYellow /> : <SupportStatusRed />}
+                                    {data.Priority == "High" ? <SupportStatusRed /> : data.Priority == "Medium" ? <SupportStatusYellow /> : <SupportStatusGreen />}
                                     {data.Priority} Priority</p>
                             </div>
 
