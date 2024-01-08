@@ -70,7 +70,7 @@ margin: 0;
 }
 
 .QuearyTicket{
-    margin: 0;
+    margin: 10px 0;
     padding: 13px;
     display: flex;
     border-radius: 8px;
@@ -114,6 +114,7 @@ margin: 0;
 .ShopNameBrand{
     border-left:1px solid #E2E2E2 ;
     padding: 0  20px;
+    min-width: 302px;
 
 }
 
