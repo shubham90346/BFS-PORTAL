@@ -2,7 +2,6 @@ import React from "react";
 import Loading from "../Loading";
 import styles from "./table.module.css";
 const ComparisonReportTable = ({ comparisonData }) => {
-  console.log(comparisonData);
   return (
     <>
       {comparisonData ? (
