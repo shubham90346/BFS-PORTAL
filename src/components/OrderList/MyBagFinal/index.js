@@ -134,7 +134,7 @@ function MyBagFinal() {
                             {OrderData?.Shipping_Street__c}, {OrderData?.Shipping_City__c} <br />
                             {OrderData?.Shipping_State__c}, {OrderData?.Shipping_Country__c} {OrderData?.Shipping_Zip__c}
                             <br />
-                            {OrderData?.email} | {OrderData?.contact}
+                            {OrderData?.email} {OrderData?.contact?` | ${OrderData?.contact}`:null}
                           </>
                         ) : (
                           "No Shipping Address"

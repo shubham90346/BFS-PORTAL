@@ -95,8 +95,8 @@ const Accordion = ({ data, formattedData }) => {
                     });
                     // console.log(formattedData);
                     return (
-                      <CollapsibleRow title={key != "null" ? key : "No Category"} quantity={categoryOrderQuantity} key={index}>
-                        {Object.values(formattedData)[index]?.map((value, indexed) => {
+                      <CollapsibleRow title={key != "null" ? key : "No Category"} quantity={categoryOrderQuantity} key={index}>                       
+{Object.values(formattedData)[index]?.map((value, indexed) => {
                           let listPrice = isNaN(Number(value.usdRetail__c.substring(1))) ? (+value.usdRetail__c.substring(2)).toFixed(2) : (+value.usdRetail__c.substring(1)).toFixed(2);
                           return (
                             <tr className="w-full" key={indexed}>
