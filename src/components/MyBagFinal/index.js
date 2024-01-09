@@ -129,19 +129,49 @@ function MyBagFinal() {
                         {localStorage.getItem("orders") && Object.values(JSON.parse(localStorage.getItem("orders"))).length > 0 ? (
                           Object.values(JSON.parse(localStorage.getItem("orders"))).map((ele) => {
                             // console.log(ele);
-                            {
-                              ele.Category__c === "TESTER"
-                                ? (price = ele.product.usdRetail__c.includes("$")
-                                    ? (+ele.product.usdRetail__c.substring(1) - (ele?.discount?.testerMargin / 100) * +ele.product.usdRetail__c.substring(1)).toFixed(2)
-                                    : (+ele.product.usdRetail__c - (ele?.discount?.testerMargin / 100) * +ele.product.usdRetail__c).toFixed(2))
-                                : ele.Category__c === "Samples"
-                                ? (price = ele.product.usdRetail__c.includes("$")
+                          let listPrice = isNaN(Number(ele.product.usdRetail__c.substring(1))) ? (+ele.product.usdRetail__c.substring(2)).toFixed(2) : (+ele.product.usdRetail__c.substring(1)).toFixed(2);
+                       
+                          {ele.product.Category__c === "TESTER" ? (
+                            <>
+                              
+                              {price=ele.product.usdRetail__c.includes("$")
+                                ? (+ele.product.usdRetail__c.substring(1) - (ele?.discount?.testerMargin / 100) * +ele.product.usdRetail__c.substring(1)).toFixed(2)
+                                : (+ele.product.usdRetail__c - (ele?.discount?.testerMargin / 100) * +ele.product.usdRetail__c).toFixed(2)}
+                            </>
+                          ) : (
+                            <>
+                              {ele.product.Category__c === "Samples" ? (
+                                <>
+                                  {" "}
+                                 
+                                  {price=ele.product.usdRetail__c.includes("$")
                                     ? (+ele.product.usdRetail__c.substring(1) - (ele?.discount?.sample / 100) * +ele.product.usdRetail__c.substring(1)).toFixed(2)
-                                    : (+ele.product.usdRetail__c - (ele?.discount?.sample / 100) * +ele.product.usdRetail__c).toFixed(2))
-                                : (price = ele.product.usdRetail__c.includes("$")
-                                    ? (+ele.product.usdRetail__c.substring(1) - (ele?.discount?.margin / 100) * +ele.product.usdRetail__c.substring(1)).toFixed(2)
-                                    : (+ele.product.usdRetail__c - (ele?.discount?.margin / 100) * +ele.product.usdRetail__c).toFixed(2));
-                            }
+                                    : (+ele.product.usdRetail__c - (ele?.discount?.sample / 100) * +ele.product.usdRetail__c).toFixed(2)}
+                                </>
+                              ) : (
+                                <>
+                                  
+                                  {price=ele.product.usdRetail__c.includes("$")
+                                    ? (listPrice - (ele?.discount?.margin / 100) * listPrice).toFixed(2)
+                                    : (+ele.product.usdRetail__c - (ele?.discount?.margin / 100) * +ele.product.usdRetail__c).toFixed(2)}
+                                </>
+                              )}
+                            </>
+                          )}
+                        
+                            // {
+                            //   ele.Category__c === "TESTER"
+                            //     ? (price = ele.product.usdRetail__c.includes("$")
+                            //         ? (+ele.product.usdRetail__c.substring(1) - (ele?.discount?.testerMargin / 100) * +ele.product.usdRetail__c.substring(1)).toFixed(2)
+                            //         : (+ele.product.usdRetail__c - (ele?.discount?.testerMargin / 100) * +ele.product.usdRetail__c).toFixed(2))
+                            //     : ele.Category__c === "Samples"
+                            //     ? (price = ele.product.usdRetail__c.includes("$")
+                            //         ? (+ele.product.usdRetail__c.substring(1) - (ele?.discount?.sample / 100) * +ele.product.usdRetail__c.substring(1)).toFixed(2)
+                            //         : (+ele.product.usdRetail__c - (ele?.discount?.sample / 100) * +ele.product.usdRetail__c).toFixed(2))
+                            //     : (price = ele.product.usdRetail__c.includes("$")
+                            //         ? (+ele.product.usdRetail__c.substring(1) - (ele?.discount?.margin / 100) * +ele.product.usdRetail__c.substring(1)).toFixed(2)
+                            //         : (+ele.product.usdRetail__c - (ele?.discount?.margin / 100) * +ele.product.usdRetail__c).toFixed(2));
+                            // }
                             // price = price;
                             // console.log(price);
                             total += Number(price) * ele.quantity;

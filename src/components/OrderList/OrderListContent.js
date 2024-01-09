@@ -33,11 +33,11 @@ function OrderListContent({ data, PageSize, currentPage }) {
           }
           return false;
         }
-        // console.log((currentPage - 1) * PageSize, currentPage * PageSize);
+        console.log((currentPage - 1) * PageSize, currentPage * PageSize);
         return true;
       })
-      // ?.slice((currentPage - 1) * PageSize, currentPage * PageSize);
-  }, [data, searchShipBy]);
+      ?.slice((currentPage - 1) * PageSize, currentPage * PageSize);
+  }, [data, searchShipBy,currentPage,PageSize]);
   console.log("filteredOrders", filteredOrders);
   const generateSuportHandler = ({ data, value }) => {
     let beg = {

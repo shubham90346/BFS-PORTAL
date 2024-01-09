@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Styles from "./style.module.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import OrderListContent from "./OrderListContent";
@@ -19,7 +19,7 @@ function OrderList({ filterValue }) {
     });
     return data;
   }
-  const orderData=()=>{
+  const orderData=useMemo(()=>{
     return orders
     // Manufacturer filter
     ?.filter(
@@ -36,7 +36,8 @@ function OrderList({ filterValue }) {
         )
       );
     })
-  }
+  },[filterValue,orders])
+  console.log("orderData",orderData);
   useEffect(() => {
     setLoaded(false);
     GetAuthData()
@@ -73,13 +74,13 @@ function OrderList({ filterValue }) {
               <OrderListContent
                 currentPage={currentPage}
                 PageSize={PageSize}
-                data={orderData()}
+                data={orderData}
               />
             </div>
             <Pagination
               className="pagination-bar"
               currentPage={currentPage}
-              totalCount={orderData().length}
+              totalCount={orderData.length}
               pageSize={PageSize}
               onPageChange={(page) => setCurrentPage(page)}
             />
