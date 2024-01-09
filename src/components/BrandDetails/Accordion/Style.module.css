@@ -4,7 +4,10 @@
   min-width:850px;
 
 }
-
+.ControlTR{
+  border: 1px solid #F8F8F8;
+  background: #FFF;
+}
 
 .ControlStyle img{
   
@@ -82,6 +85,7 @@ border: 1px solid #000 !important;
 .accordion {
   border-radius: 5px;
   background: #fff;
+  padding: 0 10px;
 }
 
 /* .accordion tr{

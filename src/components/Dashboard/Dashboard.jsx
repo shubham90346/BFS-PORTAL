@@ -414,9 +414,10 @@ function Dashboard({ dashboardData }) {
           </select>
           <hr className="w-100" />
 
-          <div className="row">
+          <div className="row justify-between ">
             {/* monthly data goal by brand*/}
-            <div className="col-lg-6 my-2">
+            <div className="col-lg-6 my-2" style={{width:"49.5%"}}>
+            <div className={Styles.DashboardWidth}>
               <p className={Styles.Tabletext}>Month bill date(MTD): Goal by Brand</p>
               <div className={Styles.goaltable}>
 
@@ -449,8 +450,10 @@ function Dashboard({ dashboardData }) {
 
               </div>
             </div>
+            </div>
             {/* leads by brand*/}
-            <div className="col-lg-6 my-2">
+            <div className="col-lg-6 my-2 " style={{width:"49.5%"}}>
+            <div className={Styles.DashboardWidth}>
               <p className={Styles.Tabletext}>Leads by Brand</p>
               <div className={Styles.goaltable1}>
                 <div className="">
@@ -490,11 +493,13 @@ function Dashboard({ dashboardData }) {
                 </div>
               </div>
             </div>
+            </div>
           </div>
 
-          <div className="row mt-5">
+          <div className="row mt-2 justify-between">
             {/* Monthly SALESBYREP */}
-            <div className="col-lg-6 my-2">
+            <div className="col-lg-6 my-2" style={{width:"49.5%"}}>
+              <div className={Styles.DashboardWidth}>
               <p className={Styles.Tabletext}>Month bill date(MTD): Sales By Rep</p>
               <div className={Styles.goaltable}>
                 <div className="">
@@ -539,9 +544,11 @@ function Dashboard({ dashboardData }) {
                   </div>
                 </div>
               </div>
+              </div>
             </div>
             {/* Yearly SALESBYREP */}
-            <div className="col-lg-6 my-2">
+            <div className="col-lg-6 my-2" style={{width:"49.5%"}}>
+              <div className={Styles.DashboardWidth}>
               <p className={Styles.Tabletext}>Year bill date(MTD): Sales By Rep</p>
               <div className={Styles.goaltable}>
                 <div className="">
@@ -586,6 +593,7 @@ function Dashboard({ dashboardData }) {
                   </div>
                 </div>
               </div>
+              </div>
             </div>
           </div>
 
@@ -599,12 +607,12 @@ function Dashboard({ dashboardData }) {
           </div> */}
           <div className="my-5">
 
-            <div className="row mt-1">
-              <div className={`col-lg-6 ${Styles.top_perform1}`}>
+            <div className={`row mt-1 justify-between ${Styles.topPerform2}`}>
+              <div className={`col-lg-6 ${Styles.top_perform1}`} style={{width:"48%"}}>
                 <p className={Styles.Tabletext}>Top Performing Accounts</p>
                 <div className="row">
                   {/* TOP PERFORMANCE */}
-                  <div className="col-lg-6 col-md-6 col-sm-6 ">
+                  <div className="col-lg-6 col-md-6 col-sm-6 " >
                     <div className={Styles.top_perform}>
                       <div className="container">
                         <div className={Styles.top_account}>
@@ -655,7 +663,7 @@ function Dashboard({ dashboardData }) {
                 </div>
               </div>
 
-              <div className="col-lg-6">
+              <div className="col-lg-6" style={{width:"48%"}}>
                 <p className={Styles.Tabletext1}>Low Performing Accounts</p>
                 <div className="row">
                   <div className="col-lg-6 col-md-6 col-sm-6">
@@ -712,7 +720,7 @@ function Dashboard({ dashboardData }) {
           </div>
 
 
-          <div className="row my-5">
+          <div className="row my-3">
             <div className="col-lg-7">
               <p className={Styles.Tabletext}>Sales By Brand</p>
 
@@ -748,7 +756,7 @@ function Dashboard({ dashboardData }) {
             </div>
           </div>
 
-          <div className="row mt-5 g-4">
+          <div className="row mt-2 g-4">
             <div className="col-lg-3 col-md-6 col-sm-6">
               <div className={Styles.dashbottom}>
 
@@ -772,7 +780,7 @@ function Dashboard({ dashboardData }) {
                 </div>
                 <div className="">
                   <p className={`text-end ${Styles.activetext}`}>GROWTH 2022 VS 2023</p>
-                  <h1 className={`text-end ${Styles.activetext1}`}>78</h1>
+                  <h1 className={`text-end ${Styles.activetext1}`}>78<span>%</span></h1>
                 </div>
 
               </div>
@@ -785,7 +793,7 @@ function Dashboard({ dashboardData }) {
 
                 </div>
                 <div className="">
-                  <p className={`text-end ${Styles.activetext}`}>TOTAL NO.ORDERS</p>
+                  <p className={`text-end ${Styles.activetext}`}>TOTAL NO. OF ORDERS</p>
                   <h1 className={`text-end ${Styles.activetext1}`}>135K</h1>
                 </div>
 

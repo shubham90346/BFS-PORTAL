@@ -99,7 +99,7 @@ const Accordion = ({ data, formattedData }) => {
                         {Object.values(formattedData)[index]?.map((value, indexed) => {
                           let listPrice = isNaN(Number(value.usdRetail__c.substring(1))) ? (+value.usdRetail__c.substring(2)).toFixed(2) : (+value.usdRetail__c.substring(1)).toFixed(2);
                           return (
-                            <tr className="w-full" key={indexed}>
+                            <tr className={`${styles.ControlTR} w-full `} key={indexed}>
                               <td className={styles.ControlStyle}>
                                 <img src={Img1} alt="img" />
                               </td>

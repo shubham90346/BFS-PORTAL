@@ -2,7 +2,7 @@ import React, { useMemo } from 'react'
 import Styles from './Style.module.css'
 import MySupportTicket from './MySupportTicket';
 import { Link } from 'react-router-dom'
-import { CustomerServiceIcon, OrderStatusIcon } from '../../lib/svg'
+import { CustomerServiceIcon, OrderStatusIcon,DefaultSupportIcon,MarketingSupportIcon } from '../../lib/svg'
 
 function CustomerSupportPage({ data, PageSize, currentPage, manufacturerFilter, searchBy,retailerFilter }) {
   const filteredData = useMemo(() => {
@@ -38,6 +38,7 @@ function CustomerSupportPage({ data, PageSize, currentPage, manufacturerFilter, 
                   </div>
                 </Link>
 
+                <Link to={"/order-list"}>
                 <div className={Styles.supportLeftBox}>
                   <div className={Styles.supportLeftImg}>
                     <CustomerServiceIcon width={42} height={42} />
@@ -48,6 +49,64 @@ function CustomerSupportPage({ data, PageSize, currentPage, manufacturerFilter, 
                     <p>Resolving Concerns Serving Solutions</p>
                   </div>
                 </div>
+                </Link>
+
+                <Link to={"/order-list"}>
+                <div className={Styles.supportLeftBox}>
+                  <div className={Styles.supportLeftImg}>
+                    <MarketingSupportIcon width={42} height={42} />
+                  </div>
+
+                  <div className={Styles.supportLeftContent}>
+                    <h2>Marketing Support Issues </h2>
+                    <p>Elevate Your Marketing with 
+Proactive Solutions.</p>
+                  </div>
+                </div>
+                </Link>
+
+                <Link to={"/order-list"}>
+                <div className={Styles.supportLeftBox}>
+                  <div className={Styles.supportLeftImg}>
+                    <DefaultSupportIcon width={42} height={42} />
+                  </div>
+
+                  <div className={Styles.supportLeftContent}>
+                    <h2>Management Cases </h2>
+                    <p>Empowering Solutions for 
+Effective Management</p>
+                  </div>
+                </div>
+                </Link>
+
+                <Link to={"/order-list"}>
+                <div className={Styles.supportLeftBox}>
+                  <div className={Styles.supportLeftImg}>
+                    <DefaultSupportIcon width={42} height={42} />
+                  </div>
+
+                  <div className={Styles.supportLeftContent}>
+                    <h2>DIF Tester Issue </h2>
+                    <p>Empowering Solutions for 
+Effective Management</p>
+                  </div>
+                </div>
+                </Link>
+
+                <Link to={"/order-list"}>
+                <div className={Styles.supportLeftBox}>
+                  <div className={Styles.supportLeftImg}>
+                    <DefaultSupportIcon width={42} height={42} />
+                  </div>
+
+                  <div className={Styles.supportLeftContent}>
+                    <h2>Displays Issues </h2>
+                    <p>Empowering Solutions for 
+Effective Management</p>
+                  </div>
+                </div>
+                </Link>
+
               </div>
             </div>
 
