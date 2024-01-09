@@ -19,11 +19,10 @@ const OrderListPage = () => {
 
   return (
     <>
-
-<Layout>
-            <div>
-                <div className="col-12">
-                <div className="filter-container">
+      <Layout>
+        <div>
+          <div className="col-12">
+            <div className="filter-container">
               <Filters
                 onChange={handleFilterChange}
                 value={filterValue}
@@ -36,14 +35,13 @@ const OrderListPage = () => {
                 }}
               />
             </div>
-                </div>
-                <div>
-                <OrderList filterValue={filterValue} />
-                    {/* <OrderStatusFormSection /> */}
-                </div>
-            </div>
-        </Layout>
-      
+          </div>
+          <div>
+            <OrderList filterValue={filterValue} />
+            {/* <OrderStatusFormSection /> */}
+          </div>
+        </div>
+      </Layout>
     </>
   );
 };
