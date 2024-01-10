@@ -16,10 +16,10 @@ const TopNav = () => {
             <div className={styles.vr}></div>
             <p className={`m-0 ${styles.language}`}>EN</p>
             <p className={`m-0 ${styles.language} ${styles.text} flex`}>
-                          <div class="dropdown dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          <div className="dropdown dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Need Help?&nbsp;
             {/* </a> */}
-            <ul class="dropdown-menu">
+            <ul className="dropdown-menu">
               <li>
                 <Link to="" className="dropdown-item text-start" >
                 Order Status

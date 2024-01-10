@@ -275,7 +275,7 @@ function MyBagFinal() {
                               <p className={` ${StylesModal.ModalContent}`}>Enter PO Number</p>
                               <div className="d-flex justify-content-center">
                                 <button
-                                  class={`${StylesModal.modalButton}`}
+                                  className={`${StylesModal.modalButton}`}
                                   onClick={() => {
                                     setPONumberFilled(true);
                                   }}
