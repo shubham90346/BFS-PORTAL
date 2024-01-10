@@ -10,7 +10,6 @@ function OrderListContent({ data, PageSize, currentPage }) {
   const [searchShipBy, setSearchShipBy] = useState();
   const [Viewmore, setviewmore] = useState(false);
   const [modalData, setModalData] = useState({});
-  console.log("data", data,PageSize, currentPage);
   const currentDate = new Date();
   const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   let size = 3;
@@ -19,11 +18,10 @@ function OrderListContent({ data, PageSize, currentPage }) {
   };
 
   const filteredOrders = useMemo(() => {
-    return data
+    let filteredData= data
       ?.filter((order) => {
         if (searchShipBy) {
           const orderItems = order.OpportunityLineItems?.records;
-          console.log(order.PO_Number__c, searchShipBy);
           if (orderItems?.length) {
             return (
               orderItems?.some((item) => {
@@ -33,12 +31,11 @@ function OrderListContent({ data, PageSize, currentPage }) {
           }
           return false;
         }
-        console.log((currentPage - 1) * PageSize, currentPage * PageSize);
         return true;
       })
-      ?.slice((currentPage - 1) * PageSize, currentPage * PageSize);
+      let newData=filteredData.length<10?filteredData:filteredData.slice((currentPage - 1) * PageSize, currentPage * PageSize);
+      return newData;
   }, [data, searchShipBy,currentPage,PageSize]);
-  console.log("filteredOrders", filteredOrders);
   const generateSuportHandler = ({ data, value }) => {
     let beg = {
       orderStatusForm: {
@@ -217,7 +214,6 @@ function OrderListContent({ data, PageSize, currentPage }) {
       ) : (
         <div className="flex justify-center items-center py-4 w-full lg:min-h-[300px] xl:min-h-[380px]">No data found</div>
       )}
-      {/* {isTrackingModal && <TrackingModal />} */}
     </>
   );
 }

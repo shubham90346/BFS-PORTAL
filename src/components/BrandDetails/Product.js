@@ -17,6 +17,7 @@ import ModalPage from "../Modal UI";
 import { useBag } from "../../context/BagContext";
 import { fetchBeg } from "../../lib/store";
 import Styles from "../Modal UI/Styles.module.css";
+import { BackArrow } from "../../lib/svg";
 const groupBy = function (xs, key) {
   return xs?.reduce(function (rv, x) {
     (rv[x[key]] = rv[x[key]] || []).push(x);
@@ -27,16 +28,14 @@ const groupBy = function (xs, key) {
 function Product() {
   const [emptyBag, setEmptyBag] = useState(false);
   const { orderQuantity } = useBag();
-
   const { user } = useAuth();
-  // const [searchParams] = useSearchParams();
   const [categoryFilters, setCategoryFilters] = useState([]);
   const [productTypeFilter, setProductTypeFilter] = useState("Wholesale");
   const [sortBy, setSortBy] = useState();
   const [searchBy, setSearchBy] = useState("");
   const navigate = useNavigate();
   const [redirect, setRedirect] = useState(false);
-  const [alert, setalert] = useState(0);
+  const [alert, setAlert] = useState(0);
   const [testerInBag, setTesterInBag] = useState(false);
   const { data, isLoading } = useProductList({
     key: user?.data.access_token,
@@ -156,23 +155,23 @@ function Product() {
           productPrice = parseFloat(splitPrice[0]);
         }
         if (productCategories && productCategories.toUpperCase() === "TESTER") {
-          console.log( productPrice * productQuantity - (productPrice * productQuantity * product.discount.testerMargin) / 100);
+          console.log(productPrice * productQuantity - (productPrice * productQuantity * product.discount.testerMargin) / 100);
           bagTesterPrice += productPrice * productQuantity - (productPrice * productQuantity * product.discount.testerMargin) / 100;
           bagPrice += bagTesterPrice;
-          setTesterInBag(true)
+          setTesterInBag(true);
         } else if (productCategories && productCategories.toUpperCase() === "SAMPLES") {
           bagPrice += productPrice * productQuantity - (productPrice * productQuantity * product.discount.sample) / 100;
         } else {
           bagPrice += productPrice * productQuantity - (productPrice * productQuantity * product.discount.margin) / 100;
         }
       });
-      setalert(0);
+      setAlert(0);
       console.log("begValue", begValue);
       if (data.discount.MinOrderAmount > bagPrice) {
-        setalert(1);
+        setAlert(1);
       } else {
         if (testerInBag && data.discount.testerproductLimit > bagPrice) {
-          setalert(2);
+          setAlert(2);
         } else {
           navigate("/my-bag");
         }
@@ -180,7 +179,7 @@ function Product() {
       setEmptyBag(false);
     } else {
       setEmptyBag(true);
-      setalert(0);
+      setAlert(0);
     }
   };
   useEffect(() => {
@@ -219,14 +218,14 @@ function Product() {
                     <h1 className={`fs-5 ${Styles.ModalHeader}`}>Warning</h1>
                     <p className={` ${Styles.ModalContent}`}>Please Select Products of Minimum Order Amount</p>
                     <div className="d-flex justify-content-center">
-                      <button class={`${Styles.modalButton}`} onClick={() => setalert(0)}>
+                      <button class={`${Styles.modalButton}`} onClick={() => setAlert(0)}>
                         OK
                       </button>
                     </div>
                   </div>
                 </>
               }
-              onClose={() => setalert(0)}
+              onClose={() => setAlert(0)}
             />
           )}
           {alert == 2 && (
@@ -238,7 +237,7 @@ function Product() {
                     <h1 className={`fs-5 ${Styles.ModalHeader}`}>Warning</h1>
                     <p className={` ${Styles.ModalContent}`}>Please Select Tester Product of Minimum Order Amount</p>
                     <div className="d-flex justify-content-center">
-                      <button class={`${Styles.modalButton}`} onClick={() => setalert(0)}>
+                      <button class={`${Styles.modalButton}`} onClick={() => setAlert(0)}>
                         OK
                       </button>
                     </div>
@@ -246,7 +245,7 @@ function Product() {
                 </>
               }
               onClose={() => {
-                setalert(0);
+                setAlert(0);
               }}
             />
           )}
@@ -345,13 +344,7 @@ function Product() {
                               navigate("/my-retailers");
                             }}
                           >
-                            {" "}
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="16" viewBox="0 0 24 16" fill="none">
-                              <path
-                                d="M8.94284 2.27615C9.46349 1.75544 9.46349 0.911229 8.94284 0.390521C8.42213 -0.130174 7.57792 -0.130174 7.05721 0.390521L2.3911 5.05666C2.39128 5.05648 2.39092 5.05684 2.3911 5.05666L0.390558 7.05721C0.153385 7.29442 0.024252 7.59868 0.00313201 7.90895C-0.00281464 7.99562 -0.000321319 8.08295 0.010852 8.17002C0.0431986 8.42308 0.148118 8.66868 0.325638 8.87322C0.348651 8.89975 0.372651 8.92535 0.397585 8.94989L7.05721 15.6095C7.57792 16.1302 8.42213 16.1302 8.94284 15.6095C9.46349 15.0888 9.46349 14.2446 8.94284 13.7239L4.55231 9.33335H22.6667C23.4031 9.33335 24 8.73642 24 8.00002C24 7.26362 23.4031 6.66668 22.6667 6.66668H4.55231L8.94284 2.27615Z"
-                                fill="black"
-                              />
-                            </svg>
+                            <BackArrow />
                           </button>
                           {brandName}
                         </h4>
