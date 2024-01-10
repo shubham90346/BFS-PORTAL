@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./index.module.css";
 import { Link } from "react-router-dom";
+import { NeedHelp } from "../../../lib/svg";
 // import Redirect from "../../Redirect";
 const TopNav = () => {
   const userName = localStorage.getItem("Name");
@@ -16,8 +17,8 @@ const TopNav = () => {
             <div className={styles.vr}></div>
             <p className={`m-0 ${styles.language}`}>EN</p>
             <p className={`m-0 ${styles.language} ${styles.text} flex`}>
-                          <div className="dropdown dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Need Help?&nbsp;
+                          <div className="dropdown d-flex justify-content-center align-items-center " role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Need Help?&nbsp; <NeedHelp/>
             {/* </a> */}
             <ul className="dropdown-menu">
               <li>
