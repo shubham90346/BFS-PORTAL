@@ -10,7 +10,7 @@ function OrderListContent({ data, PageSize, currentPage }) {
   const [searchShipBy, setSearchShipBy] = useState();
   const [Viewmore, setviewmore] = useState(false);
   const [modalData, setModalData] = useState({});
-
+  console.log("data", data,PageSize, currentPage);
   const currentDate = new Date();
   const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   let size = 3;
@@ -33,12 +33,13 @@ function OrderListContent({ data, PageSize, currentPage }) {
           }
           return false;
         }
+        console.log((currentPage - 1) * PageSize, currentPage * PageSize);
         return true;
       })
       ?.slice((currentPage - 1) * PageSize, currentPage * PageSize);
-  }, [data, currentPage, PageSize, searchShipBy]);
-
-  const generateSuportHandler = ({ data,value }) => {
+  }, [data, searchShipBy,currentPage,PageSize]);
+  console.log("filteredOrders", filteredOrders);
+  const generateSuportHandler = ({ data, value }) => {
     let beg = {
       orderStatusForm: {
         salesRepId: null,
@@ -51,15 +52,17 @@ function OrderListContent({ data, PageSize, currentPage }) {
         desc: null,
         opportunityId: data.Id,
         priority: "Medium",
-        sendEmail:false
-      }
-    }
-    let statusOfSupport = supportShare(beg).then((response)=>{
-      if (response) navigate("/orderStatusForm")
-    }).catch((error)=>{
-      console.error({error});
-    })
-  }
+        sendEmail: false,
+      },
+    };
+    let statusOfSupport = supportShare(beg)
+      .then((response) => {
+        if (response) navigate("/orderStatusForm");
+      })
+      .catch((error) => {
+        console.error({ error });
+      });
+  };
 
   return (
     <>
@@ -157,12 +160,12 @@ function OrderListContent({ data, PageSize, currentPage }) {
                                   {Viewmore
                                     ? ele.Name.split(item.AccountName)[1]
                                     : ele.Name.split(item.AccountName).length > 1
-                                      ? ele.Name.split(item.AccountName)[1].length >= 31
-                                        ? `${ele.Name.split(item.AccountName)[1].substring(0, 28)}...`
-                                        : `${ele.Name.split(item.AccountName)[1].substring(0, 31)}`
-                                      : ele.Name.split(item.AccountName)[0].length >= 31
-                                        ? `${ele.Name.split(item.AccountName)[0].substring(0, 28)}...`
-                                        : `${ele.Name.split(item.AccountName)[0].substring(0, 31)}`}
+                                    ? ele.Name.split(item.AccountName)[1].length >= 31
+                                      ? `${ele.Name.split(item.AccountName)[1].substring(0, 28)}...`
+                                      : `${ele.Name.split(item.AccountName)[1].substring(0, 31)}`
+                                    : ele.Name.split(item.AccountName)[0].length >= 31
+                                    ? `${ele.Name.split(item.AccountName)[0].substring(0, 28)}...`
+                                    : `${ele.Name.split(item.AccountName)[0].substring(0, 31)}`}
                                 </li>
                               </>
                             );
@@ -172,7 +175,9 @@ function OrderListContent({ data, PageSize, currentPage }) {
                         )}
                       </ul>
                       <span>
-                        <Link to="/orderDetails" className="linkStyling">{item.OpportunityLineItems?.records?.length && item.OpportunityLineItems?.records?.length > 3 && `+${item.OpportunityLineItems?.totalSize - 3} More`}</Link>
+                        <Link to="/orderDetails" className="linkStyling">
+                          {item.OpportunityLineItems?.records?.length && item.OpportunityLineItems?.records?.length > 3 && `+${item.OpportunityLineItems?.totalSize - 3} More`}
+                        </Link>
                       </span>
                     </div>
                   </div>
@@ -191,15 +196,10 @@ function OrderListContent({ data, PageSize, currentPage }) {
 
                 <div className={Styles.StatusOrder}>
                   <div className={Styles.Status1}>
-                    <h2 onClick={(e) => generateSuportHandler({ data: item,value:"Charges" })}>
-                      Charges
-                    </h2>
-                    <h3 onClick={(e) => generateSuportHandler({ data: item,value:"Status of Order" })}>
-                      {" "}
-                      Status of Order
-                    </h3>
-                    <h4 onClick={(e) => generateSuportHandler({ data: item,value:"Invoice" })}>Invoice </h4>
-                    <h4 onClick={(e) => generateSuportHandler({ data: item,value:"Tracking Status" })}>Tracking Status </h4>
+                    <h2 onClick={(e) => generateSuportHandler({ data: item, value: "Charges" })}>Charges</h2>
+                    <h3 onClick={(e) => generateSuportHandler({ data: item, value: "Status of Order" })}> Status of Order</h3>
+                    <h4 onClick={(e) => generateSuportHandler({ data: item, value: "Invoice" })}>Invoice </h4>
+                    <h4 onClick={(e) => generateSuportHandler({ data: item, value: "Tracking Status" })}>Tracking Status </h4>
                   </div>
 
                   <div className={Styles.Status2}>
