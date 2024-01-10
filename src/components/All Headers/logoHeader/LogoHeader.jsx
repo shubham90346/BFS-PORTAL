@@ -49,10 +49,10 @@ const LogoHeader = () => {
             </Link>
           </p>
           <p className={`m-0  ${styles.language}`}>
-            <Link to="/my-bag" className={`linkStyle`}>
-              My Bag ({orderQuantity ?? 0})
-            </Link>
-          </p>
+            
+            {orderQuantity?<Link to="/my-bag" className={`linkStyle`}> My Bag ({orderQuantity })
+          </Link>: "My Bag(0)"}
+            </p> 
         </div>
       </div>
       </div>
