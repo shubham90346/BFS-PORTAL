@@ -187,10 +187,12 @@ function OrderListContent({ data, PageSize, currentPage }) {
                       <h3>Total</h3>
                       <p>${Number(item.Amount).toFixed(2)}</p>
                     </div>
+                    <div className={Styles.TicketWidth}>
                     <button className="me-4">View Ticket</button>
                     <Link to="/orderDetails">
                       <button onClick={() => MyBagId(item.Id)}>View Order Details</button>
                     </Link>
+                    </div>
                   </div>
                 </div>
 

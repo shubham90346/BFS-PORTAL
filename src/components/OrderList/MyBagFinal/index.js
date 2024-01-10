@@ -143,7 +143,10 @@ function MyBagFinal() {
                     </div>
 
                     <div className={Styles.ShipAdress2}>
-                      <h4>Note</h4>
+                      <label>NOTE</label>
+                      <textarea   placeholder="Description" className="placeholder:font-[Arial-500] text-[14px] tracking-[1.12px] " />
+                    </div>
+
                       {OrderData.Description}
                     </div>
 
@@ -155,7 +158,7 @@ function MyBagFinal() {
               </div>
             </div>
           </div>
-        </div>
+        
       </section>
     </div>
   );
