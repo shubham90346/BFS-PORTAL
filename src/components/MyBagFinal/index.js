@@ -27,6 +27,12 @@ function MyBagFinal() {
     }
   }, []);
   let total = 0;
+  useEffect(() => {
+    if (bagValue?.Account?.id && bagValue?.Manufacturer?.id && Object.values(bagValue?.orderList)?.length > 0 && total > 0) {
+      setButtonActive(true);
+    }
+  }, [total, bagValue]);
+
   let price = "";
   const orderPlaceHandler = () => {
     setIsOrderPlaced(1);
@@ -34,6 +40,7 @@ function MyBagFinal() {
       .then((user) => {
         // let bagValue = fetchBeg()
         if (bagValue) {
+          console.log("bagValue", bagValue);
           // setButtonActive(true)
           let list = [];
           let orderType = "Wholesale Number";
@@ -295,16 +302,20 @@ function MyBagFinal() {
                     <div className={Styles.ShipBut}>
                       <button
                         onClick={() => {
-                          if (PONumber.length) {
-                            orderPlaceHandler();
-                          } else {
-                            setPONumberFilled(false);
+                          console.log("total",total);
+                          if (total) {
+                            if (PONumber.length) {
+                              orderPlaceHandler();
+                            } else {
+                              setPONumberFilled(false);
+                            }
                           }
                         }}
                         disabled={!buttonActive}
                       >
                         ${Number(total).toFixed(2)} PLACE ORDER
                       </button>
+                      {/* {Number(total) ? null : window.location.reload()} */}
                     </div>
                   </div>
                 </div>
