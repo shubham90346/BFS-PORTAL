@@ -294,6 +294,38 @@ padding: 0 0 8px 0;
     padding: 20px 0 0px 20px;
     margin: 32px 0;
 }
+.ShipAdress2 textarea::placeholder, .ShipAdress2 textarea {
+    color: #000;
+font-family: Arial, Helvetica, sans-serif;
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: 32px; /* 228.571% */
+letter-spacing: 1.12px;
+width: 100%;
+border: none;
+outline: none;
+background-color: transparent;
+}
+
+
+.ShipAdress2 label{
+  color: #000;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 19px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 32px; /* 228.571% */
+  letter-spacing: 1.12px;
+  width: 100%;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  /* text-transform: uppercase; */
+}
+
+
+
 
 .ShippControl h2{
     color: #000;
@@ -304,31 +336,6 @@ font-weight: 500;
 line-height: 32px; /* 177.778% */
 letter-spacing: 1.12px;
 text-transform: uppercase;
-}
-
-.ShipAdress2 h4{
-    color: #000;
-font-family: Arial, Helvetica, sans-serif;
-font-size: 18px;
-font-style: normal;
-font-weight: 500;
-line-height: 32px; /* 177.778% */
-letter-spacing: 1.12px;
-text-transform: uppercase;
-}
-
-.ShipAdress2 textarea::placeholder, .ShipAdress2 textarea {
-    color: #000;
-font-family: Arial, Helvetica, sans-serif;
-font-size: 19px;
-font-style: normal;
-font-weight: 500;
-line-height: 32px; /* 228.571% */
-letter-spacing: 1.12px;
-width: 100%;
-border: none;
-outline: none;
-background-color: transparent;
 }
 
 .ShipBut{

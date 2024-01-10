@@ -269,6 +269,22 @@
 .ShipAdress2 textarea {
   color: #000;
   font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 32px; /* 228.571% */
+  letter-spacing: 1.12px;
+  width: 100%;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  /* text-transform: uppercase; */
+}
+
+
+.ShipAdress2 label{
+  color: #000;
+  font-family: Arial, Helvetica, sans-serif;
   font-size: 19px;
   font-style: normal;
   font-weight: 500;
@@ -280,6 +296,7 @@
   background-color: transparent;
   /* text-transform: uppercase; */
 }
+
 
 .ShipBut {
   width: 100%;

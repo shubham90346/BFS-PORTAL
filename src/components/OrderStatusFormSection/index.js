@@ -73,13 +73,13 @@ const OrderStatusFormSection = () => {
             <label className={styles.labelHolder}>
                 Contact Name
                 <select onChange={(e) => { onChangeHandler('contactId', e.target.value) }} required>
-                    <option val>select Contact</option>
+                    <option val>Select Contact</option>
                     {contactList.map((priority) => { return (<option value={priority.Id} selected={priority.Id == supportTicketData?.orderStatusForm?.contactId}>{priority.Name}</option>) })}
                 </select>
             </label>
             <label className={styles.labelHolder}>
                 Describe your issues
-                <textarea required rows={4} onChange={(e) => { onChangeHandler('desc', e.target.value) }} value={supportTicketData?.orderStatusForm?.desc}></textarea>
+                <textarea placeholder="Description" required rows={4} onChange={(e) => { onChangeHandler('desc', e.target.value) }} value={supportTicketData?.orderStatusForm?.desc}></textarea>
             </label>
             <label><input type="checkbox" checked={supportTicketData?.orderStatusForm?.sendEmail} onChange={(e) => { onChangeHandler('sendEmail', e.target.checked) }} />&nbsp;Send Updates via email</label>
             <div className={styles.dFlex}> <Link to={'/order-list'} className={styles.btn}>Cancel</Link>
