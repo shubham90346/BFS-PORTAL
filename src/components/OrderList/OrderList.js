@@ -37,7 +37,6 @@ function OrderList({ filterValue }) {
       );
     })
   },[filterValue,orders])
-  console.log("orderData",orderData);
   useEffect(() => {
     setLoaded(false);
     GetAuthData()

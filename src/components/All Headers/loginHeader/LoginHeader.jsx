@@ -5,12 +5,12 @@ import styles from "./index.module.css";
 const LoginHeader = () => {
   return (
     <>
-      <div className="container-fluid p-0">
+      <div className="container">
         <div className="row d-flex justify-content-around align-items-center">
-          <div className="col-10">
+          <div className="col-12">
             <div className="d-flex justify-content-between align-items-center gap-2">
               <div className="d-flex justify-content-center align-items-center gap-5">
-                <Link to="/dashboard" className="linkStyle">
+                <Link to="/dashboard" className="">
                   <img src={"/assets/images/BFSG_logo.svg"} alt="img" />
                 </Link>
               </div>
