@@ -179,12 +179,12 @@ border-radius: 100%;
 .ActivityDate p{
     color: #000;
 font-family: Arial, Helvetica, sans-serif;
-font-size: 16px;
+font-size: 15px;
 font-style: normal;
 font-weight: 400;
 line-height: 18px; /* 112.5% */
 letter-spacing: 1.12px;
-width: 186px;
+width: 193px;
 }
 
 .Para2{
@@ -265,8 +265,40 @@ height: 79px;
     width: 98%;
 }
 
+@media(max-width:1024.98px){
+    .ActivityDate p {
+                line-height: 23px;
+                width: 127px;
+                font-size: 13px;
+    }
+    .ActivityContentImform h2 {
+                font-size: 14px;
+            }
+
+            .ActivityContentImform p {
+                font-size: 13px;
+                           }
+
+                           .ActivityProfile h6 {
+                                                       font-size: 13px;
+                                                       width: 48px;
+                            height: 48px;
+                                                   }
+
+                        .ActivityProfile {
+                                                 
+                            width: 48px;
+                            height: 48px;
+                                                   }
+}
+
 
 @media(max-width:767.98px){
+    .ActivityDate p {
+                line-height: 23px;
+                width: 127px;
+    }
+
     .FlexReverse{
         flex-direction: column-reverse;
     }

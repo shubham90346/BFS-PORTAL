@@ -363,7 +363,7 @@ function Product() {
 
                       <div className="row">
                         <div className="col-lg-3 col-md-4 col-sm-12">
-                          <div>
+                        
                             <FilterPage
                               data={data}
                               formattedData={formattedData}
@@ -374,7 +374,7 @@ function Product() {
                               setSortBy={setSortBy}
                               sortBy={sortBy}
                             ></FilterPage>
-                          </div>
+                        
                         </div>
 
                         <div className="col-lg-9 col-md-8 col-sm-12 ">

@@ -1,6 +1,8 @@
 .scrollP {
   border: 1px solid #e4e4e4;
   padding: 10px 20px;
+  height: 590px;
+  overflow: auto;
 }
 .Mainbox4:hover{
   cursor: pointer;
