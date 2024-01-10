@@ -25,7 +25,9 @@ const CustomerSupport = () => {
       .then((user) => {
         getSupportList({ user })
           .then((supports) => {
-            setSupportList(supports);
+            if(supports){
+              setSupportList(supports);
+            }
             setLoaded(true);
           })
           .catch((error) => {
@@ -82,7 +84,7 @@ const CustomerSupport = () => {
             ) : (
               <CustomerSupportPage data={supportList} currentPage={currentPage} PageSize={PageSize} manufacturerFilter={manufacturerFilter} searchBy={searchBy} retailerFilter={retailerFilter} />
             )}
-            <Pagination className="pagination-bar" currentPage={currentPage} totalCount={supportList.length} pageSize={PageSize} onPageChange={(page) => setCurrentPage(page)} />
+            <Pagination className="pagination-bar" currentPage={currentPage} totalCount={supportList?.length} pageSize={PageSize} onPageChange={(page) => setCurrentPage(page)} />
             {/* <OrderStatusFormSection /> */}
           </div>
         </div>
