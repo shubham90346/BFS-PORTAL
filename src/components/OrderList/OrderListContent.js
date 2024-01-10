@@ -150,10 +150,10 @@ function OrderListContent({ data, PageSize, currentPage }) {
                     <div className={Styles.ProtuctInnerBox1}>
                       <ul>
                         {item.OpportunityLineItems?.records.length > 0 ? (
-                          item.OpportunityLineItems?.records.slice(0, size).map((ele) => {
+                          item.OpportunityLineItems?.records.slice(0, size).map((ele, index) => {
                             return (
                               <>
-                                <li>
+                                <li key={index}>
                                   {Viewmore
                                     ? ele.Name.split(item.AccountName)[1]
                                     : ele.Name.split(item.AccountName).length > 1
