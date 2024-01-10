@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Styles from "./style.module.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import OrderListContent from "./OrderListContent";
@@ -19,7 +19,25 @@ function OrderList({ filterValue }) {
     });
     return data;
   }
-
+  const orderData=useMemo(()=>{
+    return orders
+    // Manufacturer filter
+    ?.filter(
+      (order) =>
+        !filterValue.manufacturer ||
+        filterValue.manufacturer === order.ManufacturerId__c
+    )
+    // Search by account filter
+    ?.filter((order) => {
+      return (
+        !filterValue?.search?.length ||
+        order.AccountName?.toLowerCase().includes(
+          filterValue?.search?.toLowerCase()
+        )
+      );
+    })
+  },[filterValue,orders])
+  console.log("orderData",orderData);
   useEffect(() => {
     setLoaded(false);
     GetAuthData()
@@ -56,28 +74,13 @@ function OrderList({ filterValue }) {
               <OrderListContent
                 currentPage={currentPage}
                 PageSize={PageSize}
-                data={orders
-                  // Manufacturer filter
-                  ?.filter(
-                    (order) =>
-                      !filterValue.manufacturer ||
-                      filterValue.manufacturer === order.ManufacturerId__c
-                  )
-                  // Search by account filter
-                  ?.filter((order) => {
-                    return (
-                      !filterValue?.search?.length ||
-                      order.AccountName?.toLowerCase().includes(
-                        filterValue?.search?.toLowerCase()
-                      )
-                    );
-                  })}
+                data={orderData}
               />
             </div>
             <Pagination
               className="pagination-bar"
               currentPage={currentPage}
-              totalCount={orders.length}
+              totalCount={orderData.length}
               pageSize={PageSize}
               onPageChange={(page) => setCurrentPage(page)}
             />

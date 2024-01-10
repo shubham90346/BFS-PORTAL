@@ -122,8 +122,8 @@ const BrandsPage = () => {
               <div className={` ${Page.widthGivenBrandDetailPage}`}> 
                 {filteredPageData?.length ? (
                   <>
-                    {filteredPageData?.map((brand) => (
-                      <BrandCard
+                    {filteredPageData?.map((brand, index) => (
+                      <BrandCard key={index}
                         image={brandsImageMap[brand?.Name] || defaultImage}
                         brand={brand}
                       />

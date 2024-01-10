@@ -37,7 +37,7 @@ function Product() {
   const navigate = useNavigate();
   const [redirect, setRedirect] = useState(false);
   const [alert, setalert] = useState(0);
-
+  const [testerInBag, setTesterInBag] = useState(false);
   const { data, isLoading } = useProductList({
     key: user?.data.access_token,
     Sales_Rep__c: user?.data.Sales_Rep__c,
@@ -156,8 +156,10 @@ function Product() {
           productPrice = parseFloat(splitPrice[0]);
         }
         if (productCategories && productCategories.toUpperCase() === "TESTER") {
+          console.log( productPrice * productQuantity - (productPrice * productQuantity * product.discount.testerMargin) / 100);
           bagTesterPrice += productPrice * productQuantity - (productPrice * productQuantity * product.discount.testerMargin) / 100;
           bagPrice += bagTesterPrice;
+          setTesterInBag(true)
         } else if (productCategories && productCategories.toUpperCase() === "SAMPLES") {
           bagPrice += productPrice * productQuantity - (productPrice * productQuantity * product.discount.sample) / 100;
         } else {
@@ -165,10 +167,11 @@ function Product() {
         }
       });
       setalert(0);
+      console.log("begValue", begValue);
       if (data.discount.MinOrderAmount > bagPrice) {
         setalert(1);
       } else {
-        if (data.discount.testerproductLimit > bagPrice) {
+        if (testerInBag && data.discount.testerproductLimit > bagPrice) {
           setalert(2);
         } else {
           navigate("/my-bag");
@@ -231,12 +234,14 @@ function Product() {
               open
               content={
                 <>
-                  <h2>Warning</h2>
-                  <p className="mt-3">Please Select Tester Product of Minimum Order Amount</p>
-                  <div className="d-flex justify-content-center">
-                    <button className={styles.closeButton} onClick={() => setalert(0)}>
-                      OK
-                    </button>
+                  <div style={{ maxWidth: "309px" }}>
+                    <h1 className={`fs-5 ${Styles.ModalHeader}`}>Warning</h1>
+                    <p className={` ${Styles.ModalContent}`}>Please Select Tester Product of Minimum Order Amount</p>
+                    <div className="d-flex justify-content-center">
+                      <button class={`${Styles.modalButton}`} onClick={() => setalert(0)}>
+                        OK
+                      </button>
+                    </div>
                   </div>
                 </>
               }
@@ -312,7 +317,7 @@ function Product() {
                     setProductTypeFilter(value);
                   }}
                 />
-                <FilterSearch onChange={(e) => setSearchBy(e.target.value)} value={searchBy} placeholder={"Enter Product name"} width="155px" />
+                <FilterSearch onChange={(e) => setSearchBy(e.target.value)} value={searchBy} placeholder={"Enter Product name"} minWidth="155px" />
                 <button
                   className="border px-2.5 py-1 leading-tight"
                   onClick={() => {

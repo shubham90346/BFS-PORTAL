@@ -23,8 +23,8 @@ export const FilterItem = ({ label, options, onChange, minWidth, value }) => {
           className="bg-white z-10 rounded-[5px] shadow-sm text-black absolute py-2 pr-2 flex flex-col gap-2 list-disc"
           style={{ minWidth: minWidth || "120px" }}
         >
-          {options?.map((option) => (
-            <li
+          {options?.map((option,index) => (
+            <li key={index}
               onClick={() => {
                 onChange(option.value);
                 setIsOpen(false);
