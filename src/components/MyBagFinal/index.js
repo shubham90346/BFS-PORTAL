@@ -83,7 +83,7 @@ function MyBagFinal() {
   return (
     <div className="mt-4">
       <section>
-        <div className="container">
+        <div className="">
           <div>
             <div className={Styles.MyBagFinalTop}>
               <div className={Styles.MyBagFinalRight}>

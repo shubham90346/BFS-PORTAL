@@ -97,6 +97,7 @@ ul.dropdown-menu.show {
   font-weight: 500;
   line-height: normal;
   letter-spacing: 2px;
+  margin: 0;
 }
 
 .inorderflex button {
