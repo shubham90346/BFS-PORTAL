@@ -3,7 +3,6 @@ import classNames from "classnames";
 import Styles from "../pages/page.module.css";
 
 const CollapsibleRow = ({ children, title, onChange, quantity }) => {
-  // console.log(quantity);
   const [open, setOpen] = useState(false);
 
   return (
@@ -48,9 +47,6 @@ const CollapsibleRow = ({ children, title, onChange, quantity }) => {
                   strokeWidth={"2"}
                 />
               </svg>
-            //   <svg xmlns="http://www.w3.org/2000/svg" width="29" height="28" viewBox="0 0 29 28" fill="none">
-            //   <path d="M7.71484 10.8534L14.8098 17.7119L21.9048 10.8534" stroke="#403A35" stroke-width="2"/>
-            // </svg>
             )}
           </label>
         </td>
