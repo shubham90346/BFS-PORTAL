@@ -250,7 +250,7 @@ function Dashboard({ dashboardData }) {
                 let dashboardData = JSON.parse(dashboard?.details);
                 setSalesByBrandData({
                   series: Object.values(dashboardData.brandSalesByRep.data).map((value) => {
-                    return [value.totalOrder];
+                    return value.totalOrder;
                   }),
                   options: {
                     chart: {
@@ -276,7 +276,7 @@ function Dashboard({ dashboardData }) {
                               formatter: function (w) {
                                 const t = w.globals.seriesTotals;
                                 const result = t.reduce((a, b) => a + b, 0);
-                                return (result / 10000).toFixed(1);
+                                return result < 1000 ? result.toFixed(1) : `${(result / 1000).toFixed(1)}K`;
                               },
                             },
                           },
@@ -442,7 +442,7 @@ function Dashboard({ dashboardData }) {
                           })
                         ) : (
                           <>
-                            <tr style={{minHeight:"300px"}}>
+                            <tr style={{ minHeight: "300px" }}>
                               <td>
                                 <ContentLoader />
                               </td>
@@ -456,7 +456,6 @@ function Dashboard({ dashboardData }) {
                                 <ContentLoader />
                               </td>
                               {/* <ContentLoader/> */}
-                              {console.log("delayyy......")}
                             </tr>
                           </>
                         )}
@@ -736,10 +735,10 @@ function Dashboard({ dashboardData }) {
               <div className={Styles.donuttop}>
                 <p className={` text-center mt-3  ${Styles.Tabletextt}`}>Sum of Ordered</p>
                 <p className={`text-end ${Styles.main_heading}`}>MANUFACTURER</p>
-                <Chart options={salesByBrandData.options} series={salesByBrandData.series} type="donut" className={Styles.donutchart} width="90%" />
+                <Chart options={salesByBrandData.options} series={salesByBrandData.series} type="donut" className={Styles.donutchart} width="90%" height="400px"/>
               </div>
             </div>
-
+            {console.log("salesByBrandData", salesByBrandData)}
             <div className="col-lg-5">
               <p className={Styles.Tabletext}>Your Sales Performance Score in 2023</p>
               <div className={Styles.donuttop1}>
