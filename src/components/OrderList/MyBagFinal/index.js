@@ -144,10 +144,10 @@ function MyBagFinal() {
 
                     <div className={Styles.ShipAdress2}>
                       <label>NOTE</label>
-                      <textarea   placeholder="Description" className="placeholder:font-[Arial-500] text-[14px] tracking-[1.12px] " />
+                      <p className="placeholder:font-[Arial-500] text-[14px] tracking-[1.12px] m-0" style={{minHeight:"119px"}}>{OrderData.Description}</p>
                     </div>
 
-                      {OrderData.Description}
+                      
                     </div>
 
                     <div className={Styles.ShipBut}>

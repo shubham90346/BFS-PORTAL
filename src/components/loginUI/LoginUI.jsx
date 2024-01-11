@@ -18,8 +18,9 @@ const LoginUI = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const initialValues = {
-    email: "",
-    password: "",
+    email: localStorage.getItem("emailB2B")||"",
+    password: localStorage.getItem("passwordB2B")||"",
+    remember: true,
   };
 
   const onSubmit = async (values, action) => {
@@ -27,7 +28,12 @@ const LoginUI = () => {
     const apiData = await api.mutateLogin(values.email, values.password);
     setLoading(false);
     if (apiData?.status === 200) {
+      if(values.remember){
+        localStorage.setItem("emailB2B",values.email)
+        localStorage.setItem("passwordB2B",values.password)
+      }
       localStorage.setItem("Name", apiData?.data?.Name);
+     
       localStorage.setItem("Api Data", JSON.stringify(apiData));
       const fetched = localStorage.getItem("Api Data");
       setUserValue(JSON.parse(fetched));
@@ -55,7 +61,6 @@ const LoginUI = () => {
           onClose={() => setLoading(false)}
         />
       ) : null}
-      {/* new login page vinod */}
       <Formik initialValues={initialValues} validationSchema={LoginFormSchema} onSubmit={onSubmit}>
         <div>
           <div className="container">
@@ -69,7 +74,7 @@ const LoginUI = () => {
 
                   <div className={styles.LabelEmail}>
                     <label>Email</label> <br />
-                    <Field type="email" className="border-0 h-50 border-bottom" style={{ width: "100%", outline: "none" }} name="email" />
+                    <Field type="email" className="border-0 h-50 border-bottom" style={{ width: "100%", outline: "none" }} name="email"  />
                     <ErrorMessage component={TextError} name="email" />
                   </div>
                 </div>
@@ -88,7 +93,7 @@ const LoginUI = () => {
 
                 <div className={`${styles.ReCheck}`}>
                   <div className={`${styles.RememMe} ${styles.rememInput}`}>
-                    <input type="checkbox" />
+                    <input type="checkbox" name="remember" defaultChecked/>
                     Remember me
                   </div>
 
@@ -117,7 +122,6 @@ const LoginUI = () => {
         </div>
       </Formik>
 
-      {/* new login page vinod */}
       {modalOpen ? (
         <ModalPage
           open={modalOpen}

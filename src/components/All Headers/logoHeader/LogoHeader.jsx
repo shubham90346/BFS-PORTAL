@@ -36,7 +36,7 @@ const LogoHeader = () => {
         {/* my bag */}
         <div className={styles.lapSetting}>
           <p className={`m-0 w-[100px]  ${styles.language} flex`}>
-          <a href="#search" data-rr-ui-event-key="#search" class=" pr-0 nav-link active"><div class="search-container"><input class="search expandright" id="searchright" type="search" name="" placeholder="Search..."/><label class="button searchbutton" for="searchright"><span class="searchCode">Search...</span> <span class="mglass">
+          <a href="#search" data-rr-ui-event-key="#search" className=" pr-0 nav-link active"><div className="search-container"><input className="search expandright" id="searchright" type="search" name="" placeholder="Search..."/><label className="button searchbutton" for="searchright"><span className="searchCode">Search...</span> <span className="mglass">
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
   <circle cx="8.24976" cy="8.25" r="4.5" stroke="black"/>
   <path d="M8.24976 6C7.95428 6 7.6617 6.0582 7.38872 6.17127C7.11574 6.28434 6.8677 6.45008 6.65877 6.65901C6.44983 6.86794 6.2841 7.11598 6.17103 7.38896C6.05795 7.66195 5.99976 7.95453 5.99976 8.25" stroke="black" stroke-linecap="round"/>

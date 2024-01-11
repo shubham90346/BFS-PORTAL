@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import style from "../topNav/index.module.css";
 import styles from "./index.module.css";
+import { NeedHelp } from "../../../lib/svg";
 const LoginHeader = () => {
   return (
     <>
@@ -15,10 +16,30 @@ const LoginHeader = () => {
                 </Link>
               </div>
               <div className="d-flex justify-content-center align-items-center gap-4">
-                <p className={`m-0 ${style.language} d-flex`}>
-                  Need Help?&nbsp;
-                  <img src={"/assets/images/dropDownArrow.svg"} alt="img" />
-                </p>
+              <p className={`m-0 ${style.language} ${style.text} flex`}>
+                          <div className="dropdown d-flex justify-content-center align-items-center " role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Need Help?&nbsp; <NeedHelp/>
+            {/* </a> */}
+            <ul className="dropdown-menu">
+              <li>
+                <Link to="" className="dropdown-item text-start" >
+                Order Status
+                </Link>
+              </li>
+              <li>
+                <Link to="t" className="dropdown-item text-start" >
+                Management Cases
+                </Link>
+              </li>
+              <li>
+                <Link to="" className="dropdown-item  text-start"  >
+                Marketing Support Issues
+                </Link>
+              </li>
+            </ul>
+          </div>
+              {/* <img src={"/assets/images/dropDownArrow.svg"} alt="img" /> */}
+            </p>
                 <p className={`m-0 ${style.language}`}>Sign up</p>
               </div>
             </div>
