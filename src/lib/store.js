@@ -7,6 +7,7 @@ const brandKey = "Account";
 const accountKey = "manufacturer";
 const POCount = "woX5MkCSIOlHXkT";
 const support = "AP0HBuNwbNnuhKR";
+
 export async function AuthCheck() {
   if (JSON.parse(localStorage.getItem("Api Data"))?.data) {
     return true;
@@ -142,7 +143,7 @@ export async function OrderPlaced({ order }) {
 
 export async function DestoryAuth() {
   localStorage.clear();
-  // window.localStorage.href = "/"
+  window.location.href = window.location.origin
   return true;
 }
 
@@ -252,6 +253,22 @@ export async function postSupport({ rawData }) {
   };
 
   let response = await fetch(url + "v3/hunQaon7f5sTDeb", {
+    method: "POST",
+    body: JSON.stringify(rawData),
+    headers: headersList,
+  });
+  let data = JSON.parse(await response.text());
+  console.log({data});
+  return data.data;
+}
+
+export async function postSupportAny({ rawData }) {
+  let headersList = {
+    Accept: "*/*",
+    "Content-Type": "application/json"
+  };
+
+  let response = await fetch(url + "v3/OFT88qVeJPUGsly", {
     method: "POST",
     body: JSON.stringify(rawData),
     headers: headersList,
