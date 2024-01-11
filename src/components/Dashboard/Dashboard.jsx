@@ -238,7 +238,6 @@ function Dashboard({ dashboardData }) {
     if (localStorage.getItem("Name")) {
       GetAuthData()
         .then((user) => {
-          user.Sales_Rep__c = "00530000005AdvsAAC";
           getDashboardata({ user })
             .then((dashboard) => {
               if (dashboard?.details) {
@@ -609,7 +608,6 @@ function Dashboard({ dashboardData }) {
                       return (
                         <div className="col-lg-6 col-md-6 col-sm-12 ">
                           <div className={Styles.top_perform}>
-                            {/* <div className="container"> */}
                               <div className={Styles.top_account}>
                                 <p className={Styles.top_accounttext}>{ele.Name}</p>
                               </div>
@@ -621,7 +619,6 @@ function Dashboard({ dashboardData }) {
                                 })}
                               </div>
                             </div>
-                          {/* </div> */}
                         </div>
                       );
                     }
@@ -637,7 +634,6 @@ function Dashboard({ dashboardData }) {
                         if(index<4){
                           return(<div className="col-lg-6 col-md-6 col-sm-12">
                           <div className={Styles.top_perform2}>
-                              {/* <div className="container"> */}
                                 <div className={Styles.top_accnew}>
                                   <p className={Styles.top_accounttext}>{ele.Name}</p>
                                 </div>
@@ -648,7 +644,6 @@ function Dashboard({ dashboardData }) {
                                     return <span className={`${Styles.account22} ${Styles[bgcolor]}`}>{item.Name}</span>;
                                   })}
                                 </div>
-                              {/* </div> */}
                             </div>
                           </div>)
                         }
