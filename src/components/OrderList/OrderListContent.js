@@ -82,13 +82,13 @@ function OrderListContent({ data, PageSize, currentPage }) {
 
       {/* TRACKING MODAL */}
 
-      <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl modal-lg">
+      <div className="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div className="modal-dialog modal-xl modal-lg">
           <div className={`${Styles.modalContrlWidth} modal-content`}>
-            {/* <div class="modal-header">
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            {/* <div className="modal-header">
+              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div> */}
-            <div class="modal-body  ">
+            <div className="modal-body  ">
               <TrackingStatus data={modalData} />
             </div>
           </div>
@@ -97,13 +97,13 @@ function OrderListContent({ data, PageSize, currentPage }) {
 
       {/* ORDER STATUS MODAL */}
 
-      <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl modal-lg">
+      <div className="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div className="modal-dialog modal-xl modal-lg">
           <div className={`${Styles.modalContrlWidth} modal-content`}>
-            {/* <div class="modal-header">
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            {/* <div className="modal-header">
+              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div> */}
-            <div class="modal-body ">
+            <div className="modal-body ">
               <Orderstatus data={modalData} />
             </div>
           </div>
@@ -150,10 +150,10 @@ function OrderListContent({ data, PageSize, currentPage }) {
                     <div className={Styles.ProtuctInnerBox1}>
                       <ul>
                         {item.OpportunityLineItems?.records.length > 0 ? (
-                          item.OpportunityLineItems?.records.slice(0, size).map((ele) => {
+                          item.OpportunityLineItems?.records.slice(0, size).map((ele, index) => {
                             return (
                               <>
-                                <li>
+                                <li key={index}>
                                   {Viewmore
                                     ? ele.Name.split(item.AccountName)[1]
                                     : ele.Name.split(item.AccountName).length > 1

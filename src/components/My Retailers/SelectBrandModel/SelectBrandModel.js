@@ -22,7 +22,7 @@ const SelectBrandModel = ({ brands, onClose }) => {
                 <h1 className={`fs-5 ${modalStyles.ModalHeader}`}>Warning</h1>
                 <p className={` ${modalStyles.ModalContent}`}>Please Select Manufacturer</p>
                 <div className="d-flex justify-content-center">
-                  <button class={`${modalStyles.modalButton}`} onClick={() => setModalOpen(false)}>
+                  <button className={`${modalStyles.modalButton}`} onClick={() => setModalOpen(false)}>
                     OK
                   </button>
                 </div>

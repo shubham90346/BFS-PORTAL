@@ -31,9 +31,9 @@ const Header = () => {
       </p>
       <p className={`m-0  ${styles.text}`}>
         <Link to="" className="linkStyle">
-          <div class="dropdown dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <div className="dropdown dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             {path === "/sales-report" ? "Sales Report" : null || path === "/newness-report" ? "newness Report" : null || path === "/comparison-report" ? "comparison Report" : null || "Reports"}
-            <ul class="dropdown-menu">
+            <ul className="dropdown-menu">
               <li>
                 <Link
                   to="/sales-report"

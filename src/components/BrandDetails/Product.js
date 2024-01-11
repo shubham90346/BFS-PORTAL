@@ -218,7 +218,7 @@ function Product() {
                     <h1 className={`fs-5 ${Styles.ModalHeader}`}>Warning</h1>
                     <p className={` ${Styles.ModalContent}`}>Please Select Products of Minimum Order Amount</p>
                     <div className="d-flex justify-content-center">
-                      <button class={`${Styles.modalButton}`} onClick={() => setAlert(0)}>
+                      <button className={`${Styles.modalButton}`} onClick={() => setAlert(0)}>
                         OK
                       </button>
                     </div>
@@ -237,7 +237,7 @@ function Product() {
                     <h1 className={`fs-5 ${Styles.ModalHeader}`}>Warning</h1>
                     <p className={` ${Styles.ModalContent}`}>Please Select Tester Product of Minimum Order Amount</p>
                     <div className="d-flex justify-content-center">
-                      <button class={`${Styles.modalButton}`} onClick={() => setAlert(0)}>
+                      <button className={`${Styles.modalButton}`} onClick={() => setAlert(0)}>
                         OK
                       </button>
                     </div>
@@ -258,7 +258,7 @@ function Product() {
                     <h1 className={`fs-5 ${Styles.ModalHeader}`}>Warning</h1>
                     <p className={` ${Styles.ModalContent}`}>No Product in your bag</p>
                     <div className="d-flex justify-content-center">
-                      <button class={`${Styles.modalButton}`} onClick={() => setEmptyBag(false)}>
+                      <button className={`${Styles.modalButton}`} onClick={() => setEmptyBag(false)}>
                         OK
                       </button>
                     </div>
