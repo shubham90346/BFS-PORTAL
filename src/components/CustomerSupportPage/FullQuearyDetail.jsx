@@ -76,12 +76,13 @@ function FullQuearyDetail({ data }) {
                                         const itemDate = new Date(activity.CreatedDate);
                                         return (<div className={Detail.ActivityBox}>
 
-                                            <div className={`${Detail.ActivityProfile} ${activity?.CreatedById != data?.salesRepId && Detail.ActiDark}`}>
-                                                <h6>{activity?.CreatedById == data?.salesRepId ? getStrCode(data.salesRepName) : "CS"}</h6>
+                                            <div className={`${Detail.ActivityProfile} ${activity?.CreatedById != "0053b00000DgEVEAA3" && Detail.ActiDark}`}>
+                                                <h6>{activity?.CreatedById == "0053b00000DgEVEAA3" ? getStrCode(data.salesRepName) : getStrCode(data?.CreatedByName||"Customer Support")}</h6>
                                             </div>
                                             <div className={Detail.ActivityContentImform}>
-                                                <h2>{activity?.CreatedById == data?.salesRepId ? data.salesRepName : "Customer Support"}</h2>
-                                                <p>Hi, {activity?.CreatedById != data?.salesRepId ? data.salesRepName : "Customer Support"},</p>
+                                                {console.log({activity})}
+                                                <h2>{activity?.CreatedById == "0053b00000DgEVEAA3" ? data.salesRepName : data?.CreatedByName||"Customer Support"}</h2>
+                                                <p>Hi, {activity?.CreatedById != "0053b00000DgEVEAA3" ? data.salesRepName : data?.CreatedByName||"Customer Support"},</p>
                                                 <p className={Detail.Para2} dangerouslySetInnerHTML={{ __html: activity?.CommentBody }} />
 
                                             </div>

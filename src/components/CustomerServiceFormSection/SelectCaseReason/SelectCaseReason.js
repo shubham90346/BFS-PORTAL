@@ -1,50 +1,113 @@
 import React, { useEffect, useState } from "react";
 import Styles from "./style.module.css";
 import { useNavigate } from "react-router-dom";
-import { GetAuthData, getSupportFormRaw, supportDriveBeg, supportShare } from "../../../lib/store";
+import { DestoryAuth, GetAuthData, getOrderList, getSupportFormRaw, postSupportAny, supportDriveBeg, supportShare } from "../../../lib/store";
 
-const SelectCaseReason = ({ reasons, onClose }) => {
+const SelectCaseReason = ({ reasons, onClose, recordType }) => {
   const navigate = useNavigate();
   const [prioritiesList, setPrioritiesList] = useState([]);
   const [contactList, setContactList] = useState([]);
-  const [supportTicketData, setTicket] = useState();
+  const [orders, setOrders] = useState([]);
+  const [typeId, setTypeId] = useState(recordType.id)
+  const [desc, setDesc] = useState()
+  const [orderData, setOrderData] = useState({
+    accountId: null,
+    orderNumber: null,
+    poNumber: null,
+    manufacturerId: null,
+    opportunityId: null,
+    actualAmount: null,
+    invoiceNumber: null
+  })
+  const [reason, setReason] = useState(null)
+  const [rawData, setRawData] = useState({
+    orderStatusForm: {
+      salesRepId: null,
+      contactId: null,
+      desc: null,
+      priority: "Medium",
+      sendEmail: false,
+    },
+  })
+  const [step, setStep] = useState(0);
   useEffect(() => {
-    let data = supportDriveBeg();
-    setTicket(data);
     GetAuthData()
-      .then((user) => {
-        let rawData = {
-          key: user.x_access_token,
-          AccountId: data.orderStatusForm.accountId,
-        };
-        getSupportFormRaw({ rawData })
-          .then((raw) => {
-            setPrioritiesList(raw.Priority);
-            setContactList(raw.ContactList);
+      .then((response) => {
+        getOrderList({
+          user: {
+            key: response.x_access_token,
+            Sales_Rep__c: false ? "00530000005AdvsAAC" : response.Sales_Rep__c,
+          },
+          month: 2024,
+        })
+          .then((order) => {
+            setOrders(order);
           })
           .catch((error) => {
-            console.error({ error });
+            console.log({ error });
           });
       })
       .catch((err) => {
-        console.error({ err });
+        console.log({ err });
       });
   }, []);
   const onChangeHandler = (e) => {
-    let temp = supportTicketData;
-    temp.orderStatusForm["reason"] = e.target.value;
-    supportShare(temp)
-      .then((response) => {
-        let data = supportDriveBeg();
-        setTicket(data);
-      })
-      .catch((error) => {
-        console.error({ error });
-      });
-    navigate(`/customerService`);
-
-    console.log(supportTicketData);
+    setReason(e.target.value)
+    setStep(1)
   };
+  const onOrderChangeHandler = (e) => {
+    let id = e.target.value
+    let orderDetails =orders.filter(function(element) {
+      
+      if(element.Id === id){ setOrderData({
+        accountId: element.AccountId,
+        orderNumber: element.Order_Number__c,
+        poNumber: element.PO_Number__c,
+        manufacturerId: element.ManufacturerId__c,
+        opportunityId: element.Id,
+        actualAmount: element.Amount,
+        invoiceNumber: element.Wholesale_Invoice__c
+      });
+      return element
+    }
+    });
+    if(orderData.opportunityId){
+      setStep(2)
+    }
+  }
+  const submitForm = ()=>{
+    GetAuthData().then((user)=>{
+      if(user){
+        let rawData = {
+          orderStatusForm: {
+            typeId,
+            salesRepId: user.Sales_Rep__c,
+            reason,
+            accountId: orderData.accountId,
+            orderNumber: orderData?.orderNumber,
+            poNumber: orderData.poNumber,
+            manufacturerId: orderData.manufacturerId,
+            desc: null,
+            opportunityId: orderData.opportunityId,
+            priority: "Medium",
+            sendEmail: false,
+          },
+          key:user.x_access_token
+        }
+        postSupportAny({rawData}).then((response)=>{
+          if(response){
+            navigate("/CustomerSupportDetails?id="+response)
+          }
+        }).catch((err)=>{
+          console.error({err});
+        })
+      }else{
+        DestoryAuth()
+      }
+    }).catch((error)=>{
+      DestoryAuth()
+    })
+  }
   return (
     <>
       <div className="px-[68px] pb-[67px] pt-[40px] max-w-[900px]">
@@ -52,7 +115,7 @@ const SelectCaseReason = ({ reasons, onClose }) => {
           <div className="d-flex align-items-center justify-content-end gap-5">
             <button type="button" className="btn-close" onClick={onClose}></button>
           </div>
-          <h1 className="font-[Montserrat-500] text-[22px] tracking-[2.20px] mb-[20px]">Choose the Manufacturer</h1>
+          <h1 className="font-[Montserrat-500] text-[22px] tracking-[2.20px] mb-[20px]">{recordType.name}</h1>
 
           <div className={Styles.BrandInRadio}>
             <div className={Styles.ModalResponsive}>
@@ -73,24 +136,40 @@ const SelectCaseReason = ({ reasons, onClose }) => {
                 );
               })}
             </div>
-
-            {/* <div className={Styles.BrandButton}> */}
-            {/* <button className={Styles.Button1} onClick={onClose}>
+            {step >= 1 && <div>
+              <div style={{ width: '100%' }}>
+                <select onChange={(e) => { onOrderChangeHandler(e) }}>
+                  <option>Search Order</option>
+                  {orders.length>0 &&orders.map((element) => {
+                    return (<option value={element.Id}>Order from {element.AccountName} for ({element.ProductCount} Products) Actual Amount {element.Amount} | {element.ManufacturerName__c} | PO #{element.PO_Number__c}</option>)
+                  })}
+                </select>
+              </div>
+            </div>}
+            {step ==2 && <div>
+              <div style={{ width: '100%' }}>
+                <div><label>Actual Amount</label>
+                <input type="text" value={orderData.actualAmount}/>
+                <label>Associated Invoice Number:</label>
+                <input type="text" value={orderData.invoiceNumber?orderData.invoiceNumber:'NA'}/></div>
+                <div>
+                <input type="text" placeholder="Provide One line Subject"/></div>
+                <div>
+                <textarea placeholder="Describe your issues"></textarea></div>
+              </div>
+            </div>}
+            {step == 2 && <div className={Styles.BrandButton}>
+              <button className={Styles.Button1} onClick={onClose}>
                 CANCEL
-              </button> */}
-            {/* <button
+              </button>
+              <button
                 className={Styles.Button2}
-                onClick={() => {
-                  if (selectedBrandManufacturer) {
-                    navigate(`/product`);
-                  } else {
-                    setModalOpen(true);
-                  }
+                onClick={() => {submitForm()
                 }}
               >
                 SUBMIT
-              </button> */}
-            {/* </div> */}
+              </button>
+            </div>}
           </div>
         </section>
       </div>
