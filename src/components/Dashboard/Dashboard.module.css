@@ -1,519 +1,492 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700&family=Nunito:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Open+Sans:wght@300;400;500;600&family=Rubik:wght@300;400;500;600;700;800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700&family=Nunito:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Open+Sans:wght@300;400;500;600&family=Rubik:wght@300;400;500;600;700;800&display=swap");
 
 .goaltable {
-    width: 100%;
-    border: 1px black dashed;
-    /* padding-bottom: 5px; */
-    padding: 10px;
-
+  width: 100%;
+  border: 1px black dashed;
+  /* padding-bottom: 5px; */
+  padding: 10px;
 }
 
 .goaltable1 {
-    width: 100%;
-    height: 320px;
-    border: 1px black dashed;
-    padding: 0 12px;
-
+  width: 100%;
+  height: 320px;
+  border: 1px black dashed;
+  padding: 0 12px;
 }
-
 
 .Tabletext {
-    color: #000;
-    font-family: Arial;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 32px;
-    letter-spacing: 1.12px;
+  color: #000;
+  font-family: Arial;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 32px;
+  letter-spacing: 1.12px;
 }
 
-.Tabletext_head{
-    color: #000;
-    font-family: Arial;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 32px;
-    letter-spacing: 1.12px;
+.Tabletext_head {
+  color: #000;
+  font-family: Arial;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 32px;
+  letter-spacing: 1.12px;
 }
 
 .Tabletext1 {
-    /* margin-left: 3%; */
-    color: #000;
-    font-family: Arial;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 32px;
-    letter-spacing: 1.12px;
+  /* margin-left: 3%; */
+  color: #000;
+  font-family: Arial;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 32px;
+  letter-spacing: 1.12px;
 }
 
 .tablerow {
-    --bs-table-bg: #f8f8f8;
-    color: #000;
-    font-family: Arial;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 24px;
-    letter-spacing: 1.12px;
-    position: sticky;
-    top: 0rem;
-    font-size: 20px;
-
-
+  --bs-table-bg: #f8f8f8;
+  color: #000;
+  font-family: Arial;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: 1.12px;
+  position: sticky;
+  top: 0rem;
+  font-size: 20px;
 }
 
 .top_perform {
-    width: 100%;
-    height: 140px;
-    border: 1px solid #E4E4E4;
-    border-radius: 12px;
-    margin: 15px 0 30px 0;
+  width: 100%;
+  height: 140px;
+  border: 1px solid #e4e4e4;
+  border-radius: 12px;
+  margin-left: 5%;
+  margin: 15px 0 30px 0;
+  padding: 13px;
 }
 
 .top_perform1 {
-    /* border-right: 1px rgb(32, 32, 32) dashed; */
-    /* position: relative; */
+  /* border-right: 1px rgb(32, 32, 32) dashed; */
+  /* position: relative; */
 }
 
 .topPerform2 {
-    /* border-right: 1px rgb(32, 32, 32) dashed; */
-    position: relative;
+  /* border-right: 1px rgb(32, 32, 32) dashed; */
+  position: relative;
 }
 
-.topPerform2::before{
-    position: absolute;
-    content: "";
-    width: 1px;
-    height: 100% ;
-    color: transparent;
-    background-color: transparent;
-    color: #acacac; 
-    left: 49.5% ;
-    border-right: 1px dashed rgb(32, 32, 32);
+.topPerform2::before {
+  position: absolute;
+  content: "";
+  width: 1px;
+  height: 100%;
+  color: transparent;
+  background-color: transparent;
+  color: #acacac;
+  left: 49.5%;
+  border-right: 1px dashed rgb(32, 32, 32);
 }
 
 .top_perform2 {
-    width: 100%;
-    height: 140px;
-    border: 1px solid #E4E4E4;
-    border-radius: 12px;
-    margin-left: 5%;
-    margin: 15px 0 30px 0;
+  width: 100%;
+  height: 140px;
+  border: 1px solid #e4e4e4;
+  border-radius: 12px;
+  margin-left: 5%;
+  margin: 15px 0 30px 0;
+  padding: 13px;
 }
 
 .top_account {
-    width: 100%;
-    height: 54px;
-    background-color: rgb(243, 232, 224);
-    margin-top: 3%;
+  width: 100%;
+  height: 42px;
+  background-color: rgb(243, 232, 224);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 }
 
-.top_accnew{
-    width: 100%;
-    height: 54px;
-    background-color: #f8f6f8;
-    margin-top: 3%;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    padding: 8px;
-    /* margin: 0; */
+.top_accnew {
+  width: 100%;
+  height: 42px;
+  background-color: #f8f6f8;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 }
-
 
 .top_accounttext {
-    font-weight: 700;
-    font-size: 18px;
-    margin-left: 2%;
-    padding-top: 1%;
-    color: #000;
-    font-family: Arial;
-    font-style: normal;
-    line-height: 18px;
-    letter-spacing: 1.0px;
-    padding: 8px;
-    margin: 0;
+  color: #000;
+  font-family: Arial;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 32px; /* 160% */
+  letter-spacing: 1.12px;
+  margin: 5px 9px;
+  vertical-align: middle;
+  max-width: 33ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .scrollbar {
-    margin-top: 3%;
-    gap: 10px;
-    display: flex;
-    flex-wrap: wrap;
-    height: 60px;
-    overflow: auto;
+  margin-top: 12px;
+  gap: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  height: 60px;
+  overflow: auto;
 }
 
 .table_scroll {
-    /* margin-top: 15px; */
-    gap: 10px;
-    display: flex;
-    flex-wrap: wrap;
-    height: 300px;
-    overflow: auto;
-    width: 100%;
-    display: flex;
-
+  /* margin-top: 15px; */
+  gap: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  height: 300px;
+  overflow: auto;
+  width: 100%;
+  display: flex;
 }
 
 .table_scroll::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
-    background-color: #F5F5F5;
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  background-color: #f5f5f5;
 }
 
 .table_scroll::-webkit-scrollbar {
-    width: 4px;
-    border-radius: 10px;
-
+  width: 4px;
+  border-radius: 10px;
 }
 
 .scrollbar::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    -webkit-box-shadow: inset 0 0 6px rgba(2, 2, 2, 0.964);
-    background-color: rgb(117, 116, 116);
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(2, 2, 2, 0.964);
+  background-color: rgb(117, 116, 116);
 }
 
 .scrollbar::-webkit-scrollbar {
-    width: 4px;
-    background-color: #acacac;
+  width: 4px;
+  background-color: #acacac;
 }
 
 .account {
-    color: #000;
-    background-color: rgb(236, 251, 255);
-    font-family: Arial;
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 22px;
-padding-left: 5px;
-padding-right: 5px;
-    letter-spacing: 1.12px;
-    border-radius: 4px;
+  color: #000;
+  background-color: rgb(236, 251, 255);
+  font-family: Arial;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22px;
+  padding-left: 5px;
+  padding-right: 5px;
+  letter-spacing: 1.12px;
+  border-radius: 4px;
+  height: fit-content;
 }
 
- .KevynAucoinCosmeticsBg {
-    background-color: #ecfbff  !important;
+.KevynAucoinCosmeticsBg {
+  background-color: #ecfbff !important;
 }
 
 .BYTERRYBg {
-    background-color: #eaffee  !important;
+  background-color: #eaffee !important;
 }
 
 .BobbiBrownBg {
-    background-color: #ffdcdc  !important;
+  background-color: #ffdcdc !important;
 }
 
 .BumbleandBumbleBg {
-    background-color: #ffead7  !important;
+  background-color: #ffead7 !important;
 }
 
 .ReViveBg {
-    background-color: #f0f6ff  !important;
+  background-color: #f0f6ff !important;
 }
 
-.RMSBeautyBg{
-background-color: #fffac9 !important;
+.RMSBeautyBg {
+  background-color: #fffac9 !important;
 }
 .MaisonMargielaBg {
-    background-color: #f0f6ff  !important;
+  background-color: #f0f6ff !important;
 }
 
 .SmashboxBg {
-    background-color: #eaffee  !important;
+  background-color: #eaffee !important;
 }
 .esteeLauderBg {
-    background-color: #ead7ff  !important;
+  background-color: #ead7ff !important;
 }
 
 .account22 {
-    background-color: rgb(255, 234, 215);
-    border-radius: 4px;
-    padding: 2px 2px;
-    margin-left: 4px;
-    height: 22px;
-    color: #000;
-    background-color: rgb(236, 251, 255);
-    font-family: Arial-400;
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 20px;
-    letter-spacing: 1.12px;
-    padding: 0 5px;
+  background-color: rgb(255, 234, 215);
+  border-radius: 4px;
+  padding: 2px 2px;
+  margin-left: 4px;
+  height: 22px;
+  color: #000;
+  background-color: rgb(236, 251, 255);
+  font-family: Arial-400;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 1.12px;
+  padding: 0 5px;
+  height: fit-content;
 }
 
 .donuttop {
-    width: 98%;
-    padding: 20px;
-    /* height: 500px; */
-    border: 1px black dashed;
-
+  width: 98%;
+  padding: 20px;
+  /* height: 500px; */
+  border: 1px black dashed;
 }
 
 .donuttop1 {
-    width: 95%;
-    height: 220px;
-    border: 1px black dashed;
-    background-color: rgb(252, 252, 252);
-
-
+  width: 95%;
+  height: 220px;
+  border: 1px black dashed;
+  background-color: rgb(252, 252, 252);
 }
 
 .donutchart {
-    justify-content: center;
-    align-items: center;
-    display: flex;
+  justify-content: center;
+  align-items: center;
+  display: flex;
 }
 
 .Tabletextt {
-    color: #000;
-    text-align: center;
-    font-family: Arial;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 32px;
-    /* 160% */
-    letter-spacing: 1.12px;
-
+  color: #000;
+  text-align: center;
+  font-family: Arial;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 32px;
+  /* 160% */
+  letter-spacing: 1.12px;
 }
 
 .dashbottom {
-    width: 100%;
-    height: 97px;
-    border: 2px solid rgb(238, 238, 238);
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 5%;
-    gap: 2%;
+  width: 100%;
+  height: 97px;
+  border: 2px solid rgb(238, 238, 238);
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 5%;
+  gap: 2%;
 }
-
-
-
 
 .active {
-    width: 47px;
-    height: 44px;
-    /* border: 2px solid #C7C7C7; */
-    border-radius: 10px;
-        background-color: black;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  width: 47px;
+  height: 44px;
+  /* border: 2px solid #C7C7C7; */
+  border-radius: 10px;
+  background-color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-
 .activetext {
-    color: #000;
-    font-family: "Montserrat";
-    font-size: 15px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 22px;
-    /* letter-spacing: .5px; */
-    text-transform: uppercase;
+  color: #000;
+  font-family: "Montserrat";
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 22px;
+  /* letter-spacing: .5px; */
+  text-transform: uppercase;
 }
 
 .activetext1 {
-    color: #000;
-    text-align: right;
-    font-family: Arial;
-    font-size: 45px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 22px;
-    letter-spacing: 0.12px;
-    text-transform: uppercase;
+  color: #000;
+  text-align: right;
+  font-family: Arial;
+  font-size: 45px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 22px;
+  letter-spacing: 0.12px;
+  text-transform: uppercase;
 }
 
-.activetext1 span{
-    
-    font-size: 30px;
-    
+.activetext1 span {
+  font-size: 30px;
 }
 
 .iconactive {
-    width: 30px;
-    padding: 8px 1px;
-
+  width: 30px;
+  padding: 8px 1px;
 }
 
 .iconactive3 {
-    width: 23px;
-    padding: 8px 1px;
-
+  width: 23px;
+  padding: 8px 1px;
 }
 
 .iconactive4 {
-    width: 18px;
-    padding: 8px 1px;
+  width: 18px;
+  padding: 8px 1px;
 }
 
 .graphmain {
-    width: 100%;
-    height: 420px;
-    border: 2px solid #C7C7C7;
-    border-radius: 10px;
+  width: 100%;
+  height: 420px;
+  border: 2px solid #c7c7c7;
+  border-radius: 10px;
 }
 
 .donutbox {
-    margin-top: -28%;
+  margin-top: -28%;
 }
 
 .Tabletxt {
-    font-family: Arial;
-    font-size: 15px;
-    margin-top: 3%;
-    font-weight: 400;
+  font-family: Arial;
+  font-size: 15px;
+  margin-top: 3%;
+  font-weight: 400;
 }
 
 .Tabletxt1 {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 15px;
-    margin-top: -4%;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 15px;
+  margin-top: -4%;
 }
 
 .tabletd {
-    color: #000;
-    font-family: "Montserrat";
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 32px;
-    /* 200% */
-    letter-spacing: 1.6px;
+  color: #000;
+  font-family: "Montserrat";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 32px;
+  /* 200% */
+  letter-spacing: 1.6px;
 }
 
 .tablenodata {
-    color: #000;
-    font-family: "Montserrat";
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 32px; /* 200% */
-    letter-spacing: 1.6px;
+  color: #000;
+  font-family: "Montserrat";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 32px; /* 200% */
+  letter-spacing: 1.6px;
 }
 
 .drpp {
-    color: #000;
-    /* width: 160px; */
-    border: none;
-    float: right;
-    font-family: "Montserrat";
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 500;
-    text-transform: uppercase;
-    outline: none;
+  color: #000;
+  /* width: 160px; */
+  border: none;
+  float: right;
+  font-family: "Montserrat";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  text-transform: uppercase;
+  outline: none;
 }
 
 .head_topp {
-    width: 100%;
-    height: 50px;
-    background-color: black;
-
+  width: 100%;
+  height: 50px;
+  background-color: black;
 }
 
 .main_heading {
-    color: #000;
-    text-align: center;
-    font-family: Arial;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 22px;
-    letter-spacing: 1.12px;
-    text-transform: uppercase;
-    margin-right: 14%;
-    margin-bottom: -1%;
+  color: #000;
+  text-align: center;
+  font-family: Arial;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22px;
+  letter-spacing: 1.12px;
+  text-transform: uppercase;
+  margin-right: 14%;
+  margin-bottom: -1%;
 }
 
-
-
-.DashboardWidth{
-    width: 99%;
+.DashboardWidth {
+  width: 99%;
 }
 
-@media(max-width:1570px){
+@media (max-width: 1570px) {
+  .top_accounttext {
+    font-size: 15px;
+  }
 
-    .top_accounttext {
-             font-size: 15px;
-         }
-
-    
-    .tablerow{
-        font-size: 16px;
-    }
+  .tablerow {
+    font-size: 16px;
+  }
 }
 
-@media(max-width:1450px){
-    .top_accounttext {
-        font-size: 14px;
-    }
-    .tablerow{
-        font-size: 14px;
-    }
-.tabletd{
+@media (max-width: 1450px) {
+  .top_accounttext {
     font-size: 14px;
-}
-    
-}
-
-
-@media(max-width:1299px){
-
-    .activetext1 {
-        font-size: 35px;
-    }
-    .main_heading {
-             font-size: 15px;
-         }
-    .Tabletextt {
-            font-size: 16px;
-         }
-
-    .Tabletext{
-     
-        font-size: 15px;
-     
-    }
-
-    .top_accounttext {
-        font-size: 12px;
-    }
-    .tablerow{
-        font-size: 12px;
-    }
-    .tabletd{
-        font-size: 12px;
-    }
+  }
+  .tablerow {
+    font-size: 14px;
+  }
+  .tabletd {
+    font-size: 14px;
+  }
 }
 
+@media (max-width: 1299px) {
+  .activetext1 {
+    font-size: 35px;
+  }
+  .main_heading {
+    font-size: 15px;
+  }
+  .Tabletextt {
+    font-size: 16px;
+  }
 
-@media(max-width:991px){
-    
-    .top_account {
-        height: 35px;
-        }
-        .top_accnew {
-            height: 35px;
-           
-            /* margin: 0; */
-        }
+  .Tabletext {
+    font-size: 15px;
+  }
 
-    .top_perform1 {
-        border-right: 0px rgb(32, 32, 32) dashed;
-    }
+  .top_accounttext {
+    font-size: 12px;
+  }
+  .tablerow {
+    font-size: 12px;
+  }
+  .tabletd {
+    font-size: 12px;
+  }
 }
 
+@media (max-width: 991px) {
+  .top_account {
+    height: 35px;
+  }
+  .top_accnew {
+    height: 35px;
 
-@media(max-width:767.98px){
-.head_topp{
+    /* margin: 0; */
+  }
+
+  .top_perform1 {
+    border-right: 0px rgb(32, 32, 32) dashed;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .head_topp {
     display: none;
-}
+  }
 }

@@ -10,6 +10,7 @@ const OrderStatusFormSection = () => {
     const [activeBtn,setActive] = useState(false)
     useEffect(() => {
         let data = supportDriveBeg();
+        console.log({data});
         setTicket(data)
         GetAuthData().then((user) => {
             let rawData = {

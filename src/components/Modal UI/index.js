@@ -35,7 +35,6 @@ const ModalPage = ({ open, content, onClose }) => {
     <Modal isOpen={isOpen} onClose={onModalClose}>
       <div>
         <div className={Styles.ModalControl}>
-          {/* <p>Adding this item will replace your current cart</p> */}
           {content}
         </div>
       </div>
