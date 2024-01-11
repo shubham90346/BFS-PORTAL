@@ -8,7 +8,6 @@ import img3 from "./Images/Group.png";
 import img4 from "./Images/Group1.png";
 import img5 from "./Images/Rectangle 304.png";
 import { PieChart, Pie, Cell } from "recharts";
-import axios, { formToJSON } from "axios";
 import { useNavigate } from "react-router-dom";
 import { GetAuthData, getDashboardata } from "../../lib/store";
 import { getRandomColors } from "../../lib/color";
@@ -150,13 +149,8 @@ function Dashboard({ dashboardData }) {
   const [leadsbybrand, setleadsbtbrand] = useState([]);
   const [Monthlydataa, setMonthlydata] = useState([]);
   const [Yearlydataa, setYearlydata] = useState([]);
-  const [nameacc, setnameacc] = useState([]);
-  const [nameacc1, setnameacc1] = useState([]);
-  const [nameacc2, setnameacc2] = useState([]);
-  const [manufacturelist, setmanufaacturelist] = useState([]);
-  const [manufacturelist1, setmanufaacturelist1] = useState([]);
-  const [manufacturelist2, setmanufaacturelist2] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [dashboardRelatedData, setDashboardRelatedData] = useState({});
   const [salesByBrandData, setSalesByBrandData] = useState({
     series: [],
     options: {
@@ -244,10 +238,13 @@ function Dashboard({ dashboardData }) {
     if (localStorage.getItem("Name")) {
       GetAuthData()
         .then((user) => {
+          user.Sales_Rep__c = "00530000005AdvsAAC";
           getDashboardata({ user })
             .then((dashboard) => {
               if (dashboard?.details) {
                 let dashboardData = JSON.parse(dashboard?.details);
+                console.log("dashboardData", dashboardData);
+                setDashboardRelatedData(dashboardData);
                 setSalesByBrandData({
                   series: Object.values(dashboardData.brandSalesByRep.data).map((value) => {
                     return value.totalOrder;
@@ -356,13 +353,6 @@ function Dashboard({ dashboardData }) {
                 setMonthlydata(MonthlyData);
                 setYearlydata(YearlyData);
 
-                // PERFORMANCE
-                setnameacc(values.performance.data[0].Name);
-                setnameacc1(values.performance.data[1].Name);
-                setnameacc2(values.performance.data[2].Name);
-                setmanufaacturelist(values.performance.data[0].ManufacturerList);
-                setmanufaacturelist1(values.performance.data[1].ManufacturerList);
-                setmanufaacturelist2(values.performance.data[2].ManufacturerList);
                 setIsLoading(false);
               } else {
                 navigate("/");
@@ -385,6 +375,7 @@ function Dashboard({ dashboardData }) {
     month: "long",
   };
   let current = date.toLocaleString("en-IN", options);
+  let lowPerformanceArray=dashboardRelatedData?.performance?.data?.slice(0).reverse().map((ele)=>ele)
   return (
     <>
       {isLoading ? (
@@ -607,122 +598,63 @@ function Dashboard({ dashboardData }) {
             </div>
           </div>
 
-          {/* <div className="row mt-5">
-            <div className="col-lg-6">
-              <p className={Styles.Tabletext}>Top Performing Accounts</p>
-            </div>
-            <div className="col-lg-6">
-              <p className={Styles.Tabletext1}>Low Performing Accounts</p>
-            </div>
-          </div> */}
           <div className="my-5">
             <div className={`row mt-1 justify-between ${Styles.topPerform2}`}>
-              <div className={`col-lg-6 ${Styles.top_perform1}`} style={{ width: "48%" }}>
+              <div className={`col-lg-6 col-sm-12 ${Styles.top_perform1}`} style={{ width: "48%" }}>
                 <p className={Styles.Tabletext}>Top Performing Accounts</p>
                 <div className="row">
                   {/* TOP PERFORMANCE */}
-                  <div className="col-lg-6 col-md-6 col-sm-6 ">
-                    <div className={Styles.top_perform}>
-                      <div className="container">
-                        <div className={Styles.top_account}>
-                          <p className={Styles.top_accounttext}>{nameacc}</p>
-                        </div>
+                  {dashboardRelatedData?.performance?.data?.map((ele, index) => {
+                    if (index < 4) {
+                      return (
+                        <div className="col-lg-6 col-md-6 col-sm-12 ">
+                          <div className={Styles.top_perform}>
+                            {/* <div className="container"> */}
+                              <div className={Styles.top_account}>
+                                <p className={Styles.top_accounttext}>{ele.Name}</p>
+                              </div>
 
-                        <div className={` ${Styles.scrollbar}`}>
-                          {manufacturelist.map((itemm) => {
-                            const bgcolor = bgColors[itemm.Name];
-                            return <span className={`${Styles.account} ${Styles[bgcolor]}`}>{itemm.Name}</span>;
-                          })}
+                              <div className={` ${Styles.scrollbar}`}>
+                                {ele.ManufacturerList.map((itemm) => {
+                                  const bgcolor = bgColors[itemm.Name];
+                                  return <span className={`${Styles.account} ${Styles[bgcolor]}`}>{itemm.Name}</span>;
+                                })}
+                              </div>
+                            </div>
+                          {/* </div> */}
                         </div>
-                      </div>
-                    </div>
-                    <div className={` ${Styles.top_perform}`}>
-                      <div className="container">
-                        <div className={Styles.top_account}>
-                          <p className={Styles.top_accounttext}>{nameacc2}</p>
-                        </div>
-
-                        <div className={` ${Styles.scrollbar}`}>
-                          {manufacturelist2.map((item) => {
-                            const bgcolor = bgColors[item.Name];
-                            return <span className={`${Styles.account22} ${Styles[bgcolor]}`}>{item.Name}</span>;
-                          })}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="col-lg-6 col-md-6 col-sm-6">
-                    <div className={Styles.top_perform}>
-                      <div className="container">
-                        <div className={Styles.top_account}>
-                          <p className={Styles.top_accounttext}>{nameacc1}</p>
-                        </div>
-
-                        <div className={` ${Styles.scrollbar}`}>
-                          {manufacturelist1.map((item) => {
-                            const bgcolor = bgColors[item.Name];
-
-                            return <span className={`${Styles.account22} ${Styles[bgcolor]}`}>{item.Name}</span>;
-                          })}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                      );
+                    }
+                  })}
                 </div>
               </div>
 
-              <div className="col-lg-6" style={{ width: "48%" }}>
+              <div className="col-lg-6 col-sm-12" style={{ width: "48%" }}>
                 <p className={Styles.Tabletext1}>Low Performing Accounts</p>
                 <div className="row">
-                  <div className="col-lg-6 col-md-6 col-sm-6">
                     {/* LOW PERFORMANCE */}
-                    <div className={Styles.top_perform2}>
-                      <div className="container">
-                        <div className={Styles.top_accnew}>
-                          <p className={Styles.top_accounttext}>{nameacc2}</p>
-                        </div>
+                    { lowPerformanceArray?.map((ele,index)=>{
+                        if(index<4){
+                          return(<div className="col-lg-6 col-md-6 col-sm-12">
+                          <div className={Styles.top_perform2}>
+                              {/* <div className="container"> */}
+                                <div className={Styles.top_accnew}>
+                                  <p className={Styles.top_accounttext}>{ele.Name}</p>
+                                </div>
+        
+                                <div className={` ${Styles.scrollbar}`}>
+                                  {ele.ManufacturerList.map((item) => {
+                                    const bgcolor = bgColors[item.Name];
+                                    return <span className={`${Styles.account22} ${Styles[bgcolor]}`}>{item.Name}</span>;
+                                  })}
+                                </div>
+                              {/* </div> */}
+                            </div>
+                          </div>)
+                        }
+                    })}
+                  
 
-                        <div className={` ${Styles.scrollbar}`}>
-                          {manufacturelist2.map((item) => {
-                            const bgcolor = bgColors[item.Name];
-                            return <span className={`${Styles.account22} ${Styles[bgcolor]}`}>{item.Name}</span>;
-                          })}
-                        </div>
-                      </div>
-                    </div>
-                    <div className={` ${Styles.top_perform2}`}>
-                      <div className="container">
-                        <div className={Styles.top_accnew}>
-                          <p className={Styles.top_accounttext}>{nameacc} </p>
-                        </div>
-
-                        <div className={` ${Styles.scrollbar}`}>
-                          {manufacturelist.map((itemm) => {
-                            const bgcolor = bgColors[itemm.Name];
-                            return <span className={`${Styles.account} ${Styles[bgcolor]}`}>{itemm.Name}</span>;
-                          })}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="col-lg-6 col-md-6 col-sm-6">
-                    <div className={Styles.top_perform}>
-                      <div className="container">
-                        <div className={Styles.top_accnew}>
-                          <p className={Styles.top_accounttext}>{nameacc1}</p>
-                        </div>
-
-                        <div className={` ${Styles.scrollbar}`}>
-                          {manufacturelist1.map((item) => {
-                            const bgcolor = bgColors[item.Name];
-                            return <span className={`${Styles.account22} ${Styles[bgcolor]}`}>{item.Name}</span>;
-                          })}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
@@ -735,10 +667,9 @@ function Dashboard({ dashboardData }) {
               <div className={Styles.donuttop}>
                 <p className={` text-center mt-3  ${Styles.Tabletextt}`}>Sum of Ordered</p>
                 <p className={`text-end ${Styles.main_heading}`}>MANUFACTURER</p>
-                <Chart options={salesByBrandData.options} series={salesByBrandData.series} type="donut" className={Styles.donutchart} width="90%" height="400px"/>
+                <Chart options={salesByBrandData.options} series={salesByBrandData.series} type="donut" className={Styles.donutchart} width="90%" height="400px" />
               </div>
             </div>
-            {console.log("salesByBrandData", salesByBrandData)}
             <div className="col-lg-5">
               <p className={Styles.Tabletext}>Your Sales Performance Score in 2023</p>
               <div className={Styles.donuttop1}>
