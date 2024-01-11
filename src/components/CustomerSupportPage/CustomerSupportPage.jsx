@@ -25,14 +25,14 @@ function CustomerSupportPage({ data, PageSize, currentPage, manufacturerFilter, 
   const reasons={
     "Charges":"Charges",
     "Product Missing":"Product Missing",
-    "Product Overage Shipped":"Product Overage Shipped",
+    "Product Overage Shipped":"Product Overage",
     "Product Damage":"Product Damage",
-    "Update Account Information":"Update Account Information",
+    "Update Account Info":"Update Account Info",
   }
   return (
     <div>
       <div className="">
-        <ModalPage open={modalOpen} onClose={() => setModalOpen(false)} content={<SelectCaseReason reasons={reasons} onClose={() => setModalOpen(false)} />} />
+        <ModalPage open={modalOpen} onClose={() => setModalOpen(false)} content={<SelectCaseReason reasons={reasons} onClose={() => setModalOpen(false)} recordType={{id:"0123b0000007z9pAAA",name:"Customer Service"}} />} />
 
         <div className={Styles.supportMain}>
           <div className="row">
