@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Styles from "./style.module.css";
 import { useNavigate } from "react-router-dom";
-import { DestoryAuth, GetAuthData, getOrderList, getSupportFormRaw, postSupportAny, supportDriveBeg, supportShare } from "../../../lib/store";
+import { DestoryAuth, GetAuthData, getAllAccount, getOrderList, getSupportFormRaw, postSupportAny, supportDriveBeg, supportShare } from "../../../lib/store";
 
 const SelectCaseReason = ({ reasons, onClose, recordType }) => {
   const navigate = useNavigate();
@@ -11,6 +11,8 @@ const SelectCaseReason = ({ reasons, onClose, recordType }) => {
   const [orderIdChild, setOrderIdChild] = useState([]);
   const [typeId, setTypeId] = useState(recordType.id)
   const [desc, setDesc] = useState()
+  const [subject, setSubject] = useState()
+  const [selectedOrderItem,setSelectOrderItem] = useState({id:null,value:null})
   const [orderData, setOrderData] = useState({
     accountId: null,
     orderNumber: null,
@@ -47,6 +49,11 @@ const SelectCaseReason = ({ reasons, onClose, recordType }) => {
           .catch((error) => {
             console.log({ error });
           });
+        getAllAccount({ user: response }).then((accounts) => {
+          setAccountList(accounts)
+        }).catch((actError) => {
+          console.error({ actError });
+        })
       })
       .catch((err) => {
         console.log({ err });
@@ -54,6 +61,7 @@ const SelectCaseReason = ({ reasons, onClose, recordType }) => {
   }, [step]);
   const onChangeHandler = (e) => {
     setReason(e.target.value)
+    setSelectOrderItem({id:null,value:null})
     setOrderData({
       accountId: null,
       orderNumber: null,
@@ -67,6 +75,7 @@ const SelectCaseReason = ({ reasons, onClose, recordType }) => {
   };
   const onOrderChangeHandler = (e) => {
     let id = e.target.value
+    setSelectOrderItem({id:null,value:null})
     let orderDetails = orders.filter(function (element) {
       if (element.Id === id) {
         setOrderData({
@@ -84,7 +93,19 @@ const SelectCaseReason = ({ reasons, onClose, recordType }) => {
       }
     });
   }
-  console.log({ reason });
+  const onChnageAccountHander = (e) => {
+    setOrderData({ accountId: e.target.value })
+    setStep(2)
+  }
+  const onChnageOrderItemHander = (e) => {
+    let orderItemDetails = orderIdChild.filter(function (element) {
+      let id = e.target.value
+      if (element.Id === id) {
+        setSelectOrderItem({id:element.Id,value:element.Quantity});
+        return element
+      }
+    });
+  }
   const submitForm = () => {
     GetAuthData().then((user) => {
       if (user) {
@@ -97,10 +118,11 @@ const SelectCaseReason = ({ reasons, onClose, recordType }) => {
             orderNumber: orderData?.orderNumber,
             poNumber: orderData.poNumber,
             manufacturerId: orderData.manufacturerId,
-            desc: null,
+            desc,
             opportunityId: orderData.opportunityId,
             priority: "Medium",
             sendEmail: false,
+            subject
           },
           key: user.x_access_token
         }
@@ -155,10 +177,10 @@ const SelectCaseReason = ({ reasons, onClose, recordType }) => {
                       return (<option value={element.Id} selected={orderData.opportunityId == element.Id}>Order from {element.AccountName} for ({element.ProductCount} Products) Actual Amount {element.Amount} | {element.ManufacturerName__c} | PO #{element.PO_Number__c}</option>)
                     })}
                   </select>}
-                {reason == "Update Account Info" && <select onChange={(e) => { }}>
+                {reason == "Update Account Info" && <select onChange={(e) => { onChnageAccountHander(e) }}>
                   <option>Search Account</option>
-                  {orders.length > 0 && orders.map((element) => {
-                    return (<option value={element.Id}>Order from {element.AccountName} for ({element.ProductCount} Products) Actual Amount {element.Amount} | {element.ManufacturerName__c} | PO #{element.PO_Number__c}</option>)
+                  {accountList.length > 0 && accountList.map((element) => {
+                    return (<option value={element.Id}>{element.Name}</option>)
                   })}
                 </select>}
               </div>
@@ -169,19 +191,19 @@ const SelectCaseReason = ({ reasons, onClose, recordType }) => {
                   <input type="text" value={orderData.actualAmount} />
                   <label>Associated Invoice Number:</label>
                   <input type="text" value={orderData.invoiceNumber ? orderData.invoiceNumber : 'NA'} /></div>}
-                {(reason == "Product Missing" || reason == "Product Overage") && <div><select onChange={(e) => { }}>
+                {(reason == "Product Missing" || reason == "Product Overage" || reason == "Product Damage") && <div><select onChange={(e) => { onChnageOrderItemHander(e)}}>
                   <option>Search Product</option>
                   {orderIdChild.length > 0 && orderIdChild.map((element) => {
-                    return (<option value={element.Id}>{element.Name}</option>)
+                    return (<option value={element.Id} selected={selectedOrderItem.id == element.Id}>{element.Name}</option>)
                   })}
                 </select>
                   <div>
-                    <input type="text" placeholder="Quantity Missing" /></div>
+                    <input type="text" placeholder="Quantity Missing" value={selectedOrderItem.value}/></div>
                 </div>}
                 <div>
-                  <input type="text" placeholder="Provide One line Subject" /></div>
+                  <input type="text" placeholder="Provide One line Subject" onKeyDown={(e)=>{setSubject(e.target.value)}} /></div>
                 <div>
-                  <textarea placeholder="Describe your issues"></textarea></div>
+                  <textarea placeholder="Describe your issues" onKeyDown={(e)=>{setDesc(e.target.value)}}></textarea></div>
               </div>
             </div>}
             {step == 2 && <div className={Styles.BrandButton}>
