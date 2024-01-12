@@ -6,20 +6,24 @@ import * as XLSX from "xlsx";
 import { useNewnessReport } from "../../../api/useNewnessReport";
 import { useManufacturer } from "../../../api/useManufacturer";
 import Loading from "../../Loading";
+import { DestoryAuth } from "../../../lib/store";
 const FiltersInNewness = () => {
   let currentDate = new Date().toJSON().slice(0, 10);
-
+  console.log({currentDate});
   const [filter, setFilter] = useState({
     ManufacturerId__c: "a0O3b00000p7zqKEAQ",
     toDate: currentDate,
-    fromDate: "2023-01-01",
+    fromDate: "2024-01-01",
     dataDisplay: "quantity",
     selectedManufacturer: "BOBBI BROWN",
   });
   const originalApiData = useNewnessReport(filter);
 
   const { data: manufacturers, isLoading, error } = useManufacturer();
-  // console.log(manufacturers);
+  console.log({manufacturers:manufacturers.status});
+  if(manufacturers.status != 200){
+    DestoryAuth();
+  }
   const [newnessData, setNewnessData] = useState(originalApiData || {});
   const [loading, setLoading] = useState(false);
   useEffect(() => {

@@ -7,6 +7,7 @@ const brandKey = "Account";
 const accountKey = "manufacturer";
 const POCount = "woX5MkCSIOlHXkT";
 const support = "AP0HBuNwbNnuhKR";
+
 export async function AuthCheck() {
   if (JSON.parse(localStorage.getItem("Api Data"))?.data) {
     return true;
@@ -78,9 +79,9 @@ export async function supportShare(data){
 export function supportClear(){
   localStorage.removeItem(support)
   if(localStorage.getItem(support)){
-    return true;
-  }else{
     return false;
+  }else{
+    return true;
   }
 }
 
@@ -142,7 +143,7 @@ export async function OrderPlaced({ order }) {
 
 export async function DestoryAuth() {
   localStorage.clear();
-  // window.localStorage.href = "/"
+  window.location.href = window.location.origin
   return true;
 }
 
@@ -170,7 +171,11 @@ export async function getOrderList({ user, month }) {
     headers: headersList,
   });
   let data = JSON.parse(await response.text());
-  return data.data;
+  if(data.status != 200){
+    DestoryAuth()
+  }else{
+    return data.data;
+  }
 }
 
 export async function getDashboardata({ user }) {
@@ -188,14 +193,18 @@ export async function getDashboardata({ user }) {
     headers: headersList,
   });
   let data = JSON.parse(await response.text());
-  return data.data;
+  if(data.status != 200){
+    DestoryAuth()
+  }else{
+    return data.data;
+  }
 }
 
 export async function getSupportList({ user }) {
   let headersList = {
     Accept: "*/*",
   };
-
+  console.log({user});
   let bodyContent = new FormData();
   bodyContent.append("key", user.x_access_token);
   bodyContent.append("salesRepId", user.Sales_Rep__c);
@@ -206,25 +215,34 @@ export async function getSupportList({ user }) {
     headers: headersList,
   });
   let data = JSON.parse(await response.text());
-  return data.data;
+  if(data.status != 200){
+    DestoryAuth()
+  }else{
+    return data.data;
+  }
 }
 
 export async function getSupportDetails({ rawData }) {
   let headersList = {
     Accept: "*/*",
   };
-
+  
   let bodyContent = new FormData();
   bodyContent.append("key", rawData.key);
   bodyContent.append("caseId", rawData.caseId);
-
+  
   let response = await fetch(url + "v3/ffBUF1vNs9LTLfz", {
     method: "POST",
     body: bodyContent,
     headers: headersList,
   });
   let data = JSON.parse(await response.text());
-  return data.data;
+  console.log({data});
+  // if(data.status != 200){
+  //   DestoryAuth()
+  // }else{
+    return data.data;
+  // }
 }
 
 export async function getSupportFormRaw({ rawData }) {
@@ -242,7 +260,30 @@ export async function getSupportFormRaw({ rawData }) {
     headers: headersList,
   });
   let data = JSON.parse(await response.text());
-  return data.data;
+  if(data.status != 200){
+    DestoryAuth()
+  }else{
+    return data.data;
+  }
+}
+
+export async function getAllAccount({ user }) {
+  let headersList = {
+    Accept: "*/*",
+    key:user.x_access_token,
+    userId:user.Sales_Rep__c
+  };
+
+  let response = await fetch(url + "v3/JbUxci", {
+    method: "POST",
+    headers: headersList
+  });
+  let data = JSON.parse(await response.text());
+  if(data.status != 200){
+    DestoryAuth()
+  }else{
+    return data.data;
+  }
 }
 
 export async function postSupport({ rawData }) {
@@ -257,8 +298,30 @@ export async function postSupport({ rawData }) {
     headers: headersList,
   });
   let data = JSON.parse(await response.text());
-  console.log({data});
-  return data.data;
+  if(data.status != 200){
+    DestoryAuth()
+  }else{
+    return data.data;
+  }
+}
+
+export async function postSupportAny({ rawData }) {
+  let headersList = {
+    Accept: "*/*",
+    "Content-Type": "application/json"
+  };
+
+  let response = await fetch(url + "v3/OFT88qVeJPUGsly", {
+    method: "POST",
+    body: JSON.stringify(rawData),
+    headers: headersList,
+  });
+  let data = JSON.parse(await response.text());
+  if(data.status != 200){
+    DestoryAuth()
+  }else{
+    return data.data;
+  }
 }
 
 export async function postSupportComment({ rawData }) {
@@ -274,5 +337,9 @@ export async function postSupportComment({ rawData }) {
   });
   let data = JSON.parse(await response.text());
   console.log({data});
-  return data.data;
+  // if(data.status != 200){
+    // DestoryAuth()
+  // }else{
+    return data.data;
+  // }
 }

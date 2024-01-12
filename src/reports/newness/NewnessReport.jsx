@@ -21,20 +21,20 @@ const NewnessReport = () => {
   }, []);
   return (
     <div>
-<Layout>
-            <div>
-                {/* <div className="col-12">
+      <Layout>
+        <div>
+          {/* <div className="col-12">
                     <div className="filter-container  ">
                     </div>
                 </div> */}
-                <div>
-                <FiltersInNewness />
-                    {/* <OrderStatusFormSection /> */}
-                </div>
-            </div>
-        </Layout>
+          <div>
+            <FiltersInNewness />
+            {/* <OrderStatusFormSection /> */}
+          </div>
+        </div>
+      </Layout>
 
-   
+
     </div>
   );
 };

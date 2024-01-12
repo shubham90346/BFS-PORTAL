@@ -143,8 +143,11 @@ function MyBagFinal() {
                     </div>
 
                     <div className={Styles.ShipAdress2}>
-                      <h4>Note</h4>
-                      {OrderData.Description}
+                      <label>NOTE</label>
+                      <p className="placeholder:font-[Arial-500] text-[14px] tracking-[1.12px] m-0" style={{minHeight:"119px"}}>{OrderData.Description}</p>
+                    </div>
+
+                      
                     </div>
 
                     <div className={Styles.ShipBut}>
@@ -155,7 +158,7 @@ function MyBagFinal() {
               </div>
             </div>
           </div>
-        </div>
+        
       </section>
     </div>
   );

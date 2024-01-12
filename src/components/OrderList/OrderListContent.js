@@ -10,7 +10,6 @@ function OrderListContent({ data, PageSize, currentPage }) {
   const [searchShipBy, setSearchShipBy] = useState();
   const [Viewmore, setviewmore] = useState(false);
   const [modalData, setModalData] = useState({});
-  console.log("data", data,PageSize, currentPage);
   const currentDate = new Date();
   const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   let size = 3;
@@ -19,11 +18,10 @@ function OrderListContent({ data, PageSize, currentPage }) {
   };
 
   const filteredOrders = useMemo(() => {
-    return data
+    let filteredData= data
       ?.filter((order) => {
         if (searchShipBy) {
           const orderItems = order.OpportunityLineItems?.records;
-          console.log(order.PO_Number__c, searchShipBy);
           if (orderItems?.length) {
             return (
               orderItems?.some((item) => {
@@ -33,12 +31,11 @@ function OrderListContent({ data, PageSize, currentPage }) {
           }
           return false;
         }
-        console.log((currentPage - 1) * PageSize, currentPage * PageSize);
         return true;
       })
-      ?.slice((currentPage - 1) * PageSize, currentPage * PageSize);
+      let newData=filteredData.length<10?filteredData:filteredData.slice((currentPage - 1) * PageSize, currentPage * PageSize);
+      return newData;
   }, [data, searchShipBy,currentPage,PageSize]);
-  console.log("filteredOrders", filteredOrders);
   const generateSuportHandler = ({ data, value }) => {
     let beg = {
       orderStatusForm: {
@@ -85,13 +82,13 @@ function OrderListContent({ data, PageSize, currentPage }) {
 
       {/* TRACKING MODAL */}
 
-      <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl modal-lg">
+      <div className="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div className="modal-dialog modal-xl modal-lg">
           <div className={`${Styles.modalContrlWidth} modal-content`}>
-            {/* <div class="modal-header">
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            {/* <div className="modal-header">
+              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div> */}
-            <div class="modal-body  ">
+            <div className="modal-body  ">
               <TrackingStatus data={modalData} />
             </div>
           </div>
@@ -100,13 +97,13 @@ function OrderListContent({ data, PageSize, currentPage }) {
 
       {/* ORDER STATUS MODAL */}
 
-      <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl modal-lg">
+      <div className="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div className="modal-dialog modal-xl modal-lg">
           <div className={`${Styles.modalContrlWidth} modal-content`}>
-            {/* <div class="modal-header">
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            {/* <div className="modal-header">
+              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div> */}
-            <div class="modal-body ">
+            <div className="modal-body ">
               <Orderstatus data={modalData} />
             </div>
           </div>
@@ -153,10 +150,10 @@ function OrderListContent({ data, PageSize, currentPage }) {
                     <div className={Styles.ProtuctInnerBox1}>
                       <ul>
                         {item.OpportunityLineItems?.records.length > 0 ? (
-                          item.OpportunityLineItems?.records.slice(0, size).map((ele) => {
+                          item.OpportunityLineItems?.records.slice(0, size).map((ele, index) => {
                             return (
                               <>
-                                <li>
+                                <li key={index}>
                                   {Viewmore
                                     ? ele.Name.split(item.AccountName)[1]
                                     : ele.Name.split(item.AccountName).length > 1
@@ -187,10 +184,12 @@ function OrderListContent({ data, PageSize, currentPage }) {
                       <h3>Total</h3>
                       <p>${Number(item.Amount).toFixed(2)}</p>
                     </div>
+                    <div className={Styles.TicketWidth}>
                     <button className="me-4">View Ticket</button>
                     <Link to="/orderDetails">
                       <button onClick={() => MyBagId(item.Id)}>View Order Details</button>
                     </Link>
+                    </div>
                   </div>
                 </div>
 
@@ -215,7 +214,6 @@ function OrderListContent({ data, PageSize, currentPage }) {
       ) : (
         <div className="flex justify-center items-center py-4 w-full lg:min-h-[300px] xl:min-h-[380px]">No data found</div>
       )}
-      {/* {isTrackingModal && <TrackingModal />} */}
     </>
   );
 }

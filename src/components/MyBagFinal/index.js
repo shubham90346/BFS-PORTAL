@@ -15,17 +15,24 @@ function MyBagFinal() {
   const [orderDesc, setOrderDesc] = useState(null);
   const [PONumber, setPONumber] = useState(POGenerator());
   const [buttonActive, setButtonActive] = useState(false);
-  const { addOrder, orderQuantity, deleteOrder } = useBag();
+  const { addOrder, orderQuantity, deleteOrder, orders, setOrders } = useBag();
   const [bagValue, setBagValue] = useState(fetchBeg());
   const [isOrderPlaced, setIsOrderPlaced] = useState(0);
   const [isPOEditable, setIsPOEditable] = useState(false);
   const [PONumberFilled, setPONumberFilled] = useState(true);
+
   useEffect(() => {
     if (bagValue?.Account?.id && bagValue?.Manufacturer?.id && Object.values(bagValue?.orderList)?.length > 0) {
       setButtonActive(true);
     }
   }, []);
   let total = 0;
+  useEffect(() => {
+    if (bagValue?.Account?.id && bagValue?.Manufacturer?.id && Object.values(bagValue?.orderList)?.length > 0 && total > 0) {
+      setButtonActive(true);
+    }
+  }, [total, bagValue]);
+
   let price = "";
   const orderPlaceHandler = () => {
     setIsOrderPlaced(1);
@@ -33,6 +40,7 @@ function MyBagFinal() {
       .then((user) => {
         // let bagValue = fetchBeg()
         if (bagValue) {
+          console.log("bagValue", bagValue);
           // setButtonActive(true)
           let list = [];
           let orderType = "Wholesale Number";
@@ -63,6 +71,8 @@ function MyBagFinal() {
           OrderPlaced({ order: begToOrder })
             .then((response) => {
               if (response) {
+                bagValue.orderList.map((ele) => addOrder(ele.product, 0, ele.discount));
+                localStorage.removeItem("orders");
                 navigate("/order-list");
                 setIsOrderPlaced(2);
               }
@@ -107,7 +117,14 @@ function MyBagFinal() {
               </div>
 
               <div className={Styles.MyBagFinalleft}>
-                <h5>PO Number {!isPOEditable ? <b> {buttonActive ? PONumber : "---"}</b> : <input type="text" defaultValue={PONumber} onKeyUp={(e) => setPONumber(e.target.value)} placeholder=" Enter PO Number" style={{borderBottom:"1px solid black"}}/>}</h5>
+                <h5>
+                  PO Number{" "}
+                  {!isPOEditable ? (
+                    <b> {buttonActive ? PONumber : "---"}</b>
+                  ) : (
+                    <input type="text" defaultValue={PONumber} onKeyUp={(e) => setPONumber(e.target.value)} placeholder=" Enter PO Number" style={{ borderBottom: "1px solid black" }} />
+                  )}
+                </h5>
                 {!isPOEditable && (
                   <svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20" fill="none" onClick={() => setIsPOEditable(true)} style={{ cursor: "pointer" }}>
                     <path
@@ -129,53 +146,44 @@ function MyBagFinal() {
                         {localStorage.getItem("orders") && Object.values(JSON.parse(localStorage.getItem("orders"))).length > 0 ? (
                           Object.values(JSON.parse(localStorage.getItem("orders"))).map((ele) => {
                             // console.log(ele);
-                          let listPrice = isNaN(Number(ele.product.usdRetail__c.substring(1))) ? (+ele.product.usdRetail__c.substring(2)).toFixed(2) : (+ele.product.usdRetail__c.substring(1)).toFixed(2);
-                       
-                          {ele.product.Category__c === "TESTER" ? (
-                            <>
-                              
-                              {price=ele.product.usdRetail__c.includes("$")
-                                ? (+ele.product.usdRetail__c.substring(1) - (ele?.discount?.testerMargin / 100) * +ele.product.usdRetail__c.substring(1)).toFixed(2)
-                                : (+ele.product.usdRetail__c - (ele?.discount?.testerMargin / 100) * +ele.product.usdRetail__c).toFixed(2)}
-                            </>
-                          ) : (
-                            <>
-                              {ele.product.Category__c === "Samples" ? (
+                            let listPrice = isNaN(Number(ele.product.usdRetail__c.substring(1)))
+                              ? (+ele.product.usdRetail__c.substring(2)).toFixed(2)
+                              : (+ele.product.usdRetail__c.substring(1)).toFixed(2);
+
+                            {
+                              ele.product.Category__c === "TESTER" ? (
                                 <>
-                                  {" "}
-                                 
-                                  {price=ele.product.usdRetail__c.includes("$")
-                                    ? (+ele.product.usdRetail__c.substring(1) - (ele?.discount?.sample / 100) * +ele.product.usdRetail__c.substring(1)).toFixed(2)
-                                    : (+ele.product.usdRetail__c - (ele?.discount?.sample / 100) * +ele.product.usdRetail__c).toFixed(2)}
+                                  {
+                                    (price = ele.product.usdRetail__c.includes("$")
+                                      ? (+ele.product.usdRetail__c.substring(1) - (ele?.discount?.testerMargin / 100) * +ele.product.usdRetail__c.substring(1)).toFixed(2)
+                                      : (+ele.product.usdRetail__c - (ele?.discount?.testerMargin / 100) * +ele.product.usdRetail__c).toFixed(2))
+                                  }
                                 </>
                               ) : (
                                 <>
-                                  
-                                  {price=ele.product.usdRetail__c.includes("$")
-                                    ? (listPrice - (ele?.discount?.margin / 100) * listPrice).toFixed(2)
-                                    : (+ele.product.usdRetail__c - (ele?.discount?.margin / 100) * +ele.product.usdRetail__c).toFixed(2)}
+                                  {ele.product.Category__c === "Samples" ? (
+                                    <>
+                                      {" "}
+                                      {
+                                        (price = ele.product.usdRetail__c.includes("$")
+                                          ? (+ele.product.usdRetail__c.substring(1) - (ele?.discount?.sample / 100) * +ele.product.usdRetail__c.substring(1)).toFixed(2)
+                                          : (+ele.product.usdRetail__c - (ele?.discount?.sample / 100) * +ele.product.usdRetail__c).toFixed(2))
+                                      }
+                                    </>
+                                  ) : (
+                                    <>
+                                      {
+                                        (price = ele.product.usdRetail__c.includes("$")
+                                          ? (listPrice - (ele?.discount?.margin / 100) * listPrice).toFixed(2)
+                                          : (+ele.product.usdRetail__c - (ele?.discount?.margin / 100) * +ele.product.usdRetail__c).toFixed(2))
+                                      }
+                                    </>
+                                  )}
                                 </>
-                              )}
-                            </>
-                          )}
-                        
-                            // {
-                            //   ele.Category__c === "TESTER"
-                            //     ? (price = ele.product.usdRetail__c.includes("$")
-                            //         ? (+ele.product.usdRetail__c.substring(1) - (ele?.discount?.testerMargin / 100) * +ele.product.usdRetail__c.substring(1)).toFixed(2)
-                            //         : (+ele.product.usdRetail__c - (ele?.discount?.testerMargin / 100) * +ele.product.usdRetail__c).toFixed(2))
-                            //     : ele.Category__c === "Samples"
-                            //     ? (price = ele.product.usdRetail__c.includes("$")
-                            //         ? (+ele.product.usdRetail__c.substring(1) - (ele?.discount?.sample / 100) * +ele.product.usdRetail__c.substring(1)).toFixed(2)
-                            //         : (+ele.product.usdRetail__c - (ele?.discount?.sample / 100) * +ele.product.usdRetail__c).toFixed(2))
-                            //     : (price = ele.product.usdRetail__c.includes("$")
-                            //         ? (+ele.product.usdRetail__c.substring(1) - (ele?.discount?.margin / 100) * +ele.product.usdRetail__c.substring(1)).toFixed(2)
-                            //         : (+ele.product.usdRetail__c - (ele?.discount?.margin / 100) * +ele.product.usdRetail__c).toFixed(2));
-                            // }
-                            // price = price;
-                            // console.log(price);
+                              );
+                            }
+
                             total += Number(price) * ele.quantity;
-                            // console.log(total);
                             return (
                               <div className={Styles.Mainbox}>
                                 <div className={Styles.Mainbox1M}>
@@ -261,9 +269,8 @@ function MyBagFinal() {
                     </div>
 
                     <div className={Styles.ShipAdress2}>
-                      
-
-                      <textarea  onKeyUp={(e) => setOrderDesc(e.target.value)} placeholder="NOTE" className="placeholder:font-[Arial-500] text-[14px] tracking-[1.12px] " />
+                      <label>NOTE</label>
+                      <textarea onKeyUp={(e) => setOrderDesc(e.target.value)} placeholder="Description" className="placeholder:font-[Arial-500] text-[14px] tracking-[1.12px] " />
                     </div>
                     {!PONumberFilled ? (
                       <ModalPage
@@ -275,7 +282,7 @@ function MyBagFinal() {
                               <p className={` ${StylesModal.ModalContent}`}>Enter PO Number</p>
                               <div className="d-flex justify-content-center">
                                 <button
-                                  class={`${StylesModal.modalButton}`}
+                                  className={`${StylesModal.modalButton}`}
                                   onClick={() => {
                                     setPONumberFilled(true);
                                   }}
@@ -295,16 +302,19 @@ function MyBagFinal() {
                     <div className={Styles.ShipBut}>
                       <button
                         onClick={() => {
-                          if (PONumber.length) {
-                            orderPlaceHandler();
-                          } else {
-                            setPONumberFilled(false);
+                          if (total) {
+                            if (PONumber.length) {
+                              orderPlaceHandler();
+                            } else {
+                              setPONumberFilled(false);
+                            }
                           }
                         }}
                         disabled={!buttonActive}
                       >
                         ${Number(total).toFixed(2)} PLACE ORDER
                       </button>
+                      {/* {Number(total) ? null : window.location.reload()} */}
                     </div>
                   </div>
                 </div>

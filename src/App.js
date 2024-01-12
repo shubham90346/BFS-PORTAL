@@ -27,6 +27,8 @@ import BagProvider from "./context/BagContext";
 import MyBagOrder from "./pages/MyBagOrder";
 import OrderStatusForm from "./pages/OrderStatusForm";
 import CustomerSupportDetails from "./pages/CustomerSupportDetails";
+import CustomerServiceForm from "./pages/CustomerServiceForm";
+import SignUp from "./pages/SignUp";
 function App() {
   // const Redirect = ({ href }) => {
   //   window.location.href = href;
@@ -75,8 +77,10 @@ function App() {
             <Route path="/about-us" element={<AboutUs />}></Route>
             {/* <Route path="/wholesale-inquiry" elements={<WholesaleInquiry />}></Route> */}
             <Route path="logout" element={<Logout />}></Route>
+            <Route path="/sign-up" element={<SignUp />}></Route>
             <Route path="/orderDetails" element={<MyBagOrder/>}></Route>
             <Route path="/orderStatusForm" element={<OrderStatusForm/>}></Route>
+            <Route path="/customerService" element={<CustomerServiceForm/>}></Route>
           </Routes>
         </BrowserRouter>
       </BagProvider>

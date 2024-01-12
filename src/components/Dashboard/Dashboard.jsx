@@ -8,10 +8,12 @@ import img3 from "./Images/Group.png";
 import img4 from "./Images/Group1.png";
 import img5 from "./Images/Rectangle 304.png";
 import { PieChart, Pie, Cell } from "recharts";
-import axios, { formToJSON } from "axios";
 import { useNavigate } from "react-router-dom";
 import { GetAuthData, getDashboardata } from "../../lib/store";
 import { getRandomColors } from "../../lib/color";
+import ContentLoader from "react-content-loader";
+import SelectBrandModel from "../My Retailers/SelectBrandModel/SelectBrandModel";
+import ModalPage from "../Modal UI/index";
 const dataa = {
   series: [
     {
@@ -83,9 +85,6 @@ const dataa = {
   },
 };
 
-
-
-
 // const data = {
 //   series: [44, 55, 41, 17, 35], //static
 
@@ -152,60 +151,55 @@ function Dashboard({ dashboardData }) {
   const [leadsbybrand, setleadsbtbrand] = useState([]);
   const [Monthlydataa, setMonthlydata] = useState([]);
   const [Yearlydataa, setYearlydata] = useState([]);
-  const [nameacc, setnameacc] = useState([]);
-  const [nameacc1, setnameacc1] = useState([]);
-  const [nameacc2, setnameacc2] = useState([]);
-  const [manufacturelist, setmanufaacturelist] = useState([]);
-  const [manufacturelist1, setmanufaacturelist1] = useState([]);
-  const [manufacturelist2, setmanufaacturelist2] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [salesByBrandData,setSalesByBrandData] = useState({
-      series:[],
-      options: {
-        chart: {
-          type: "donut",
-        },
-        labels: {
+  const [dashboardRelatedData, setDashboardRelatedData] = useState({});
+  const [salesByBrandData, setSalesByBrandData] = useState({
+    series: [],
+    options: {
+      chart: {
+        type: "donut",
+      },
+      labels: {
+        show: true,
+        name: {
           show: true,
-          name: {
-            show: true,
-            offsetY: 38,
-            formatter: () => "out of 553 points",
-          },
+          offsetY: 38,
+          formatter: () => "out of 553 points",
         },
-        plotOptions: {
-          pie: {
-            donut: {
-              labels: {
+      },
+      plotOptions: {
+        pie: {
+          donut: {
+            labels: {
+              show: true,
+              total: {
                 show: true,
-                total: {
-                  show: true,
-                  showAlways: true,
-                  formatter: function (w) {
-                    const t = w.globals.seriesTotals;
-                    const result = t.reduce((a, b) => a + b, 0);
-                    return (result / 10000).toFixed(1);
-                  },
+                showAlways: true,
+                formatter: function (w) {
+                  const t = w.globals.seriesTotals;
+                  const result = t.reduce((a, b) => a + b, 0);
+                  return (result / 10000).toFixed(1);
                 },
               },
             },
           },
         },
-        responsive: [
-          {
-            breakpoint: 480,
-            options: {
-              chart: {
-                width: "100px",
-              },
+      },
+      responsive: [
+        {
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: "100px",
             },
           },
-        ],
-        colors: getRandomColors(8),
-        labels: [],
-      },
-    })
-
+        },
+      ],
+      colors: getRandomColors(8),
+      labels: [],
+    },
+  });
+  const [brandData, setBrandData]=useState([])
   const RADIAN = Math.PI / 180;
   const needle_data = [
     { name: "A", value: 80, color: "#16BC4E" },
@@ -239,148 +233,142 @@ function Dashboard({ dashboardData }) {
     return [<circle cx={x0} cy={y0} r={r} fill={color} stroke="none" />, <path d={`M${xba} ${yba}L${xbb} ${ybb} L${xp} ${yp} L${xba} ${yba}`} stroke="#none" fill={color} />];
   };
   const navigate = useNavigate();
+  const [modalOpen, setModalOpen] = useState(false);
 
   // API INTEGRATION
 
   useEffect(() => {
     if (localStorage.getItem("Name")) {
-      GetAuthData().then((user) => {
-        getDashboardata({ user }).then((dashboard) => {
-          if (dashboard?.details) {
-            let dashboardData = JSON.parse(dashboard?.details)
-            setSalesByBrandData( {
-                series:Object.values(dashboardData.brandSalesByRep.data).map(value=>{
-                  return [value.totalOrder]
-                }),
-                options: {
-                  chart: {
-                    type: "donut",
-                  },
-                  labels: {
-                    show: true,
-                    name: {
-                      show: true,
-                      offsetY: 38,
-                      formatter: () => "out of 553 points",
+      GetAuthData()
+        .then((user) => {
+          getDashboardata({ user })
+            .then((dashboard) => {
+              if (dashboard?.details) {
+                let dashboardData = JSON.parse(dashboard?.details);
+                setDashboardRelatedData(dashboardData);
+                setSalesByBrandData({
+                  series: Object.values(dashboardData.brandSalesByRep.data).map((value) => {
+                    return value.totalOrder;
+                  }),
+                  options: {
+                    chart: {
+                      type: "donut",
                     },
-                  },
-                  plotOptions: {
-                    pie: {
-                      donut: {
-                        labels: {
-                          show: true,
-            
-                          total: {
+                    labels: {
+                      show: true,
+                      name: {
+                        show: true,
+                        offsetY: 38,
+                        formatter: () => "out of 553 points",
+                      },
+                    },
+                    plotOptions: {
+                      pie: {
+                        donut: {
+                          labels: {
                             show: true,
-                            showAlways: true,
-                            formatter: function (w) {
-                              const t = w.globals.seriesTotals;
-                              const result = t.reduce((a, b) => a + b, 0);
-                              return (result / 10000).toFixed(1);
+
+                            total: {
+                              show: true,
+                              showAlways: true,
+                              formatter: function (w) {
+                                const t = w.globals.seriesTotals;
+                                const result = t.reduce((a, b) => a + b, 0);
+                                return result < 1000 ? result.toFixed(1) : `${(result / 1000).toFixed(1)}K`;
+                              },
                             },
                           },
                         },
                       },
                     },
-                  },
-            
-                  responsive: [
-                    {
-                      breakpoint: 100,
-                      options: {
-                        chart: {
-                          width: "100px",
+
+                    responsive: [
+                      {
+                        breakpoint: 100,
+                        options: {
+                          chart: {
+                            width: "100px",
+                          },
                         },
                       },
-                    },
-                  ],
-                  colors: getRandomColors(Object.values(dashboardData.brandSalesByRep.data).length),
-                  labels: Object.values(dashboardData.brandSalesByRep.data).map(value=>{
-                    return value.ManufacturerName
-                  }),
-                },
-              })
-            // GOAL BY BRAND (MONTHLY)
-            let filteredAarray = [];
-            setIsLoading(true);
-            const values = dashboardData;
-            let key = Object.keys(values.brandSalesByRep.data).map((ele) => ele);
-            let ans = values.brandSalesByRep.raw.map((ele) => {
-              key.map((item) => {
-                if (ele === item) {
-                  filteredAarray.push(values.brandSalesByRep.data[item]);
-                } else {
-                }
-              });
+                    ],
+                    colors: getRandomColors(Object.values(dashboardData.brandSalesByRep.data).length),
+                    labels: Object.values(dashboardData.brandSalesByRep.data).map((value) => {
+                      return value.ManufacturerName;
+                    }),
+                  },
+                });
+                // GOAL BY BRAND (MONTHLY)
+                let filteredAarray = [];
+                setIsLoading(true);
+                const values = dashboardData;
+                let key = Object.keys(values.brandSalesByRep.data).map((ele) => ele);
+                let ans = values.brandSalesByRep.raw.map((ele) => {
+                  key.map((item) => {
+                    if (ele === item) {
+                      filteredAarray.push(values.brandSalesByRep.data[item]);
+                    } else {
+                    }
+                  });
+                });
+                settabledata(filteredAarray);
+
+                // LEADS BY BRAND || MONTHLY SALESBYREP || YEARLY SALESBYREP
+                let leadsdata = [];
+                let MonthlyData = [];
+                let YearlyData = [];
+                const valuess = dashboardData;
+                let keyy = Object.keys(values.lead.data).map((ele) => ele);
+                let anss = values.lead.raw.map((ele) => {
+                  keyy.map((item) => {
+                    if (ele === item) {
+                      leadsdata.push(values.lead.data[item]);
+                    } else {
+                    }
+                  });
+                });
+
+                //       // MONTHLY SALES BY REP
+                let keey = Object.keys(valuess.monthly.data).map((ele) => ele);
+                let annss = valuess.monthly.raw.map((ele) => {
+                  keey.map((item) => {
+                    if (ele === item) {
+                      MonthlyData.push(valuess.monthly.data[item]);
+                    } else {
+                    }
+                  });
+                });
+
+                //       // YEAR SALES BY REP
+                let KEY = Object.keys(values.yearly.data).map((ele) => ele);
+                let ANS = values.yearly.raw.map((ele) => {
+                  keey.map((item) => {
+                    if (ele === item) {
+                      YearlyData.push(values.yearly.data[item]);
+                    } else {
+                    }
+                  });
+                });
+
+                setleadsbtbrand(leadsdata);
+                setMonthlydata(MonthlyData);
+                setYearlydata(YearlyData);
+
+                setIsLoading(false);
+              } else {
+                navigate("/");
+              }
+            })
+            .catch((err) => {
+              console.error({ err });
             });
-            settabledata(filteredAarray);
-
-
-            // LEADS BY BRAND || MONTHLY SALESBYREP || YEARLY SALESBYREP
-            let leadsdata = [];
-            let MonthlyData = [];
-            let YearlyData = [];
-            const valuess = dashboardData;
-            let keyy = Object.keys(values.lead.data).map((ele) => ele);
-            let anss = values.lead.raw.map((ele) => {
-              keyy.map((item) => {
-                if (ele === item) {
-                  leadsdata.push(values.lead.data[item]);
-                } else {
-                }
-              });
-            });
-
-
-            //       // MONTHLY SALES BY REP
-            let keey = Object.keys(valuess.monthly.data).map((ele) => ele);
-            let annss = valuess.monthly.raw.map((ele) => {
-              keey.map((item) => {
-                if (ele === item) {
-                  MonthlyData.push(valuess.monthly.data[item]);
-                } else {
-                }
-              });
-            });
-
-
-            //       // YEAR SALES BY REP
-            let KEY = Object.keys(values.yearly.data).map((ele) => ele);
-            let ANS = values.yearly.raw.map((ele) => {
-              keey.map((item) => {
-                if (ele === item) {
-                  YearlyData.push(values.yearly.data[item]);
-                } else {
-                }
-              });
-            });
-
-            setleadsbtbrand(leadsdata);
-            setMonthlydata(MonthlyData);
-            setYearlydata(YearlyData);
-
-
-            // PERFORMANCE
-            setnameacc(values.performance.data[0].Name);
-            setnameacc1(values.performance.data[1].Name);
-            setnameacc2(values.performance.data[2].Name);
-            setmanufaacturelist(values.performance.data[0].ManufacturerList);
-            setmanufaacturelist1(values.performance.data[1].ManufacturerList);
-            setmanufaacturelist2(values.performance.data[2].ManufacturerList);
-            setIsLoading(false);
-          } else {
-            navigate("/");
-          }
-        }).catch((err) => {
-          console.error({ err });
         })
-      }).catch((error) => {
-        console.error({ error });
-      })
+        .catch((error) => {
+          console.error({ error });
+        });
     } else {
       navigate("/");
     }
-
   }, []);
   const date = new Date();
   const options = {
@@ -388,6 +376,10 @@ function Dashboard({ dashboardData }) {
     month: "long",
   };
   let current = date.toLocaleString("en-IN", options);
+  let lowPerformanceArray = dashboardRelatedData?.performance?.data
+    ?.slice(0)
+    .reverse()
+    .map((ele) => ele);
   return (
     <>
       {isLoading ? (
@@ -416,309 +408,273 @@ function Dashboard({ dashboardData }) {
 
           <div className="row justify-between ">
             {/* monthly data goal by brand*/}
-            <div className="col-lg-6 my-2" style={{width:"49.5%"}}>
-            <div className={Styles.DashboardWidth}>
-              <p className={Styles.Tabletext}>Month bill date(MTD): Goal by Brand</p>
-              <div className={Styles.goaltable}>
+            <div className="col-lg-6 col-sm-12 my-2" >
+              <div className={Styles.DashboardWidth}>
+                <p className={Styles.Tabletext}>Month bill date(MTD): Goal by Brand</p>
+                <div className={Styles.goaltable}>
+                  <div className={Styles.table_scroll}>
+                    <table className="table table-borderless ">
+                      <thead>
+                        <tr className={Styles.tablerow}>
+                          <th className="ps-3">Manufacturer</th>
+                          <th>Total Order</th>
+                          <th>Sale</th>
+                          <th>Sale Target</th>
+                        </tr>
+                      </thead>
 
-                <div className={Styles.table_scroll}>
-                  <table className="table table-borderless ">
-                    <thead>
-                      <tr className={Styles.tablerow}>
-                        <th className="ps-3">Manufacturer</th>
-                        <th>Total Order</th>
-                        <th>Sale</th>
-                        <th>Sale Target</th>
-                      </tr>
-                    </thead>
-
-                    <tbody className={Styles.tbdy}>
-                      {tabledata?.map((e) => {
-                        return (
-                          <tr key={e}>
-                            <td className={` ps-3 ${Styles.tabletd}`}>{e.ManufacturerName}</td>
-                            <td className={Styles.tabletd}>{e.totalOrder}</td>
-                            <td className={Styles.tabletd}>${Number(e.sale).toFixed(2)}K</td>
-                            <td className={Styles.tabletd}>${e.target}K</td>
-                          </tr>
-                        );
-
-                      })}
-                    </tbody>
-                  </table>
+                      <tbody className={Styles.tbdy}>
+                        {tabledata.length ? (
+                          tabledata?.map((e) => {
+                            return (
+                              <tr key={e}>
+                                <td className={` ps-3 ${Styles.tabletd}`}>{e.ManufacturerName}</td>
+                                <td className={Styles.tabletd}>{e.totalOrder}</td>
+                                <td className={Styles.tabletd}>${Number(e.sale).toFixed(2)}K</td>
+                                <td className={Styles.tabletd}>${e.target}K</td>
+                              </tr>
+                            );
+                          })
+                        ) : (
+                          <>
+                            <tr style={{ minHeight: "300px" }}>
+                              <td>
+                                <ContentLoader />
+                              </td>
+                              <td>
+                                <ContentLoader />
+                              </td>
+                              <td>
+                                <ContentLoader />
+                              </td>
+                              <td>
+                                <ContentLoader />
+                              </td>
+                              {/* <ContentLoader/> */}
+                            </tr>
+                          </>
+                        )}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
-
               </div>
-            </div>
             </div>
             {/* leads by brand*/}
-            <div className="col-lg-6 my-2 " style={{width:"49.5%"}}>
-            <div className={Styles.DashboardWidth}>
-              <p className={Styles.Tabletext}>Leads by Brand</p>
-              <div className={Styles.goaltable1}>
-                <div className="">
-                  <table class="table table-borderless mt-2">
-                    <thead>
-                      <tr className={Styles.tablerow}>
-                        <th className="ps-3">Manufacturer</th>
-                        <th>Received</th>
-                        <th>Converted</th>
-                      </tr>
-                    </thead>
+            <div className="col-lg-6 col-sm-12 my-2 ">
+              <div className={Styles.DashboardWidth}>
+                <p className={Styles.Tabletext}>Leads by Brand</p>
+                <div className={Styles.goaltable1}>
+                  <div className="">
+                    <table className="table table-borderless mt-2">
+                      <thead>
+                        <tr className={Styles.tablerow}>
+                          <th className="ps-3">Manufacturer</th>
+                          <th>Received</th>
+                          <th>Converted</th>
+                        </tr>
+                      </thead>
 
-                    {leadsbybrand == true ? (
-                      <tbody className="position-relative">
-                        {leadsbybrand.map((element) => {
-                          return (
-                            <tr key={element}>
-                              <td className={` ps-3 ${Styles.tabletd}`}>{element.ManufacturerName}</td>
-                              <td className={Styles.tabletd}>{element.received}</td>
-                              <td className={Styles.tabletd}>{element.converted}</td>
-                            </tr>
-                          );
-                        })}
-                      </tbody>
-                    ) : (
-                      <tbody>
-                        <td></td>
-                        <td>
-                          <div className={`d-flex justify-content-start align-items-center`} style={{ minHeight: "230px" }}>
-                            <p className={`${Styles.tablenodata}`}>No Data Found</p>
-                          </div>
-                        </td>
-                        <td></td>
-                      </tbody>
-                    )}
-                  </table>
+                      {leadsbybrand == true ? (
+                        <tbody className="position-relative">
+                          {leadsbybrand.map((element) => {
+                            return (
+                              <tr key={element}>
+                                <td className={` ps-3 ${Styles.tabletd}`}>{element.ManufacturerName}</td>
+                                <td className={Styles.tabletd}>{element.received}</td>
+                                <td className={Styles.tabletd}>{element.converted}</td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      ) : (
+                        <tbody>
+                          <td></td>
+                          <td>
+                            <div className={`d-flex justify-content-start align-items-center`} style={{ minHeight: "230px" }}>
+                              <p className={`${Styles.tablenodata}`}>No Data Found</p>
+                            </div>
+                          </td>
+                          <td></td>
+                        </tbody>
+                      )}
+                    </table>
+                  </div>
                 </div>
               </div>
-            </div>
             </div>
           </div>
 
           <div className="row mt-2 justify-between">
             {/* Monthly SALESBYREP */}
-            <div className="col-lg-6 my-2" style={{width:"49.5%"}}>
+            <div className="col-lg-6 my-2" >
               <div className={Styles.DashboardWidth}>
-              <p className={Styles.Tabletext}>Month bill date(MTD): Sales By Rep</p>
-              <div className={Styles.goaltable}>
-                <div className="">
-                  <div className={Styles.table_scroll}>
+                <p className={Styles.Tabletext}>Month bill date(MTD): Sales By Rep</p>
+                <div className={Styles.goaltable}>
+                  <div className="">
+                    <div className={Styles.table_scroll}>
+                      <table className="table table-borderless ">
+                        <thead>
+                          <tr className={Styles.tablerow}>
+                            <th scope="col" className="ps-3">
+                              Opportunity Owner
+                            </th>
+                            <th scope="col">Sum of Amount</th>
+                          </tr>
+                        </thead>
 
-                    <table class="table table-borderless ">
-                      <thead>
-                        <tr className={Styles.tablerow}>
-                          <th scope="col" className="ps-3">
-                            Opportunity Owner
-                          </th>
-                          <th scope="col">Sum of Amount</th>
-                        </tr>
-                      </thead>
-
-
-                      {Monthlydataa ? (
-                        <tbody>
-                          {Monthlydataa?.map((e) => {
-                            return (
-                              <tr key={e}>
-                                <td className={`${Styles.tabletd} ps-3 d-flex justify-content-start align-items-center gap-2`}>
-                                  <img src={img5} className="h-100" alt="" /> {e.salesRepName}
-                                </td>
-                                <td className={Styles.tabletd}>${(Number(e.total.revenue) / 1000).toFixed(0)}K</td>
-                              </tr>
-                            );
-                          })}
-                        </tbody>
-                      ) : (
-                        <tbody>
-                          <td></td>
-                          <td>
-                            <div className={`d-flex justify-content-start align-items-center`} style={{ minHeight: "230px" }}>
-                              <p className={`${Styles.tablenodata}`}>No Data Found</p>
-                            </div>
-                          </td>
-                          <td></td>
-                        </tbody>
-                      )}
-                    </table>
+                        {Monthlydataa ? (
+                          <tbody>
+                            {Monthlydataa?.map((e) => {
+                              return (
+                                <tr key={e}>
+                                  <td className={`${Styles.tabletd} ps-3 d-flex justify-content-start align-items-center gap-2`}>
+                                    <img src={img5} className="h-100" alt="" /> {e.salesRepName}
+                                  </td>
+                                  <td className={Styles.tabletd}>${(Number(e.total.revenue) / 1000).toFixed(0)}K</td>
+                                </tr>
+                              );
+                            })}
+                          </tbody>
+                        ) : (
+                          <tbody>
+                            <td></td>
+                            <td>
+                              <div className={`d-flex justify-content-start align-items-center`} style={{ minHeight: "230px" }}>
+                                <p className={`${Styles.tablenodata}`}>No Data Found</p>
+                              </div>
+                            </td>
+                            <td></td>
+                          </tbody>
+                        )}
+                      </table>
+                    </div>
                   </div>
                 </div>
-              </div>
               </div>
             </div>
             {/* Yearly SALESBYREP */}
-            <div className="col-lg-6 my-2" style={{width:"49.5%"}}>
+            <div className="col-lg-6 my-2">
               <div className={Styles.DashboardWidth}>
-              <p className={Styles.Tabletext}>Year bill date(MTD): Sales By Rep</p>
-              <div className={Styles.goaltable}>
-                <div className="">
-                  <div className={Styles.table_scroll}>
-                    <table class="table table-borderless ">
-                      <thead>
-                        <tr className={Styles.tablerow}>
-                          <th scope="col" className="ps-3">
-                            Opportunity Owner
-                          </th>
-                          <th scope="col">Sum of Amount</th>
-                        </tr>
-                      </thead>
+                <p className={Styles.Tabletext}>Year bill date(MTD): Sales By Rep</p>
+                <div className={Styles.goaltable}>
+                  <div className="">
+                    <div className={Styles.table_scroll}>
+                      <table className="table table-borderless ">
+                        <thead>
+                          <tr className={Styles.tablerow}>
+                            <th scope="col" className="ps-3">
+                              Opportunity Owner
+                            </th>
+                            <th scope="col">Sum of Amount</th>
+                          </tr>
+                        </thead>
 
-
-
-                      {Yearlydataa ? (
-                        <tbody>
-                          {Yearlydataa?.map((e) => {
-                            return (
-                              <tr key={e}>
-                                <td className={`${Styles.tabletd} ps-3 d-flex justify-content-start align-items-center gap-2`}>
-                                  <img src={img5} className="h-100" alt="" /> {e.salesRepName}
-                                </td>
-                                <td className={Styles.tabletd}>${(Number(e.total.revenue) / 1000).toFixed(0)}K</td>
-                              </tr>
-                            );
-                          })}
-                        </tbody>
-                      ) : (
-                        <tbody>
-                          <td></td>
-                          <td>
-                            <div className={`d-flex justify-content-start align-items-center`} style={{ minHeight: "230px" }}>
-                              <p className={`${Styles.tablenodata}`}>No Data Found</p>
-                            </div>
-                          </td>
-                          <td></td>
-                        </tbody>
-                      )}
-                    </table>
+                        {Yearlydataa ? (
+                          <tbody>
+                            {Yearlydataa?.map((e) => {
+                              return (
+                                <tr key={e}>
+                                  <td className={`${Styles.tabletd} ps-3 d-flex justify-content-start align-items-center gap-2`}>
+                                    <img src={img5} className="h-100" alt="" /> {e.salesRepName}
+                                  </td>
+                                  <td className={Styles.tabletd}>${(Number(e.total.revenue) / 1000).toFixed(0)}K</td>
+                                </tr>
+                              );
+                            })}
+                          </tbody>
+                        ) : (
+                          <tbody>
+                            <td></td>
+                            <td>
+                              <div className={`d-flex justify-content-start align-items-center`} style={{ minHeight: "230px" }}>
+                                <p className={`${Styles.tablenodata}`}>No Data Found</p>
+                              </div>
+                            </td>
+                            <td></td>
+                          </tbody>
+                        )}
+                      </table>
+                    </div>
                   </div>
                 </div>
-              </div>
               </div>
             </div>
           </div>
 
-          {/* <div className="row mt-5">
-            <div className="col-lg-6">
-              <p className={Styles.Tabletext}>Top Performing Accounts</p>
-            </div>
-            <div className="col-lg-6">
-              <p className={Styles.Tabletext1}>Low Performing Accounts</p>
-            </div>
-          </div> */}
           <div className="my-5">
-
             <div className={`row mt-1 justify-between ${Styles.topPerform2}`}>
-              <div className={`col-lg-6 ${Styles.top_perform1}`} style={{width:"48%"}}>
+              <div className={`col-lg-6 col-sm-12 ${Styles.top_perform1}`} >
                 <p className={Styles.Tabletext}>Top Performing Accounts</p>
                 <div className="row">
                   {/* TOP PERFORMANCE */}
-                  <div className="col-lg-6 col-md-6 col-sm-6 " >
-                    <div className={Styles.top_perform}>
-                      <div className="container">
-                        <div className={Styles.top_account}>
-                          <p className={Styles.top_accounttext}>{nameacc}</p>
-                        </div>
+                  {dashboardRelatedData?.performance?.data?.map((ele, index) => {
+                    if (index < 4) {
+                      return (
+                        <div className="col-lg-6 col-md-6 col-sm-12 ">
+                          <div
+                            className={Styles.top_perform}
+                            onClick={() => {
+                              setModalOpen(true);
+                              setBrandData(ele.ManufacturerList)
+                              console.log("kkkkk",ele);
+                              localStorage.setItem("Account", ele.Name);
+                              localStorage.setItem("AccountId__c", ele.AccountId);
+                            }}
+                            id={index}
+                          >
+                            <div className={Styles.top_accnew}>
+                              <p className={Styles.top_accounttext}>{ele.Name}</p>
+                            </div>
 
-                        <div className={` ${Styles.scrollbar}`}>
-                          {manufacturelist.map((itemm) => {
-                            const bgcolor = bgColors[itemm.Name];
-                            return <span className={`${Styles.account} ${Styles[bgcolor]}`}>{itemm.Name}</span>;
-                          })}
+                            <div className={` ${Styles.scrollbar}`}>
+                              {ele.ManufacturerList.map((itemm) => {
+                                const bgcolor = bgColors[itemm.Name];
+                                return <span className={`${Styles.account} ${Styles[bgcolor]}`}>{itemm.Name}</span>;
+                              })}
+                            </div>
+                            
+                          </div>
                         </div>
-                      </div>
-                    </div>
-                    <div className={` ${Styles.top_perform}`}>
-                      <div className="container">
-                        <div className={Styles.top_account}>
-                          <p className={Styles.top_accounttext}>{nameacc2}</p>
-                        </div>
-
-                        <div className={` ${Styles.scrollbar}`}>
-                          {manufacturelist2.map((item) => {
-                            const bgcolor = bgColors[item.Name];
-                            return <span className={`${Styles.account22} ${Styles[bgcolor]}`}>{item.Name}</span>;
-                          })}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="col-lg-6 col-md-6 col-sm-6">
-                    <div className={Styles.top_perform}>
-                      <div className="container">
-                        <div className={Styles.top_account}>
-                          <p className={Styles.top_accounttext}>{nameacc1}</p>
-                        </div>
-
-                        <div className={` ${Styles.scrollbar}`}>
-                          {manufacturelist1.map((item) => {
-                            const bgcolor = bgColors[item.Name];
-
-                            return <span className={`${Styles.account22} ${Styles[bgcolor]}`}>{item.Name}</span>;
-                          })}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                      );
+                    }
+                  })}
                 </div>
               </div>
-
-              <div className="col-lg-6" style={{width:"48%"}}>
+              <ModalPage open={modalOpen} onClose={() => setModalOpen(false)} content={<SelectBrandModel brands={brandData} onClose={() => setModalOpen(false)} />} />
+              <div className="col-lg-6 col-sm-12" style={{ width: "48%" }}>
                 <p className={Styles.Tabletext1}>Low Performing Accounts</p>
                 <div className="row">
-                  <div className="col-lg-6 col-md-6 col-sm-6">
-                    {/* LOW PERFORMANCE */}
-                    <div className={Styles.top_perform2}>
-                      <div className="container">
-                        <div className={Styles.top_accnew}>
-                          <p className={Styles.top_accounttext}>{nameacc2}</p>
-                        </div>
+                  {/* LOW PERFORMANCE */}
+                  {lowPerformanceArray?.map((ele, index) => {
+                    if (index < 4) {
+                      return (
+                        <div className="col-lg-6 col-md-6 col-sm-12">
+                          <div className={Styles.top_perform2}  onClick={() => {
+                              setModalOpen(true);
+                              setBrandData(ele.ManufacturerList);
+                              localStorage.setItem("Account", ele.Name);
+                              localStorage.setItem("AccountId__c", ele.AccountId);
+                            }}>
+                            <div className={Styles.top_account}>
+                              <p className={Styles.top_accounttext}>{ele.Name}</p>
+                            </div>
 
-                        <div className={` ${Styles.scrollbar}`}>
-                          {manufacturelist2.map((item) => {
-                            const bgcolor = bgColors[item.Name];
-                            return <span className={`${Styles.account22} ${Styles[bgcolor]}`}>{item.Name}</span>;
-                          })}
+                            <div className={` ${Styles.scrollbar}`}>
+                              {ele.ManufacturerList.map((item) => {
+                                const bgcolor = bgColors[item.Name];
+                                return <span className={`${Styles.account22} ${Styles[bgcolor]}`}>{item.Name}</span>;
+                              })}
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                    </div>
-                    <div className={` ${Styles.top_perform2}`}>
-                      <div className="container">
-                        <div className={Styles.top_accnew}>
-                          <p className={Styles.top_accounttext}>{nameacc} </p>
-                        </div>
-
-                        <div className={` ${Styles.scrollbar}`}>
-                          {manufacturelist.map((itemm) => {
-                            const bgcolor = bgColors[itemm.Name];
-                            return <span className={`${Styles.account} ${Styles[bgcolor]}`}>{itemm.Name}</span>;
-                          })}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="col-lg-6 col-md-6 col-sm-6">
-                    <div className={Styles.top_perform}>
-                      <div className="container">
-                        <div className={Styles.top_accnew}>
-                          <p className={Styles.top_accounttext}>{nameacc1}</p>
-                        </div>
-
-                        <div className={` ${Styles.scrollbar}`}>
-                          {manufacturelist1.map((item) => {
-                            const bgcolor = bgColors[item.Name];
-                            return <span className={`${Styles.account22} ${Styles[bgcolor]}`}>{item.Name}</span>;
-                          })}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                      );
+                    }
+                  })}
                 </div>
               </div>
             </div>
           </div>
-
 
           <div className="row my-3">
             <div className="col-lg-7">
@@ -727,10 +683,9 @@ function Dashboard({ dashboardData }) {
               <div className={Styles.donuttop}>
                 <p className={` text-center mt-3  ${Styles.Tabletextt}`}>Sum of Ordered</p>
                 <p className={`text-end ${Styles.main_heading}`}>MANUFACTURER</p>
-                <Chart options={salesByBrandData.options} series={salesByBrandData.series} type="donut" className={Styles.donutchart} width="90%" />
+                <Chart options={salesByBrandData.options} series={salesByBrandData.series} type="donut" className={Styles.donutchart} width="90%" height="400px" />
               </div>
             </div>
-
             <div className="col-lg-5">
               <p className={Styles.Tabletext}>Your Sales Performance Score in 2023</p>
               <div className={Styles.donuttop1}>
@@ -759,58 +714,48 @@ function Dashboard({ dashboardData }) {
           <div className="row mt-2 g-4">
             <div className="col-lg-3 col-md-6 col-sm-6">
               <div className={Styles.dashbottom}>
-
                 <div className={`text-center  ${Styles.active}`}>
                   <img src={img1} alt="" className={`text-center ${Styles.iconactive}`} />
-
                 </div>
                 <div className="">
                   <p className={`text-end ${Styles.activetext}`}>ACTIVE RETAILERS</p>
                   <h1 className={`text-end ${Styles.activetext1}`}>06</h1>
                 </div>
-
               </div>
             </div>
             <div className="col-lg-3 col-md-6 col-sm-6">
               <div className={Styles.dashbottom}>
-
                 <div className={`text-center  ${Styles.active}`}>
                   <img src={img2} alt="" className={`text-center ${Styles.iconactive}`} />
-
                 </div>
                 <div className="">
                   <p className={`text-end ${Styles.activetext}`}>GROWTH 2022 VS 2023</p>
-                  <h1 className={`text-end ${Styles.activetext1}`}>78<span>%</span></h1>
+                  <h1 className={`text-end ${Styles.activetext1}`}>
+                    78<span>%</span>
+                  </h1>
                 </div>
-
               </div>
             </div>
             <div className="col-lg-3 col-md-6 col-sm-6">
               <div className={Styles.dashbottom}>
-
                 <div className={`text-center  ${Styles.active}`}>
                   <img src={img3} alt="" className={`text-center ${Styles.iconactive3}`} />
-
                 </div>
                 <div className="">
                   <p className={`text-end ${Styles.activetext}`}>TOTAL NO. OF ORDERS</p>
                   <h1 className={`text-end ${Styles.activetext1}`}>135K</h1>
                 </div>
-
               </div>
             </div>
             <div className="col-lg-3 col-md-6 col-sm-6">
               <div className={Styles.dashbottom}>
-
                 <div className={`text-center  ${Styles.active}`}>
                   <img src={img4} alt="" className={`text-center ${Styles.iconactive4}`} />
-
                 </div>
                 <div className="">
                   <p className={`text-end ${Styles.activetext}`}>REVENUE</p>
                   <h1 className={`text-end ${Styles.activetext1}`}>$680K</h1>
                 </div>
-
               </div>
             </div>
           </div>

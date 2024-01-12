@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import CustomerSupportPage from "../components/CustomerSupportPage/CustomerSupportPage";
 import { FilterItem } from "../components/FilterItem";
 import FilterSearch from "../components/FilterSearch";
-import { GetAuthData, getSupportList } from "../lib/store";
+import { DestoryAuth, GetAuthData, getSupportList } from "../lib/store";
 import Loading from "../components/Loading";
 import Pagination from "../components/Pagination/Pagination";
 import Layout from "../components/Layout/Layout";
@@ -19,20 +19,27 @@ const CustomerSupport = () => {
   const [retailerFilter, setRetailerFilter] = useState(null);
   const { data: manufacturers } = useManufacturer();
   const { data: retailerData } = useRetailersData();
-
   useEffect(() => {
     GetAuthData()
-      .then((user) => {
+    .then((user) => {
+      if(user){
         getSupportList({ user })
-          .then((supports) => {
-            if(supports){
-              setSupportList(supports);
-            }
-            setLoaded(true);
-          })
-          .catch((error) => {
-            console.error({ error });
-          });
+        .then((supports) => {
+          if(supports){
+            setSupportList(supports);
+          }
+          setLoaded(true);
+        })
+        .catch((error) => {
+          console.error({ error });
+        });
+      }else{
+        DestoryAuth().then((res)=>{
+          console.log({res});
+        }).catch((err1)=>{
+          console.error({err1});
+        });
+      }
       })
       .catch((err) => {
         console.error(err);

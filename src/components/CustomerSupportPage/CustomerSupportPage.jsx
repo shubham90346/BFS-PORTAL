@@ -1,10 +1,14 @@
-import React, { useMemo } from 'react'
-import Styles from './Style.module.css'
-import MySupportTicket from './MySupportTicket';
-import { Link } from 'react-router-dom'
-import { CustomerServiceIcon, OrderStatusIcon,DefaultSupportIcon,MarketingSupportIcon } from '../../lib/svg'
+import React, { useMemo, useState } from "react";
+import Styles from "./Style.module.css";
+import MySupportTicket from "./MySupportTicket";
+import { Link } from "react-router-dom";
+import { CustomerServiceIcon, OrderStatusIcon, DefaultSupportIcon, MarketingSupportIcon, DIFTestIcon, DisplayIssuesIcon } from "../../lib/svg";
+import ModalPage from "../Modal UI";
+import SelectCaseReason from "../CustomerServiceFormSection/SelectCaseReason/SelectCaseReason";
 
-function CustomerSupportPage({ data, PageSize, currentPage, manufacturerFilter, searchBy,retailerFilter }) {
+function CustomerSupportPage({ data, PageSize, currentPage, manufacturerFilter, searchBy, retailerFilter }) {
+  const [modalOpen, setModalOpen] = useState(false);
+
   const filteredData = useMemo(() => {
     let newValues = data;
     if (manufacturerFilter) {
@@ -13,14 +17,23 @@ function CustomerSupportPage({ data, PageSize, currentPage, manufacturerFilter, 
     if (searchBy) {
       newValues = newValues?.filter((value) => value.CaseNumber?.toLowerCase().includes(searchBy?.toLowerCase()));
     }
-    if(retailerFilter){
-        newValues=newValues.filter((item)=>item.AccountId===retailerFilter)
+    if (retailerFilter) {
+      newValues = newValues.filter((item) => item.AccountId === retailerFilter);
     }
     return newValues;
-  }, [data,retailerFilter, manufacturerFilter, searchBy]);
+  }, [data, retailerFilter, manufacturerFilter, searchBy]);
+  const reasons={
+    "Charges":"Charges",
+    "Product Missing":"Product Missing",
+    "Product Overage Shipped":"Product Overage",
+    "Product Damage":"Product Damage",
+    "Update Account Info":"Update Account Info",
+  }
   return (
     <div>
       <div className="">
+        <ModalPage open={modalOpen} onClose={() => setModalOpen(false)} content={<SelectCaseReason reasons={reasons} onClose={() => setModalOpen(false)} recordType={{id:"0123b0000007z9pAAA",name:"Customer Service"}} />} />
+
         <div className={Styles.supportMain}>
           <div className="row">
             <div className="col-lg-3 col-md-12 col-sm-12">
@@ -38,8 +51,13 @@ function CustomerSupportPage({ data, PageSize, currentPage, manufacturerFilter, 
                   </div>
                 </Link>
 
-                <Link to={"/order-list"}>
-                <div className={Styles.supportLeftBox}>
+                <div
+                  className={Styles.supportLeftBox}
+                  style={{cursor:"pointer"}}
+                  onClick={() => {
+                    setModalOpen(true);
+                  }}
+                >
                   <div className={Styles.supportLeftImg}>
                     <CustomerServiceIcon width={42} height={42} />
                   </div>
@@ -49,64 +67,58 @@ function CustomerSupportPage({ data, PageSize, currentPage, manufacturerFilter, 
                     <p>Resolving Concerns Serving Solutions</p>
                   </div>
                 </div>
+
+                <Link to={"/order-list"}>
+                  <div className={Styles.supportLeftBox}>
+                    <div className={Styles.supportLeftImg}>
+                      <MarketingSupportIcon width={42} height={42} />
+                    </div>
+
+                    <div className={Styles.supportLeftContent}>
+                      <h2>Marketing Support Issues </h2>
+                      <p>Elevate Your Marketing with Proactive Solutions.</p>
+                    </div>
+                  </div>
                 </Link>
 
                 <Link to={"/order-list"}>
-                <div className={Styles.supportLeftBox}>
-                  <div className={Styles.supportLeftImg}>
-                    <MarketingSupportIcon width={42} height={42} />
-                  </div>
+                  <div className={Styles.supportLeftBox}>
+                    <div className={Styles.supportLeftImg}>
+                      <DefaultSupportIcon width={42} height={42} />
+                    </div>
 
-                  <div className={Styles.supportLeftContent}>
-                    <h2>Marketing Support Issues </h2>
-                    <p>Elevate Your Marketing with 
-Proactive Solutions.</p>
+                    <div className={Styles.supportLeftContent}>
+                      <h2>Management Cases </h2>
+                      <p>Empowering Solutions for Effective Management</p>
+                    </div>
                   </div>
-                </div>
                 </Link>
 
                 <Link to={"/order-list"}>
-                <div className={Styles.supportLeftBox}>
-                  <div className={Styles.supportLeftImg}>
-                    <DefaultSupportIcon width={42} height={42} />
-                  </div>
+                  <div className={Styles.supportLeftBox}>
+                    <div className={Styles.supportLeftImg}>
+                      <DIFTestIcon width={42} height={42} />
+                    </div>
 
-                  <div className={Styles.supportLeftContent}>
-                    <h2>Management Cases </h2>
-                    <p>Empowering Solutions for 
-Effective Management</p>
+                    <div className={Styles.supportLeftContent}>
+                      <h2>DIF Tester Issue </h2>
+                      <p>Empowering Solutions for Effective Management</p>
+                    </div>
                   </div>
-                </div>
                 </Link>
 
                 <Link to={"/order-list"}>
-                <div className={Styles.supportLeftBox}>
-                  <div className={Styles.supportLeftImg}>
-                    <DefaultSupportIcon width={42} height={42} />
-                  </div>
+                  <div className={Styles.supportLeftBox}>
+                    <div className={Styles.supportLeftImg}>
+                      <DisplayIssuesIcon width={42} height={42} />
+                    </div>
 
-                  <div className={Styles.supportLeftContent}>
-                    <h2>DIF Tester Issue </h2>
-                    <p>Empowering Solutions for 
-Effective Management</p>
+                    <div className={Styles.supportLeftContent}>
+                      <h2>Displays Issues </h2>
+                      <p>Empowering Solutions for Effective Management</p>
+                    </div>
                   </div>
-                </div>
                 </Link>
-
-                <Link to={"/order-list"}>
-                <div className={Styles.supportLeftBox}>
-                  <div className={Styles.supportLeftImg}>
-                    <DefaultSupportIcon width={42} height={42} />
-                  </div>
-
-                  <div className={Styles.supportLeftContent}>
-                    <h2>Displays Issues </h2>
-                    <p>Empowering Solutions for 
-Effective Management</p>
-                  </div>
-                </div>
-                </Link>
-
               </div>
             </div>
 
