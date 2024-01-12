@@ -11,9 +11,9 @@ const LoginHeader = () => {
           <div className="col-12">
             <div className="d-flex justify-content-between align-items-center gap-2">
               <div className="d-flex justify-content-center align-items-center gap-5">
-                <Link to="/dashboard" className="">
+                {/* <Link to="/dashboard" className=""> */}
                   <img src={"/assets/images/BFSG_logo.svg"} alt="img" />
-                </Link>
+                {/* </Link> */}
               </div>
               <div className="d-flex justify-content-center align-items-center gap-4">
               <p className={`m-0 ${style.language} ${style.text} flex`}>
