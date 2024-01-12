@@ -6,8 +6,9 @@ import { DestoryAuth, GetAuthData, getOrderList, getSupportFormRaw, postSupportA
 const SelectCaseReason = ({ reasons, onClose, recordType }) => {
   const navigate = useNavigate();
   const [prioritiesList, setPrioritiesList] = useState([]);
-  const [contactList, setContactList] = useState([]);
+  const [accountList, setAccountList] = useState([]);
   const [orders, setOrders] = useState([]);
+  const[orderIdChild,setOrderIdChild] = useState([]);
   const [typeId, setTypeId] = useState(recordType.id)
   const [desc, setDesc] = useState()
   const [orderData, setOrderData] = useState({
@@ -57,27 +58,29 @@ const SelectCaseReason = ({ reasons, onClose, recordType }) => {
   };
   const onOrderChangeHandler = (e) => {
     let id = e.target.value
-    let orderDetails =orders.filter(function(element) {
-      
-      if(element.Id === id){ setOrderData({
-        accountId: element.AccountId,
-        orderNumber: element.Order_Number__c,
-        poNumber: element.PO_Number__c,
-        manufacturerId: element.ManufacturerId__c,
-        opportunityId: element.Id,
-        actualAmount: element.Amount,
-        invoiceNumber: element.Wholesale_Invoice__c
-      });
-      return element
-    }
+    let orderDetails = orders.filter(function (element) {
+      if (element.Id === id) {
+        setOrderData({
+          accountId: element.AccountId,
+          orderNumber: element.Order_Number__c,
+          poNumber: element.PO_Number__c,
+          manufacturerId: element.ManufacturerId__c,
+          opportunityId: element.Id,
+          actualAmount: element.Amount,
+          invoiceNumber: element.Wholesale_Invoice__c
+        });
+        setOrderIdChild(element.OpportunityLineItems.records)
+        return element
+      }
     });
-    if(orderData.opportunityId){
+    if (orderData.opportunityId) {
       setStep(2)
     }
   }
-  const submitForm = ()=>{
-    GetAuthData().then((user)=>{
-      if(user){
+  console.log({ reason });
+  const submitForm = () => {
+    GetAuthData().then((user) => {
+      if (user) {
         let rawData = {
           orderStatusForm: {
             typeId,
@@ -92,19 +95,19 @@ const SelectCaseReason = ({ reasons, onClose, recordType }) => {
             priority: "Medium",
             sendEmail: false,
           },
-          key:user.x_access_token
+          key: user.x_access_token
         }
-        postSupportAny({rawData}).then((response)=>{
-          if(response){
-            navigate("/CustomerSupportDetails?id="+response)
+        postSupportAny({ rawData }).then((response) => {
+          if (response) {
+            navigate("/CustomerSupportDetails?id=" + response)
           }
-        }).catch((err)=>{
-          console.error({err});
+        }).catch((err) => {
+          console.error({ err });
         })
-      }else{
+      } else {
         DestoryAuth()
       }
-    }).catch((error)=>{
+    }).catch((error) => {
       DestoryAuth()
     })
   }
@@ -138,24 +141,40 @@ const SelectCaseReason = ({ reasons, onClose, recordType }) => {
             </div>
             {step >= 1 && <div>
               <div style={{ width: '100%' }}>
-                <select onChange={(e) => { onOrderChangeHandler(e) }}>
-                  <option>Search Order</option>
-                  {orders.length>0 &&orders.map((element) => {
+                {(reason == "Charges" || reason == "Product Missing" || reason == "Product Overage" || reason == "Product Damage") &&
+                  <select onChange={(e) => { onOrderChangeHandler(e) }}>
+                    <option>Search Order</option>
+                    {orders.length > 0 && orders.map((element) => {
+                      return (<option value={element.Id}>Order from {element.AccountName} for ({element.ProductCount} Products) Actual Amount {element.Amount} | {element.ManufacturerName__c} | PO #{element.PO_Number__c}</option>)
+                    })}
+                  </select>}
+                {reason == "Update Account Info" && <select onChange={(e) => { }}>
+                  <option>Search Account</option>
+                  {orders.length > 0 && orders.map((element) => {
                     return (<option value={element.Id}>Order from {element.AccountName} for ({element.ProductCount} Products) Actual Amount {element.Amount} | {element.ManufacturerName__c} | PO #{element.PO_Number__c}</option>)
                   })}
-                </select>
+                </select>}
               </div>
             </div>}
-            {step ==2 && <div>
+            {step == 2 && <div>
               <div style={{ width: '100%' }}>
-                <div><label>Actual Amount</label>
-                <input type="text" value={orderData.actualAmount}/>
-                <label>Associated Invoice Number:</label>
-                <input type="text" value={orderData.invoiceNumber?orderData.invoiceNumber:'NA'}/></div>
+              {reason == "Charges" && <div><label>Actual Amount</label>
+                  <input type="text" value={orderData.actualAmount} />
+                  <label>Associated Invoice Number:</label>
+                  <input type="text" value={orderData.invoiceNumber ? orderData.invoiceNumber : 'NA'} /></div>}
+                  {reason == "Product Missing"&&<div><select onChange={(e) => { }}>
+                  <option>Search Product</option>
+                  {orderIdChild.length > 0 && orderIdChild.map((element) => {
+                    return (<option value={element.Id}>{element.Name}</option>)
+                  })}
+                </select>
                 <div>
-                <input type="text" placeholder="Provide One line Subject"/></div>
+                  <input type="text" placeholder="Quantity Missing" /></div>
+                </div>}
                 <div>
-                <textarea placeholder="Describe your issues"></textarea></div>
+                  <input type="text" placeholder="Provide One line Subject" /></div>
+                <div>
+                  <textarea placeholder="Describe your issues"></textarea></div>
               </div>
             </div>}
             {step == 2 && <div className={Styles.BrandButton}>
@@ -164,7 +183,8 @@ const SelectCaseReason = ({ reasons, onClose, recordType }) => {
               </button>
               <button
                 className={Styles.Button2}
-                onClick={() => {submitForm()
+                onClick={() => {
+                  submitForm()
                 }}
               >
                 SUBMIT
