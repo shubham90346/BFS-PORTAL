@@ -22,7 +22,7 @@ const TopNav = () => {
             {/* </a> */}
             <ul className="dropdown-menu">
               <li>
-                <Link to="" className="dropdown-item text-start" >
+                <Link to="/order-list" className="dropdown-item text-start" >
                 Order Status
                 </Link>
               </li>
