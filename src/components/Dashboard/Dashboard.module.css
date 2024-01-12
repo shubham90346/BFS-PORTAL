@@ -489,4 +489,16 @@
   .head_topp {
     display: none;
   }
+
+  .topPerform2::before {
+    position: absolute;
+    content: "";
+    width: 0px;
+    height: 100%;
+    color: transparent;
+    background-color: transparent;
+    color: #acacac;
+    left: 49.5%;
+    border-right: 0px dashed rgb(32, 32, 32);
+  }
 }
