@@ -54,6 +54,15 @@ const SelectCaseReason = ({ reasons, onClose, recordType }) => {
   }, []);
   const onChangeHandler = (e) => {
     setReason(e.target.value)
+    setOrderData({
+      accountId: null,
+      orderNumber: null,
+      poNumber: null,
+      manufacturerId: null,
+      opportunityId: null,
+      actualAmount: null,
+      invoiceNumber: null
+    })
     setStep(1)
   };
   const onOrderChangeHandler = (e) => {
