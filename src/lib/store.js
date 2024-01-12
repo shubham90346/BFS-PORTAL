@@ -204,7 +204,7 @@ export async function getSupportList({ user }) {
   let headersList = {
     Accept: "*/*",
   };
-
+  console.log({user});
   let bodyContent = new FormData();
   bodyContent.append("key", user.x_access_token);
   bodyContent.append("salesRepId", user.Sales_Rep__c);
@@ -226,22 +226,23 @@ export async function getSupportDetails({ rawData }) {
   let headersList = {
     Accept: "*/*",
   };
-
+  
   let bodyContent = new FormData();
   bodyContent.append("key", rawData.key);
   bodyContent.append("caseId", rawData.caseId);
-
+  
   let response = await fetch(url + "v3/ffBUF1vNs9LTLfz", {
     method: "POST",
     body: bodyContent,
     headers: headersList,
   });
   let data = JSON.parse(await response.text());
-  if(data.status != 200){
-    DestoryAuth()
-  }else{
+  console.log({data});
+  // if(data.status != 200){
+  //   DestoryAuth()
+  // }else{
     return data.data;
-  }
+  // }
 }
 
 export async function getSupportFormRaw({ rawData }) {
@@ -257,6 +258,25 @@ export async function getSupportFormRaw({ rawData }) {
     method: "POST",
     body: bodyContent,
     headers: headersList,
+  });
+  let data = JSON.parse(await response.text());
+  if(data.status != 200){
+    DestoryAuth()
+  }else{
+    return data.data;
+  }
+}
+
+export async function getAllAccount({ user }) {
+  let headersList = {
+    Accept: "*/*",
+    key:user.x_access_token,
+    userId:user.Sales_Rep__c
+  };
+
+  let response = await fetch(url + "v3/JbUxci", {
+    method: "POST",
+    headers: headersList
   });
   let data = JSON.parse(await response.text());
   if(data.status != 200){
@@ -316,9 +336,10 @@ export async function postSupportComment({ rawData }) {
     headers: headersList,
   });
   let data = JSON.parse(await response.text());
-  if(data.status != 200){
-    DestoryAuth()
-  }else{
+  console.log({data});
+  // if(data.status != 200){
+    // DestoryAuth()
+  // }else{
     return data.data;
-  }
+  // }
 }
