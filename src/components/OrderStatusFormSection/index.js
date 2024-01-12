@@ -48,7 +48,7 @@ const OrderStatusFormSection = () => {
             postSupport({rawData:supportTicketData}).then((response)=>{
                 if(response){
                     let flush = supportClear()
-                    if(flush) {navigate("/CustomerSupportDetails?id="+response)}
+                    navigate("/CustomerSupportDetails?id="+response)
                 }else{
                     alert("something went wrong..")
                 }
