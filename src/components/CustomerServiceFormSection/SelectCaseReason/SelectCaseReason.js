@@ -21,9 +21,9 @@ const SelectCaseReason = ({ reasons, onClose, recordType }) => {
     manufacturerId: null,
     opportunityId: null,
     actualAmount: null,
-    invoiceNumber: null,
-  });
-  const [reason, setReason] = useState(null);
+    invoiceNumber: null
+  })
+  const [reason, setReason] = useState(null)
   const [rawData, setRawData] = useState({
     orderStatusForm: {
       salesRepId: null,
@@ -32,7 +32,7 @@ const SelectCaseReason = ({ reasons, onClose, recordType }) => {
       priority: "Medium",
       sendEmail: false,
     },
-  });
+  })
   const [step, setStep] = useState(0);
   useEffect(() => {
     GetAuthData()
@@ -70,9 +70,9 @@ const SelectCaseReason = ({ reasons, onClose, recordType }) => {
       manufacturerId: null,
       opportunityId: null,
       actualAmount: null,
-      invoiceNumber: null,
-    });
-    setStep(1);
+      invoiceNumber: null
+    })
+    setStep(1)
   };
   const onOrderChangeHandler = (e) => {
     let id = e.target.value
@@ -86,11 +86,11 @@ const SelectCaseReason = ({ reasons, onClose, recordType }) => {
           manufacturerId: element.ManufacturerId__c,
           opportunityId: element.Id,
           actualAmount: element.Amount,
-          invoiceNumber: element.Wholesale_Invoice__c,
+          invoiceNumber: element.Wholesale_Invoice__c
         });
-        setOrderIdChild(element.OpportunityLineItems.records);
-        setStep(2);
-        return element;
+        setOrderIdChild(element.OpportunityLineItems.records)
+        setStep(2)
+        return element
       }
     });
   }
@@ -127,11 +127,20 @@ const SelectCaseReason = ({ reasons, onClose, recordType }) => {
           },
           key: user.x_access_token
         }
-      })
-      .catch((error) => {
-        DestoryAuth();
-      });
-  };
+        postSupportAny({ rawData }).then((response) => {
+          if (response) {
+            navigate("/CustomerSupportDetails?id=" + response)
+          }
+        }).catch((err) => {
+          console.error({ err });
+        })
+      } else {
+        DestoryAuth()
+      }
+    }).catch((error) => {
+      DestoryAuth()
+    })
+  }
   return (
     <>
       <div className="px-[68px] pb-[30px] pt-[30px] max-w-[900px]">
@@ -186,7 +195,7 @@ const SelectCaseReason = ({ reasons, onClose, recordType }) => {
                       })}
                   </select>
                 )}
-                                {reason == "Update Account Info" && <select onChange={(e) => { onChnageAccountHander(e) }}>
+                {reason == "Update Account Info" && <select onChange={(e) => { onChnageAccountHander(e) }}>
                   <option>Search Account</option>
                   {accountList.length > 0 && accountList.map((element) => {
                     return (<option value={element.Id}>{element.Name}</option>)
@@ -199,19 +208,19 @@ const SelectCaseReason = ({ reasons, onClose, recordType }) => {
               <div style={{ width: "100%" }}>
                 {reason == "Charges" && (
                   <div className={Styles.labelAmountDiv}>
-                    <div className="d-flex justify-content-start align-items-center gap-3" style={{width:"40%", borderRight:"1px solid #D9D9D9"}}>
+                    <div className="d-flex justify-content-start align-items-center gap-3" style={{ width: "40%", borderRight: "1px solid #D9D9D9" }}>
                       <label className={Styles.label}>Actual Amount:</label>
-<input type="text" className={Styles.labelInput} value={Number(orderData.actualAmount).toFixed(2)} />
+                      <input type="text" className={Styles.labelInput} value={Number(orderData.actualAmount).toFixed(2)} />
                     </div>
                     <div className="d-flex justify-content-center align-items-center gap-3 ms-3">
                       <label className={Styles.label}>Associated Invoice Number:</label>
-<input type="text" value={orderData.invoiceNumber ? orderData.invoiceNumber : 'NA'} className={Styles.labelInput}/>
+                      <input type="text" value={orderData.invoiceNumber ? orderData.invoiceNumber : 'NA'} className={Styles.labelInput} />
                     </div>
                   </div>
                 )}
                 {(reason == "Product Missing" || reason == "Product Overage") && (
                   <div>
-                    <select onChange={(e) => { onChnageOrderItemHander(e)}} className="mt-[10px] mb-[10px] ">
+                    <select onChange={(e) => { onChnageOrderItemHander(e) }} className="mt-[10px] mb-[10px] ">
                       <option>Search Product</option>
                       {orderIdChild.length > 0 &&
                         orderIdChild.map((element) => {
@@ -219,15 +228,15 @@ const SelectCaseReason = ({ reasons, onClose, recordType }) => {
                         })}
                     </select>
                     <div>
-                      <input className={Styles.input} type="text" placeholder="Quantity Missing" value={selectedOrderItem.value}/>
+                      <input className={Styles.input} type="text" placeholder="Quantity Missing" value={selectedOrderItem.value} />
                     </div>
                   </div>
                 )}
                 <div>
-                  <input className={Styles.input} type="text" placeholder="Provide One line Subject" onKeyDown={(e)=>{setSubject(e.target.value)}}/>
+                  <input className={Styles.input} type="text" placeholder="Provide One line Subject" onKeyDown={(e) => { setSubject(e.target.value) }} />
                 </div>
                 <div>
-                  <textarea className={Styles.input} rows={3} placeholder="Describe your issues" onKeyDown={(e)=>{setDesc(e.target.value)}}></textarea>
+                  <textarea className={Styles.input} rows={3} placeholder="Describe your issues" onKeyDown={(e) => { setDesc(e.target.value) }}></textarea>
                 </div>
               </div>
             </div>
