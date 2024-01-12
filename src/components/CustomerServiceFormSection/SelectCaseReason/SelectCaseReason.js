@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Styles from "./style.module.css";
 import { useNavigate } from "react-router-dom";
+import { CloseButton } from "../../../lib/svg";
 import { DestoryAuth, GetAuthData, getAllAccount, getOrderList, getSupportFormRaw, postSupportAny, supportDriveBeg, supportShare } from "../../../lib/store";
 
 const SelectCaseReason = ({ reasons, onClose, recordType }) => {
@@ -142,10 +143,12 @@ const SelectCaseReason = ({ reasons, onClose, recordType }) => {
   }
   return (
     <>
-      <div className="px-[68px] pb-[67px] pt-[40px] max-w-[900px]">
+      <div className="px-[68px] pb-[30px] pt-[30px] max-w-[900px]">
         <section>
           <div className="d-flex align-items-center justify-content-end gap-5">
-            <button type="button" className="btn-close" onClick={onClose}></button>
+            <button type="button" onClick={onClose}>
+              <CloseButton />
+            </button>
           </div>
           <h1 className="font-[Montserrat-500] text-[22px] tracking-[2.20px] mb-[20px]">{recordType.name}</h1>
 
@@ -168,15 +171,30 @@ const SelectCaseReason = ({ reasons, onClose, recordType }) => {
                 );
               })}
             </div>
-            {step >= 1 && <div>
-              <div style={{ width: '100%' }}>
-                {(reason == "Charges" || reason == "Product Missing" || reason == "Product Overage" || reason == "Product Damage") &&
-                  <select onChange={(e) => { onOrderChangeHandler(e) }}>
+          </div>
+          <hr style={{ border: "1px dashed #D5D9D9" }}></hr>
+          {step >= 1 && (
+            <div>
+              <div className={Styles.selectDiv}>
+                {(reason == "Charges" || reason == "Product Missing" || reason == "Product Overage" || reason == "Product Damage") && (
+                  <select
+                    onChange={(e) => {
+                      onOrderChangeHandler(e);
+                    }} className="mb-[10px] "
+                  >
                     <option>Search Order</option>
-                    {orders.length > 0 && orders.map((element) => {
-                      return (<option value={element.Id} selected={orderData.opportunityId == element.Id}>Order from {element.AccountName} for ({element.ProductCount} Products) Actual Amount {element.Amount} | {element.ManufacturerName__c} | PO #{element.PO_Number__c}</option>)
-                    })}
-                  </select>}
+
+                    {orders.length > 0 &&
+                      orders.map((element) => {
+                        return (
+                          <option className={Styles.option} value={element.Id} selected={orderData.opportunityId == element.Id}>
+                            Order from <span style={{ fontWeight: "700", color: "red" }}>{element.AccountName}</span> for ({element.ProductCount} Products) Actual Amount {element.Amount} |{" "}
+                            {element.ManufacturerName__c} | PO #{element.PO_Number__c}
+                          </option>
+                        );
+                      })}
+                  </select>
+                )}
                 {reason == "Update Account Info" && <select onChange={(e) => { onChnageAccountHander(e) }}>
                   <option>Search Account</option>
                   {accountList.length > 0 && accountList.map((element) => {
@@ -184,42 +202,60 @@ const SelectCaseReason = ({ reasons, onClose, recordType }) => {
                   })}
                 </select>}
               </div>
-            </div>}
-            {step == 2 && <div>
-              <div style={{ width: '100%' }}>
-                {reason == "Charges" && <div><label>Actual Amount</label>
-                  <input type="text" value={orderData.actualAmount} />
-                  <label>Associated Invoice Number:</label>
-                  <input type="text" value={orderData.invoiceNumber ? orderData.invoiceNumber : 'NA'} /></div>}
-                {(reason == "Product Missing" || reason == "Product Overage" || reason == "Product Damage") && <div><select onChange={(e) => { onChnageOrderItemHander(e)}}>
-                  <option>Search Product</option>
-                  {orderIdChild.length > 0 && orderIdChild.map((element) => {
-                    return (<option value={element.Id} selected={selectedOrderItem.id == element.Id}>{element.Name}</option>)
-                  })}
-                </select>
+            </div>)}
+          {step == 2 && (
+            <div>
+              <div style={{ width: "100%" }}>
+                {reason == "Charges" && (
+                  <div className={Styles.labelAmountDiv}>
+                    <div className="d-flex justify-content-start align-items-center gap-3" style={{ width: "40%", borderRight: "1px solid #D9D9D9" }}>
+                      <label className={Styles.label}>Actual Amount:</label>
+                      <input type="text" className={Styles.labelInput} value={Number(orderData.actualAmount).toFixed(2)} />
+                    </div>
+                    <div className="d-flex justify-content-center align-items-center gap-3 ms-3">
+                      <label className={Styles.label}>Associated Invoice Number:</label>
+                      <input type="text" value={orderData.invoiceNumber ? orderData.invoiceNumber : 'NA'} className={Styles.labelInput} />
+                    </div>
+                  </div>
+                )}
+                {(reason == "Product Missing" || reason == "Product Overage") && (
                   <div>
-                    <input type="text" placeholder="Quantity Missing" value={selectedOrderItem.value}/></div>
-                </div>}
+                    <select onChange={(e) => { onChnageOrderItemHander(e) }} className="mt-[10px] mb-[10px] ">
+                      <option>Search Product</option>
+                      {orderIdChild.length > 0 &&
+                        orderIdChild.map((element) => {
+                          return <option value={element.Id} selected={selectedOrderItem.id == element.Id}>{element.Name}</option>;
+                        })}
+                    </select>
+                    <div>
+                      <input className={Styles.input} type="text" placeholder="Quantity Missing" value={selectedOrderItem.value} />
+                    </div>
+                  </div>
+                )}
                 <div>
-                  <input type="text" placeholder="Provide One line Subject" onKeyDown={(e)=>{setSubject(e.target.value)}} /></div>
+                  <input className={Styles.input} type="text" placeholder="Provide One line Subject" onKeyDown={(e) => { setSubject(e.target.value) }} />
+                </div>
                 <div>
-                  <textarea placeholder="Describe your issues" onKeyDown={(e)=>{setDesc(e.target.value)}}></textarea></div>
+                  <textarea className={Styles.input} rows={3} placeholder="Describe your issues" onKeyDown={(e) => { setDesc(e.target.value) }}></textarea>
+                </div>
               </div>
-            </div>}
-            {step == 2 && <div className={Styles.BrandButton}>
+            </div>
+          )}
+          {step == 2 && (
+            <div className={Styles.BrandButton}>
               <button className={Styles.Button1} onClick={onClose}>
                 CANCEL
               </button>
               <button
                 className={Styles.Button2}
                 onClick={() => {
-                  submitForm()
+                  submitForm();
                 }}
               >
                 SUBMIT
               </button>
-            </div>}
-          </div>
+            </div>
+          )}
         </section>
       </div>
     </>
