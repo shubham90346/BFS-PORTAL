@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Styles from "./style.module.css";
 import { useNavigate } from "react-router-dom";
-import { DestoryAuth, GetAuthData, getOrderList, getSupportFormRaw, postSupportAny, supportDriveBeg, supportShare } from "../../../lib/store";
 import { CloseButton } from "../../../lib/svg";
+import { DestoryAuth, GetAuthData, getAllAccount, getOrderList, getSupportFormRaw, postSupportAny, supportDriveBeg, supportShare } from "../../../lib/store";
 
 const SelectCaseReason = ({ reasons, onClose, recordType }) => {
   const navigate = useNavigate();
@@ -10,8 +10,10 @@ const SelectCaseReason = ({ reasons, onClose, recordType }) => {
   const [accountList, setAccountList] = useState([]);
   const [orders, setOrders] = useState([]);
   const [orderIdChild, setOrderIdChild] = useState([]);
-  const [typeId, setTypeId] = useState(recordType.id);
-  const [desc, setDesc] = useState();
+  const [typeId, setTypeId] = useState(recordType.id)
+  const [desc, setDesc] = useState()
+  const [subject, setSubject] = useState()
+  const [selectedOrderItem,setSelectOrderItem] = useState({id:null,value:null})
   const [orderData, setOrderData] = useState({
     accountId: null,
     orderNumber: null,
@@ -48,13 +50,19 @@ const SelectCaseReason = ({ reasons, onClose, recordType }) => {
           .catch((error) => {
             console.log({ error });
           });
+        getAllAccount({ user: response }).then((accounts) => {
+          setAccountList(accounts)
+        }).catch((actError) => {
+          console.error({ actError });
+        })
       })
       .catch((err) => {
         console.log({ err });
       });
   }, [step]);
   const onChangeHandler = (e) => {
-    setReason(e.target.value);
+    setReason(e.target.value)
+    setSelectOrderItem({id:null,value:null})
     setOrderData({
       accountId: null,
       orderNumber: null,
@@ -67,7 +75,8 @@ const SelectCaseReason = ({ reasons, onClose, recordType }) => {
     setStep(1);
   };
   const onOrderChangeHandler = (e) => {
-    let id = e.target.value;
+    let id = e.target.value
+    setSelectOrderItem({id:null,value:null})
     let orderDetails = orders.filter(function (element) {
       if (element.Id === id) {
         setOrderData({
@@ -84,39 +93,39 @@ const SelectCaseReason = ({ reasons, onClose, recordType }) => {
         return element;
       }
     });
-  };
-  console.log({ reason });
+  }
+  const onChnageAccountHander = (e) => {
+    setOrderData({ accountId: e.target.value })
+    setStep(2)
+  }
+  const onChnageOrderItemHander = (e) => {
+    let orderItemDetails = orderIdChild.filter(function (element) {
+      let id = e.target.value
+      if (element.Id === id) {
+        setSelectOrderItem({id:element.Id,value:element.Quantity});
+        return element
+      }
+    });
+  }
   const submitForm = () => {
-    GetAuthData()
-      .then((user) => {
-        if (user) {
-          let rawData = {
-            orderStatusForm: {
-              typeId,
-              salesRepId: user.Sales_Rep__c,
-              reason,
-              accountId: orderData.accountId,
-              orderNumber: orderData?.orderNumber,
-              poNumber: orderData.poNumber,
-              manufacturerId: orderData.manufacturerId,
-              desc: null,
-              opportunityId: orderData.opportunityId,
-              priority: "Medium",
-              sendEmail: false,
-            },
-            key: user.x_access_token,
-          };
-          postSupportAny({ rawData })
-            .then((response) => {
-              if (response) {
-                navigate("/CustomerSupportDetails?id=" + response);
-              }
-            })
-            .catch((err) => {
-              console.error({ err });
-            });
-        } else {
-          DestoryAuth();
+    GetAuthData().then((user) => {
+      if (user) {
+        let rawData = {
+          orderStatusForm: {
+            typeId,
+            salesRepId: user.Sales_Rep__c,
+            reason,
+            accountId: orderData.accountId,
+            orderNumber: orderData?.orderNumber,
+            poNumber: orderData.poNumber,
+            manufacturerId: orderData.manufacturerId,
+            desc,
+            opportunityId: orderData.opportunityId,
+            priority: "Medium",
+            sendEmail: false,
+            subject
+          },
+          key: user.x_access_token
         }
       })
       .catch((error) => {
@@ -165,6 +174,7 @@ const SelectCaseReason = ({ reasons, onClose, recordType }) => {
                     }} className="mb-[10px] "
                   >
                     <option>Search Order</option>
+
                     {orders.length > 0 &&
                       orders.map((element) => {
                         return (
@@ -176,24 +186,14 @@ const SelectCaseReason = ({ reasons, onClose, recordType }) => {
                       })}
                   </select>
                 )}
-
-                {reason == "Update Account Info" && (
-                  <select onChange={(e) => {} }>
-                    <option>Search Account</option>
-                    {orders.length > 0 &&
-                      orders.map((element) => {
-                        return (
-                          <option value={element.Id}>
-                            Order from {element.AccountName} for ({element.ProductCount} Products) Actual Amount {element.Amount} | {element.ManufacturerName__c} | PO #{element.PO_Number__c}
-                          </option>
-                        );
-                      })}
-                  </select>
-                )}
+                                {reason == "Update Account Info" && <select onChange={(e) => { onChnageAccountHander(e) }}>
+                  <option>Search Account</option>
+                  {accountList.length > 0 && accountList.map((element) => {
+                    return (<option value={element.Id}>{element.Name}</option>)
+                  })}
+                </select>}
               </div>
-            </div>
-          )}
-
+            </div>)}
           {step == 2 && (
             <div>
               <div style={{ width: "100%" }}>
@@ -201,33 +201,33 @@ const SelectCaseReason = ({ reasons, onClose, recordType }) => {
                   <div className={Styles.labelAmountDiv}>
                     <div className="d-flex justify-content-start align-items-center gap-3" style={{width:"40%", borderRight:"1px solid #D9D9D9"}}>
                       <label className={Styles.label}>Actual Amount:</label>
-                      <p className={Styles.labelInput}>${Number(orderData.actualAmount).toFixed(2)}</p>
+<input type="text" className={Styles.labelInput} value={Number(orderData.actualAmount).toFixed(2)} />
                     </div>
                     <div className="d-flex justify-content-center align-items-center gap-3 ms-3">
                       <label className={Styles.label}>Associated Invoice Number:</label>
-                      <p className={Styles.labelInput}>{orderData.invoiceNumber ? orderData.invoiceNumber : "NA"}</p>
+<input type="text" value={orderData.invoiceNumber ? orderData.invoiceNumber : 'NA'} className={Styles.labelInput}/>
                     </div>
                   </div>
                 )}
                 {(reason == "Product Missing" || reason == "Product Overage") && (
                   <div>
-                    <select onChange={(e) => {}} className="mt-[10px] mb-[10px] ">
+                    <select onChange={(e) => { onChnageOrderItemHander(e)}} className="mt-[10px] mb-[10px] ">
                       <option>Search Product</option>
                       {orderIdChild.length > 0 &&
                         orderIdChild.map((element) => {
-                          return <option value={element.Id}>{element.Name}</option>;
+                          return <option value={element.Id} selected={selectedOrderItem.id == element.Id}>{element.Name}</option>;
                         })}
                     </select>
                     <div>
-                      <input className={Styles.input} type="text" placeholder="Quantity Missing" />
+                      <input className={Styles.input} type="text" placeholder="Quantity Missing" value={selectedOrderItem.value}/>
                     </div>
                   </div>
                 )}
                 <div>
-                  <input className={Styles.input} type="text" placeholder="Provide One line Subject" />
+                  <input className={Styles.input} type="text" placeholder="Provide One line Subject" onKeyDown={(e)=>{setSubject(e.target.value)}}/>
                 </div>
                 <div>
-                  <textarea className={Styles.input} rows={3} placeholder="Describe your issues"></textarea>
+                  <textarea className={Styles.input} rows={3} placeholder="Describe your issues" onKeyDown={(e)=>{setDesc(e.target.value)}}></textarea>
                 </div>
               </div>
             </div>

@@ -47,9 +47,8 @@ const OrderStatusFormSection = () => {
             supportTicketData.key = user.x_access_token;
             postSupport({rawData:supportTicketData}).then((response)=>{
                 if(response){
-                    console.log({response});
                     let flush = supportClear()
-                    if(flush) navigate("/CustomerSupportDetails?id="+response)
+                    if(flush) {navigate("/CustomerSupportDetails?id="+response)}
                 }else{
                     alert("something went wrong..")
                 }
