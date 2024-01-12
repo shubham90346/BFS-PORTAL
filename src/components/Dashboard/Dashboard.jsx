@@ -12,6 +12,8 @@ import { useNavigate } from "react-router-dom";
 import { GetAuthData, getDashboardata } from "../../lib/store";
 import { getRandomColors } from "../../lib/color";
 import ContentLoader from "react-content-loader";
+import SelectBrandModel from "../My Retailers/SelectBrandModel/SelectBrandModel";
+import ModalPage from "../Modal UI/index";
 const dataa = {
   series: [
     {
@@ -197,7 +199,7 @@ function Dashboard({ dashboardData }) {
       labels: [],
     },
   });
-
+  const [brandData, setBrandData]=useState([])
   const RADIAN = Math.PI / 180;
   const needle_data = [
     { name: "A", value: 80, color: "#16BC4E" },
@@ -231,6 +233,7 @@ function Dashboard({ dashboardData }) {
     return [<circle cx={x0} cy={y0} r={r} fill={color} stroke="none" />, <path d={`M${xba} ${yba}L${xbb} ${ybb} L${xp} ${yp} L${xba} ${yba}`} stroke="#none" fill={color} />];
   };
   const navigate = useNavigate();
+  const [modalOpen, setModalOpen] = useState(false);
 
   // API INTEGRATION
 
@@ -374,7 +377,10 @@ function Dashboard({ dashboardData }) {
     month: "long",
   };
   let current = date.toLocaleString("en-IN", options);
-  let lowPerformanceArray=dashboardRelatedData?.performance?.data?.slice(0).reverse().map((ele)=>ele)
+  let lowPerformanceArray = dashboardRelatedData?.performance?.data
+    ?.slice(0)
+    .reverse()
+    .map((ele) => ele);
   return (
     <>
       {isLoading ? (
@@ -607,49 +613,65 @@ function Dashboard({ dashboardData }) {
                     if (index < 4) {
                       return (
                         <div className="col-lg-6 col-md-6 col-sm-12 ">
-                          <div className={Styles.top_perform}>
-                              <div className={Styles.top_accnew}>
-                                <p className={Styles.top_accounttext}>{ele.Name}</p>
-                              </div>
-
-                              <div className={` ${Styles.scrollbar}`}>
-                                {ele.ManufacturerList.map((itemm) => {
-                                  const bgcolor = bgColors[itemm.Name];
-                                  return <span className={`${Styles.account} ${Styles[bgcolor]}`}>{itemm.Name}</span>;
-                                })}
-                              </div>
+                          <div
+                            className={Styles.top_perform}
+                            onClick={() => {
+                              setModalOpen(true);
+                              setBrandData(ele.ManufacturerList)
+                              console.log("kkkkk",ele);
+                              localStorage.setItem("Account", ele.Name);
+                              localStorage.setItem("AccountId__c", ele.AccountId);
+                            }}
+                            id={index}
+                          >
+                            <div className={Styles.top_accnew}>
+                              <p className={Styles.top_accounttext}>{ele.Name}</p>
                             </div>
+
+                            <div className={` ${Styles.scrollbar}`}>
+                              {ele.ManufacturerList.map((itemm) => {
+                                const bgcolor = bgColors[itemm.Name];
+                                return <span className={`${Styles.account} ${Styles[bgcolor]}`}>{itemm.Name}</span>;
+                              })}
+                            </div>
+                            
+                          </div>
                         </div>
                       );
                     }
                   })}
                 </div>
               </div>
-
+              <ModalPage open={modalOpen} onClose={() => setModalOpen(false)} content={<SelectBrandModel brands={brandData} onClose={() => setModalOpen(false)} />} />
               <div className="col-lg-6 col-sm-12" style={{ width: "48%" }}>
                 <p className={Styles.Tabletext1}>Low Performing Accounts</p>
                 <div className="row">
-                    {/* LOW PERFORMANCE */}
-                    { lowPerformanceArray?.map((ele,index)=>{
-                        if(index<4){
-                          return(<div className="col-lg-6 col-md-6 col-sm-12">
-                          <div className={Styles.top_perform2}>
-                                <div className={Styles.top_account}>
-                                  <p className={Styles.top_accounttext}>{ele.Name}</p>
-                                </div>
-        
-                                <div className={` ${Styles.scrollbar}`}>
-                                  {ele.ManufacturerList.map((item) => {
-                                    const bgcolor = bgColors[item.Name];
-                                    return <span className={`${Styles.account22} ${Styles[bgcolor]}`}>{item.Name}</span>;
-                                  })}
-                                </div>
+                  {/* LOW PERFORMANCE */}
+                  {lowPerformanceArray?.map((ele, index) => {
+                    if (index < 4) {
+                      return (
+                        <div className="col-lg-6 col-md-6 col-sm-12">
+                          <div className={Styles.top_perform2}  onClick={() => {
+                              setModalOpen(true);
+                              setBrandData(ele.ManufacturerList);
+                              localStorage.setItem("Account", ele.Name);
+                              localStorage.setItem("AccountId__c", ele.AccountId);
+                            }}>
+                            <div className={Styles.top_account}>
+                              <p className={Styles.top_accounttext}>{ele.Name}</p>
                             </div>
-                          </div>)
-                        }
-                    })}
-                  
 
+                            <div className={` ${Styles.scrollbar}`}>
+                              {ele.ManufacturerList.map((item) => {
+                                const bgcolor = bgColors[item.Name];
+                                return <span className={`${Styles.account22} ${Styles[bgcolor]}`}>{item.Name}</span>;
+                              })}
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    }
+                  })}
                 </div>
               </div>
             </div>

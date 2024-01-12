@@ -31,15 +31,15 @@ const SelectBrandModel = ({ brands, onClose }) => {
                     onChange={() => {
                       // setSelectedBrandAccountId(brand.AccountId__c);
                       setSelectedBrandManufacturer(true);
-                      localStorage.setItem("manufacturer", brand.ManufacturerName__c);
-                      localStorage.setItem("ManufacturerId__c", brand.ManufacturerId__c);
+                      localStorage.setItem("manufacturer", brand.ManufacturerName__c|| brand.Name);
+                      localStorage.setItem("ManufacturerId__c", brand.ManufacturerId__c||  brand.Id);
                       // if (selectedBrandManufacturer) {
                         navigate(`/product`);
                       // } 
                     }}
-                    id={brand.ManufacturerName__c}
+                    id={brand.ManufacturerName__c||brand.Name}
                   />
-                  <label htmlFor={brand.ManufacturerName__c}>{brand.ManufacturerName__c}</label>
+                  <label htmlFor={brand.ManufacturerName__c||brand.Name}>{brand.ManufacturerName__c||brand.Name}</label>
                 </div>
               ))}
             </div>

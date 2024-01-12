@@ -187,7 +187,7 @@ const SelectCaseReason = ({ reasons, onClose, recordType }) => {
                     onChange={(e) => {
                       onOrderChangeHandler(e);
                     }}
-                    className="mb-[10px] "
+                    className={`mb-[10px] ${Styles.select}`}
                   >
                     <option>Search Order</option>
 
@@ -207,6 +207,7 @@ const SelectCaseReason = ({ reasons, onClose, recordType }) => {
                     onChange={(e) => {
                       onChnageAccountHander(e);
                     }}
+                    className={`${Styles.select}`}
                   >
                     <option>Search Account</option>
                     {accountList.length > 0 &&
@@ -239,7 +240,7 @@ const SelectCaseReason = ({ reasons, onClose, recordType }) => {
                       onChange={(e) => {
                         onChnageOrderItemHander(e);
                       }}
-                      className="mt-[10px] mb-[10px] "
+                      className={`my-[10px] ${Styles.select}`}
                     >
                       <option>Search Product</option>
                       {orderIdChild.length > 0 &&
