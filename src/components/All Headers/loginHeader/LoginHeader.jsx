@@ -1,9 +1,10 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import style from "../topNav/index.module.css";
 import styles from "./index.module.css";
 import { NeedHelp } from "../../../lib/svg";
 const LoginHeader = () => {
+  const navigate=useNavigate();
   return (
     <>
       <div className="container">
@@ -11,9 +12,9 @@ const LoginHeader = () => {
           <div className="col-12">
             <div className="d-flex justify-content-between align-items-center gap-2">
               <div className="d-flex justify-content-center align-items-center gap-5">
-                {/* <Link to="/dashboard" className=""> */}
+                <Link to="/" className="">
                 <img src={"/assets/images/BFSG_logo.svg"} alt="img" />
-                {/* </Link> */}
+                </Link>
               </div>
               <div className="d-flex justify-content-center align-items-center flex-wrap gap-4">
                 <p className={`m-0 ${style.language} ${style.text} flex`}>
@@ -35,7 +36,7 @@ const LoginHeader = () => {
                   </div>
                   {/* <img src={"/assets/images/dropDownArrow.svg"} alt="img" /> */}
                 </p>
-                <p className={`m-0 ${style.language}`}>Sign up</p>
+                <p className={`m-0 ${style.language}`} style={{cursor:"pointer"}} onClick={()=>navigate("/sign-up")}>Sign up</p>
               </div>
             </div>
             <hr className={`${styles.hr} shadow-sm`}></hr>
