@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Styles from "./style.module.css";
 import { useNavigate } from "react-router-dom";
+import { CloseButton } from "../../../lib/svg";
 
 const SelectBrandModel = ({ brands, onClose }) => {
   // const [selectedBrandAccountId, setSelectedBrandAccountId] = useState();
@@ -13,7 +14,9 @@ const SelectBrandModel = ({ brands, onClose }) => {
       <div className="px-[68px] pb-[67px] pt-[40px] max-w-[900px]">
         <section>
           <div className="d-flex align-items-center justify-content-end gap-5">
-          <button type="button" className="btn-close" onClick={onClose}></button>
+          <button type="button" onClick={onClose}>
+              <CloseButton />
+            </button>
           </div>
           <h1 className="font-[Montserrat-500] text-[22px] tracking-[2.20px] mb-[20px]">Choose the Manufacturer</h1>
           

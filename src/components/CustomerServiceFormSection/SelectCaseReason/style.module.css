@@ -235,9 +235,10 @@ select::placeholder {
   font-weight: 400;
   line-height: normal;
   letter-spacing: 1.12px;
-  width: fit-content;
+  width:30%;
   margin: 0px;
   padding: 3px 6px;
+
 }
 @media (max-width: 900px) {
   .ModalResponsive {
