@@ -154,7 +154,7 @@ const SelectCaseReason = ({ reasons, onClose, recordType }) => {
                   <select onChange={(e) => { onOrderChangeHandler(e) }}>
                     <option>Search Order</option>
                     {orders.length > 0 && orders.map((element) => {
-                      return (<option value={element.Id}>Order from {element.AccountName} for ({element.ProductCount} Products) Actual Amount {element.Amount} | {element.ManufacturerName__c} | PO #{element.PO_Number__c}</option>)
+                      return (<option value={element.Id} selected={orderData.opportunityId == element.Id}>Order from {element.AccountName} for ({element.ProductCount} Products) Actual Amount {element.Amount} | {element.ManufacturerName__c} | PO #{element.PO_Number__c}</option>)
                     })}
                   </select>}
                 {reason == "Update Account Info" && <select onChange={(e) => { }}>
