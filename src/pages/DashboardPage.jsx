@@ -16,18 +16,18 @@ const DashboardPage = () => {
   return (
     <>
 
-<Layout>
-            <div>
-                <div className="col-12">
-                    {/* <div className="filter-container  ">
+      <Layout>
+        <div>
+          <div className="col-12">
+            {/* <div className="filter-container  ">
                     </div> */}
-                </div>
-                <div>
-                <Dashboard/>
-                    {/* <OrderStatusFormSection /> */}
-                </div>
-            </div>
-        </Layout>
+          </div>
+          <div>
+            <Dashboard />
+            {/* <OrderStatusFormSection /> */}
+          </div>
+        </div>
+      </Layout>
     </>
   );
 };
