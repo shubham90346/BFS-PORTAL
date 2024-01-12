@@ -242,7 +242,6 @@ function Dashboard({ dashboardData }) {
             .then((dashboard) => {
               if (dashboard?.details) {
                 let dashboardData = JSON.parse(dashboard?.details);
-                console.log("dashboardData", dashboardData);
                 setDashboardRelatedData(dashboardData);
                 setSalesByBrandData({
                   series: Object.values(dashboardData.brandSalesByRep.data).map((value) => {
