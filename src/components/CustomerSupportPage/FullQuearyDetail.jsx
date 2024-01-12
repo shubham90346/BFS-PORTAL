@@ -117,7 +117,7 @@ function FullQuearyDetail({ data }) {
                             </div>
                             {/* Active Comment Box STARTING */}
                             <div className={Detail.CommentBox}>
-                            {data.Status == "closed" && <div className={Detail.ActivityBox}>
+                            {data.Status != "closed" && <div className={Detail.ActivityBox}>
 
                                     <div className={Detail.ActivityProfile}>
                                         <h6>{getStrCode(data.salesRepName)}</h6>
