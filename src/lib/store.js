@@ -171,7 +171,11 @@ export async function getOrderList({ user, month }) {
     headers: headersList,
   });
   let data = JSON.parse(await response.text());
-  return data.data;
+  if(data.status != 200){
+    DestoryAuth()
+  }else{
+    return data.data;
+  }
 }
 
 export async function getDashboardata({ user }) {
@@ -189,7 +193,11 @@ export async function getDashboardata({ user }) {
     headers: headersList,
   });
   let data = JSON.parse(await response.text());
-  return data.data;
+  if(data.status != 200){
+    DestoryAuth()
+  }else{
+    return data.data;
+  }
 }
 
 export async function getSupportList({ user }) {
@@ -207,7 +215,11 @@ export async function getSupportList({ user }) {
     headers: headersList,
   });
   let data = JSON.parse(await response.text());
-  return data.data;
+  if(data.status != 200){
+    DestoryAuth()
+  }else{
+    return data.data;
+  }
 }
 
 export async function getSupportDetails({ rawData }) {
@@ -225,7 +237,11 @@ export async function getSupportDetails({ rawData }) {
     headers: headersList,
   });
   let data = JSON.parse(await response.text());
-  return data.data;
+  if(data.status != 200){
+    DestoryAuth()
+  }else{
+    return data.data;
+  }
 }
 
 export async function getSupportFormRaw({ rawData }) {
@@ -243,7 +259,11 @@ export async function getSupportFormRaw({ rawData }) {
     headers: headersList,
   });
   let data = JSON.parse(await response.text());
-  return data.data;
+  if(data.status != 200){
+    DestoryAuth()
+  }else{
+    return data.data;
+  }
 }
 
 export async function postSupport({ rawData }) {
@@ -258,8 +278,11 @@ export async function postSupport({ rawData }) {
     headers: headersList,
   });
   let data = JSON.parse(await response.text());
-  console.log({data});
-  return data.data;
+  if(data.status != 200){
+    DestoryAuth()
+  }else{
+    return data.data;
+  }
 }
 
 export async function postSupportAny({ rawData }) {
@@ -274,8 +297,11 @@ export async function postSupportAny({ rawData }) {
     headers: headersList,
   });
   let data = JSON.parse(await response.text());
-  console.log({data});
-  return data.data;
+  if(data.status != 200){
+    DestoryAuth()
+  }else{
+    return data.data;
+  }
 }
 
 export async function postSupportComment({ rawData }) {
@@ -290,6 +316,9 @@ export async function postSupportComment({ rawData }) {
     headers: headersList,
   });
   let data = JSON.parse(await response.text());
-  console.log({data});
-  return data.data;
+  if(data.status != 200){
+    DestoryAuth()
+  }else{
+    return data.data;
+  }
 }
