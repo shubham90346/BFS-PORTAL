@@ -48,7 +48,7 @@ const OrderStatusFormSection = () => {
                 if(response){
                     console.log({response});
                     let flush = supportClear()
-                    if(flush) navigate("/CustomerSupportDetails?id="+response)
+                    navigate("/CustomerSupportDetails?id="+response)
                 }else{
                     alert("something went wrong..")
                 }
