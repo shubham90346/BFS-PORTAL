@@ -2,7 +2,7 @@ import React, { useMemo, useState } from "react";
 import Styles from "./Style.module.css";
 import MySupportTicket from "./MySupportTicket";
 import { Link } from "react-router-dom";
-import { CustomerServiceIcon, OrderStatusIcon, DefaultSupportIcon, MarketingSupportIcon } from "../../lib/svg";
+import { CustomerServiceIcon, OrderStatusIcon, DefaultSupportIcon, MarketingSupportIcon, DIFTestIcon, DisplayIssuesIcon } from "../../lib/svg";
 import ModalPage from "../Modal UI";
 import SelectCaseReason from "../CustomerServiceFormSection/SelectCaseReason/SelectCaseReason";
 
@@ -97,7 +97,7 @@ function CustomerSupportPage({ data, PageSize, currentPage, manufacturerFilter, 
                 <Link to={"/order-list"}>
                   <div className={Styles.supportLeftBox}>
                     <div className={Styles.supportLeftImg}>
-                      <DefaultSupportIcon width={42} height={42} />
+                      <DIFTestIcon width={42} height={42} />
                     </div>
 
                     <div className={Styles.supportLeftContent}>
@@ -110,7 +110,7 @@ function CustomerSupportPage({ data, PageSize, currentPage, manufacturerFilter, 
                 <Link to={"/order-list"}>
                   <div className={Styles.supportLeftBox}>
                     <div className={Styles.supportLeftImg}>
-                      <DefaultSupportIcon width={42} height={42} />
+                      <DisplayIssuesIcon width={42} height={42} />
                     </div>
 
                     <div className={Styles.supportLeftContent}>
