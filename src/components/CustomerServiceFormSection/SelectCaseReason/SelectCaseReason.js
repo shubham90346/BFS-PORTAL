@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Styles from "./style.module.css";
 import { useNavigate } from "react-router-dom";
 import { DestoryAuth, GetAuthData, getOrderList, getSupportFormRaw, postSupportAny, supportDriveBeg, supportShare } from "../../../lib/store";
+import { CloseButton } from "../../../lib/svg";
 
 const SelectCaseReason = ({ reasons, onClose, recordType }) => {
   const navigate = useNavigate();
@@ -123,7 +124,7 @@ const SelectCaseReason = ({ reasons, onClose, recordType }) => {
       <div className="px-[68px] pb-[67px] pt-[40px] max-w-[900px]">
         <section>
           <div className="d-flex align-items-center justify-content-end gap-5">
-            <button type="button" className="btn-close" onClick={onClose}></button>
+            <button type="button" onClick={onClose}><CloseButton/></button>
           </div>
           <h1 className="font-[Montserrat-500] text-[22px] tracking-[2.20px] mb-[20px]">{recordType.name}</h1>
 
@@ -146,15 +147,20 @@ const SelectCaseReason = ({ reasons, onClose, recordType }) => {
                 );
               })}
             </div>
-            {step >= 1 && <div>
-              <div style={{ width: '100%' }}>
+           
+          </div>
+        <hr style={{border:"1px dashed #D5D9D9"}}></hr>
+        {step >= 1 && <div>
+              <div>
                 {(reason == "Charges" || reason == "Product Missing" || reason == "Product Overage" || reason == "Product Damage") &&
                   <select onChange={(e) => { onOrderChangeHandler(e) }}>
                     <option>Search Order</option>
                     {orders.length > 0 && orders.map((element) => {
                       return (<option value={element.Id} selected={orderData.opportunityId == element.Id}>Order from {element.AccountName} for ({element.ProductCount} Products) Actual Amount {element.Amount} | {element.ManufacturerName__c} | PO #{element.PO_Number__c}</option>)
                     })}
-                  </select>}
+                  </select>
+                  }
+
                 {reason == "Update Account Info" && <select onChange={(e) => { }}>
                   <option>Search Account</option>
                   {orders.length > 0 && orders.map((element) => {
@@ -163,6 +169,7 @@ const SelectCaseReason = ({ reasons, onClose, recordType }) => {
                 </select>}
               </div>
             </div>}
+           
             {step == 2 && <div>
               <div style={{ width: '100%' }}>
                 {reason == "Charges" && <div><label>Actual Amount</label>
@@ -197,7 +204,6 @@ const SelectCaseReason = ({ reasons, onClose, recordType }) => {
                 SUBMIT
               </button>
             </div>}
-          </div>
         </section>
       </div>
     </>
