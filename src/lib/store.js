@@ -79,9 +79,9 @@ export async function supportShare(data){
 export function supportClear(){
   localStorage.removeItem(support)
   if(localStorage.getItem(support)){
-    return true;
-  }else{
     return false;
+  }else{
+    return true;
   }
 }
 
