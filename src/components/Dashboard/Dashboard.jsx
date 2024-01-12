@@ -245,7 +245,6 @@ function Dashboard({ dashboardData }) {
             .then((dashboard) => {
               if (dashboard?.details) {
                 let dashboardData = JSON.parse(dashboard?.details);
-                console.log("dashboardData", dashboardData);
                 setDashboardRelatedData(dashboardData);
                 setSalesByBrandData({
                   series: Object.values(dashboardData.brandSalesByRep.data).map((value) => {
@@ -409,7 +408,7 @@ function Dashboard({ dashboardData }) {
 
           <div className="row justify-between ">
             {/* monthly data goal by brand*/}
-            <div className="col-lg-6 my-2" style={{ width: "49.5%" }}>
+            <div className="col-lg-6 col-sm-12 my-2" >
               <div className={Styles.DashboardWidth}>
                 <p className={Styles.Tabletext}>Month bill date(MTD): Goal by Brand</p>
                 <div className={Styles.goaltable}>
@@ -462,7 +461,7 @@ function Dashboard({ dashboardData }) {
               </div>
             </div>
             {/* leads by brand*/}
-            <div className="col-lg-6 my-2 " style={{ width: "49.5%" }}>
+            <div className="col-lg-6 col-sm-12 my-2 ">
               <div className={Styles.DashboardWidth}>
                 <p className={Styles.Tabletext}>Leads by Brand</p>
                 <div className={Styles.goaltable1}>
@@ -508,7 +507,7 @@ function Dashboard({ dashboardData }) {
 
           <div className="row mt-2 justify-between">
             {/* Monthly SALESBYREP */}
-            <div className="col-lg-6 my-2" style={{ width: "49.5%" }}>
+            <div className="col-lg-6 my-2" >
               <div className={Styles.DashboardWidth}>
                 <p className={Styles.Tabletext}>Month bill date(MTD): Sales By Rep</p>
                 <div className={Styles.goaltable}>
@@ -555,7 +554,7 @@ function Dashboard({ dashboardData }) {
               </div>
             </div>
             {/* Yearly SALESBYREP */}
-            <div className="col-lg-6 my-2" style={{ width: "49.5%" }}>
+            <div className="col-lg-6 my-2">
               <div className={Styles.DashboardWidth}>
                 <p className={Styles.Tabletext}>Year bill date(MTD): Sales By Rep</p>
                 <div className={Styles.goaltable}>
@@ -605,7 +604,7 @@ function Dashboard({ dashboardData }) {
 
           <div className="my-5">
             <div className={`row mt-1 justify-between ${Styles.topPerform2}`}>
-              <div className={`col-lg-6 col-sm-12 ${Styles.top_perform1}`} style={{ width: "48%" }}>
+              <div className={`col-lg-6 col-sm-12 ${Styles.top_perform1}`} >
                 <p className={Styles.Tabletext}>Top Performing Accounts</p>
                 <div className="row">
                   {/* TOP PERFORMANCE */}
