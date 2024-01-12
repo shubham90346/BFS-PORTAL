@@ -8,7 +8,7 @@ const SelectCaseReason = ({ reasons, onClose, recordType }) => {
   const [prioritiesList, setPrioritiesList] = useState([]);
   const [accountList, setAccountList] = useState([]);
   const [orders, setOrders] = useState([]);
-  const[orderIdChild,setOrderIdChild] = useState([]);
+  const [orderIdChild, setOrderIdChild] = useState([]);
   const [typeId, setTypeId] = useState(recordType.id)
   const [desc, setDesc] = useState()
   const [orderData, setOrderData] = useState({
@@ -51,7 +51,7 @@ const SelectCaseReason = ({ reasons, onClose, recordType }) => {
       .catch((err) => {
         console.log({ err });
       });
-  }, []);
+  }, [step]);
   const onChangeHandler = (e) => {
     setReason(e.target.value)
     setOrderData({
@@ -79,12 +79,10 @@ const SelectCaseReason = ({ reasons, onClose, recordType }) => {
           invoiceNumber: element.Wholesale_Invoice__c
         });
         setOrderIdChild(element.OpportunityLineItems.records)
+        setStep(2)
         return element
       }
     });
-    if (orderData.opportunityId) {
-      setStep(2)
-    }
   }
   console.log({ reason });
   const submitForm = () => {
@@ -167,18 +165,18 @@ const SelectCaseReason = ({ reasons, onClose, recordType }) => {
             </div>}
             {step == 2 && <div>
               <div style={{ width: '100%' }}>
-              {reason == "Charges" && <div><label>Actual Amount</label>
+                {reason == "Charges" && <div><label>Actual Amount</label>
                   <input type="text" value={orderData.actualAmount} />
                   <label>Associated Invoice Number:</label>
                   <input type="text" value={orderData.invoiceNumber ? orderData.invoiceNumber : 'NA'} /></div>}
-                  {reason == "Product Missing"&&<div><select onChange={(e) => { }}>
+                {(reason == "Product Missing" || reason == "Product Overage") && <div><select onChange={(e) => { }}>
                   <option>Search Product</option>
                   {orderIdChild.length > 0 && orderIdChild.map((element) => {
                     return (<option value={element.Id}>{element.Name}</option>)
                   })}
                 </select>
-                <div>
-                  <input type="text" placeholder="Quantity Missing" /></div>
+                  <div>
+                    <input type="text" placeholder="Quantity Missing" /></div>
                 </div>}
                 <div>
                   <input type="text" placeholder="Provide One line Subject" /></div>
